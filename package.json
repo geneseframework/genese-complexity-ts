@@ -6,7 +6,11 @@
     "url": "https://github.com/gillesfabre34/"
   },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "ts-node": "~8.3.0",
+    "tslint": "~5.18.0",
+    "typescript": "^3.8.3"
+  },
   "keywords": [
     "cognitive complexity",
     "genese",
