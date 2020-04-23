@@ -1,0 +1,21 @@
+{
+  "name": "genese-complexity-ts",
+  "version": "0.0.1",
+  "author": {
+    "name": "Gilles Fabre",
+    "url": "https://github.com/gillesfabre34/"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "keywords": [
+    "cognitive complexity",
+    "genese",
+    "cyclomatic complexity",
+    "typescript"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/geneseframework/genese-complexity-ts"
+  }
+}
