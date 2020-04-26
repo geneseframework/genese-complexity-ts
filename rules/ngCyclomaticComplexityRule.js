@@ -58,7 +58,6 @@ var NgCyclomaticComplexityWalker = /** @class */ (function (_super) {
                 }
                 else {
                     // TODO : output results in a report file
-                    // console.log(`Cyclomatic complexity method ${method.name['escapedText']} = ${cc} (OK)`);
                 }
             }
             return ts.forEachChild(node, cb);
@@ -67,6 +66,34 @@ var NgCyclomaticComplexityWalker = /** @class */ (function (_super) {
     };
     return NgCyclomaticComplexityWalker;
 }(Lint.AbstractWalker));
+exports.NgCyclomaticComplexityWalker = NgCyclomaticComplexityWalker;
+var Walker = /** @class */ (function () {
+    function Walker(sourceFile) {
+        this.options = 3;
+        this.sourceFile = sourceFile;
+    }
+    Walker.prototype.walk = function () {
+        var threshold = this.options;
+        var cb = function (node) {
+            if (node.kind === typescript_1.SyntaxKind.MethodDeclaration) {
+                var method = node;
+                var cc = calculateCyclomaticComplexityOfMethod(node);
+                if (cc > threshold) {
+                    var error = "\r\nMethod " + method.name['escapedText'] + " : cyclomatic complexity = " + cc + " (threshold = " + threshold + ")";
+                    console.log('FAILURE ', error);
+                    // this.addFailureAt(node.getStart(), node.getWidth(), error);
+                }
+                else {
+                    // TODO : output results in a report file
+                }
+            }
+            return ts.forEachChild(node, cb);
+        };
+        return ts.forEachChild(this.sourceFile, cb);
+    };
+    return Walker;
+}());
+exports.Walker = Walker;
 /**
  * Calculates the cyclomatic complexity of a method
  * @param ctx: ts.Node

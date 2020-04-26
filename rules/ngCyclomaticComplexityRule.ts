@@ -21,7 +21,7 @@ export class Rule extends Lint.Rules.AbstractRule {
  * Walker of the rule
  * Browse the sourceFile and calculates cyclomatic complexity for each method
  */
-class NgCyclomaticComplexityWalker extends Lint.AbstractWalker {
+export class NgCyclomaticComplexityWalker extends Lint.AbstractWalker {
 
 
     public walk(sourceFile: ts.SourceFile): void {
@@ -43,6 +43,34 @@ class NgCyclomaticComplexityWalker extends Lint.AbstractWalker {
     }
 }
 
+export class Walker {
+
+    options = 3;
+    sourceFile: ts.SourceFile;
+
+    constructor(sourceFile: ts.SourceFile) {
+        this.sourceFile = sourceFile;
+    }
+
+    walk() {
+        const threshold: number = this.options as any;
+        const cb = (node: ts.Node): void => {
+            if (node.kind === SyntaxKind.MethodDeclaration) {
+                const method: ts.MethodDeclaration = node as ts.MethodDeclaration;
+                const cc = calculateCyclomaticComplexityOfMethod(node);
+                if (cc > threshold) {
+                    const error = `\r\nMethod ${method.name['escapedText']} : cyclomatic complexity = ${cc} (threshold = ${threshold})`;
+                    console.log('FAILURE ', error);
+                    // this.addFailureAt(node.getStart(), node.getWidth(), error);
+                } else {
+                    // TODO : output results in a report file
+                }
+            }
+            return ts.forEachChild(node, cb);
+        };
+        return ts.forEachChild(this.sourceFile, cb);
+    }
+}
 
 
 /**
