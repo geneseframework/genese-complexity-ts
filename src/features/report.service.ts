@@ -5,9 +5,6 @@ import { Evaluation } from '../models/evaluation';
 
 const appRootPath = require('app-root-path');
 
-/**
- * Main generator class
- */
 export class ReportService {
 
     private appRoot = appRootPath.toString();                   // Root of the app
@@ -40,27 +37,19 @@ export class ReportService {
         Handlebars.registerPartial("analyse", rowTemplate);
         const reportTemplate = eol.auto(fs.readFileSync(`${this.appRoot}/src/templates/report.handlebars`, 'utf-8'));
         this.template = Handlebars.compile(reportTemplate);
-
         this.writeReport();
-        console.log('REPORT GENERATED SUCCESSFULLY');
     }
 
 
     private writeReport() {
-        const ts = this.template({analyses: this.report});
+        const ts = this.template({report: this.report});
         fs.writeFileSync(`${this.outDir}/report.html`, ts, {encoding: 'utf-8'});
         fs.copyFileSync(`${this.appRoot}/src/templates/report.css`, `${this.outDir}/report.css`);
         fs.copyFileSync(`${this.appRoot}/src/templates/prettify.css`, `${this.outDir}/prettify.css`);
     }
 
 
-    getReport(): Evaluation[] {
-        return this.report;
-    }
-
-
     addEvaluation(evaluation: Evaluation): void {
         this.report.push(evaluation);
-        console.log('EVALS this.report', this.report);
     }
 }

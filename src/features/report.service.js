@@ -31,20 +31,15 @@ var ReportService = /** @class */ (function () {
         var reportTemplate = eol.auto(fs.readFileSync(this.appRoot + "/src/templates/report.handlebars", 'utf-8'));
         this.template = Handlebars.compile(reportTemplate);
         this.writeReport();
-        console.log('REPORT GENERATED SUCCESSFULLY');
     };
     ReportService.prototype.writeReport = function () {
-        var ts = this.template({ analyses: this.report });
+        var ts = this.template({ report: this.report });
         fs.writeFileSync(this.outDir + "/report.html", ts, { encoding: 'utf-8' });
         fs.copyFileSync(this.appRoot + "/src/templates/report.css", this.outDir + "/report.css");
         fs.copyFileSync(this.appRoot + "/src/templates/prettify.css", this.outDir + "/prettify.css");
     };
-    ReportService.prototype.getReport = function () {
-        return this.report;
-    };
     ReportService.prototype.addEvaluation = function (evaluation) {
         this.report.push(evaluation);
-        console.log('EVALS this.report', this.report);
     };
     return ReportService;
 }());

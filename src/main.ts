@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import * as fse from 'fs-extra';
-import { Walker } from './features/walker';
+import { FileWalker } from './features/fileWalker';
 import { ReportService } from './features/report.service';
 import { getFileName } from './features/file.service';
 
@@ -13,50 +13,25 @@ export class Main {
     constructor() {}
 
     process(): void {
+        console.log('START CALCULATION');
         this.evaluateFile(`${this.appRoot}/src/mocks/methods.mock.ts`);
         this.generateReport();
+        console.log('REPORT GENERATED SUCCESSFULLY');
     }
 
 
     evaluateFile(pathFile: string) {
         const fileName = getFileName(pathFile);
-        console.log('FILE NAME fileName ', fileName);
         const sourceFile = ts.createSourceFile(fileName,
             fse.readFileSync(pathFile, 'utf8'),
             ts.ScriptTarget.Latest);
-        const walker = new Walker(sourceFile);
+        const walker = new FileWalker(sourceFile);
         walker.walk();
     }
-
 
 
     generateReport(): void {
         const reportService = ReportService.getInstance();
         reportService.generate();
     }
-
-
-    processFolder(): Main {
-        return this;
-    }
-
-
-    processFiles(): Main {
-        return this;
-    }
-
-
-    processFile(): void {
-    }
-
-
-    processMethods(): Main {
-        return this;
-    }
-
-
-    processMethod(): void {
-
-    }
-
 }

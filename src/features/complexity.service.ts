@@ -1,4 +1,50 @@
 import * as ts from 'typescript';
+import * as utils from 'tsutils';
+
+/**
+ * Calculates the cognitive complexity of a method
+ * @param ctx: ts.Node
+ */
+export function calculateCognitiveComplexityOfMethod(ctx): number {
+    let complexity = 1;
+    let depthLevel = 0;
+    ts.forEachChild(ctx, function cb(node) {
+        if (utils.isFunctionWithBody(node)) {
+            depthLevel ++;
+            complexity += depthLevel;
+            ts.forEachChild(node, cb);
+        } else {
+            if (increasesComplexity(node)) {
+                depthLevel ++;
+                complexity += depthLevel;
+            }
+            ts.forEachChild(node, cb);
+        }
+    });
+    return complexity;
+}
+
+
+
+/**
+ * Calculates the cyclomatic complexity of a method
+ * @param ctx: ts.Node
+ */
+export function calculateCyclomaticComplexityOfMethod(ctx): number {
+    let totalComplexity = 1;
+    ts.forEachChild(ctx, function cb(node) {
+        if (utils.isFunctionWithBody(node)) {
+            totalComplexity += 1;
+            ts.forEachChild(node, cb);
+        } else {
+            if (increasesComplexity(node)) {
+                totalComplexity += 1;
+            }
+            ts.forEachChild(node, cb);
+        }
+    });
+    return totalComplexity;
+}
 
 
 export function increasesComplexity(node) {

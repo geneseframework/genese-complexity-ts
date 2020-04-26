@@ -11,12 +11,13 @@ var Main = /** @class */ (function () {
         this.appRoot = appRootPath.toString(); // Root of the app
     }
     Main.prototype.process = function () {
+        console.log('START CALCULATION');
         this.evaluateFile(this.appRoot + "/src/mocks/methods.mock.ts");
         this.generateReport();
+        console.log('REPORT GENERATED SUCCESSFULLY');
     };
     Main.prototype.evaluateFile = function (pathFile) {
         var fileName = file_service_1.getFileName(pathFile);
-        console.log('FILE NAME fileName ', fileName);
         var sourceFile = ts.createSourceFile(fileName, fse.readFileSync(pathFile, 'utf8'), ts.ScriptTarget.Latest);
         var walker = new walker_1.Walker(sourceFile);
         walker.walk();

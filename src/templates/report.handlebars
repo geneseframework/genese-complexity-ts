@@ -11,21 +11,19 @@
 </head>
 
 <body>
-    <th class="main">
-        <h1>Genese complexity report</h1>
-        <table class="coverage-summary">
-            <thead>
+    <h1>Genese complexity report</h1>
+    <table class="coverage-summary">
+        <thead>
             <tr>
                 <th class="file">File</th>
                 <th class="column methodColumn">Method</th>
                 <th class="column cyclomaticColumn">Cyclomatic complexity</th>
                 <th class="column cognitiveColumn">Cognitive complexity</th>
             </tr>
-            </thead>
-        {{#each analyses}}
+        </thead>
+        {{#each report}}
             {{>analyse analyse=.}}
         {{/each}}
-        </table>
-    </div>
+    </table>
 </body>
 </html>
