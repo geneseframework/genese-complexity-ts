@@ -10,10 +10,16 @@ var appRootPath = require('app-root-path');
 var ReportService = /** @class */ (function () {
     function ReportService() {
         this.appRoot = appRootPath.toString(); // Root of the app
+        this.report = [];
         this.outDir = this.appRoot + "/genese/complexity";
     }
+    ReportService.getInstance = function () {
+        if (!ReportService.instance) {
+            ReportService.instance = new ReportService();
+        }
+        return ReportService.instance;
+    };
     ReportService.prototype.generate = function () {
-        console.log('GENERATE');
         if (fs.existsSync(this.outDir)) {
             fs.emptyDirSync(this.outDir);
         }
@@ -28,10 +34,17 @@ var ReportService = /** @class */ (function () {
         console.log('REPORT GENERATED SUCCESSFULLY');
     };
     ReportService.prototype.writeReport = function () {
-        var ts = this.template({ score: 'aaa', analyses: [{ filename: 'zzz' }] });
+        var ts = this.template({ analyses: this.report });
         fs.writeFileSync(this.outDir + "/report.html", ts, { encoding: 'utf-8' });
         fs.copyFileSync(this.appRoot + "/src/templates/report.css", this.outDir + "/report.css");
         fs.copyFileSync(this.appRoot + "/src/templates/prettify.css", this.outDir + "/prettify.css");
+    };
+    ReportService.prototype.getReport = function () {
+        return this.report;
+    };
+    ReportService.prototype.addEvaluation = function (evaluation) {
+        this.report.push(evaluation);
+        console.log('EVALS this.report', this.report);
     };
     return ReportService;
 }());

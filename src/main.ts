@@ -1,6 +1,5 @@
 import * as ts from 'typescript';
 import * as fse from 'fs-extra';
-import * as Handlebars from 'handlebars';
 import { Walker } from './features/walker';
 import { ReportService } from './features/report.service';
 import { getFileName } from './features/file.service';
@@ -32,7 +31,7 @@ export class Main {
 
 
     generateReport(): void {
-        const reportService = new ReportService();
+        const reportService = ReportService.getInstance();
         reportService.generate();
     }
 

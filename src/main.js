@@ -22,7 +22,7 @@ var Main = /** @class */ (function () {
         walker.walk();
     };
     Main.prototype.generateReport = function () {
-        var reportService = new report_service_1.ReportService();
+        var reportService = report_service_1.ReportService.getInstance();
         reportService.generate();
     };
     Main.prototype.processFolder = function () {
