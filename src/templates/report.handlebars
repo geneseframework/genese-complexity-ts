@@ -1,4 +1,34 @@
-<div>
-    <h1>Genese complexity report</h1>
-    {{score}}
-</div>
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for All files</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="prettify.css" />
+    <link rel="stylesheet" href="report.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <th class="main">
+        <h1>Genese complexity report</h1>
+        <table class="coverage-summary">
+            <thead>
+            <tr>
+                <th class="file">File</th>
+                <th class="column methodColumn">Method</th>
+                <th class="column cyclomaticColumn">Cyclomatic complexity</th>
+                <th class="column cognitiveColumn">Cognitive complexity</th>
+            </tr>
+            </thead>
+            <tr>
+                <td class="column fileColumn">{{filename}}</td>
+                <td class="column methodColumn">{{method}}</td>
+                <td class="column cyclomaticColumn">{{cyclomaticScore}}</td>
+                <td class="column cognitiveColumn">{{cognitiveScore}}</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

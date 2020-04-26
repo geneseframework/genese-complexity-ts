@@ -35,5 +35,7 @@ export class ReportService {
     private writeReport() {
         const ts = this.template({score: 'aaa'});
         fs.writeFileSync(`${this.outDir}/report.html`, ts, {encoding: 'utf-8'});
+        fs.copyFileSync(`${this.appRoot}/src/templates/report.css`, `${this.outDir}/report.css`);
+        fs.copyFileSync(`${this.appRoot}/src/templates/prettify.css`, `${this.outDir}/prettify.css`);
     }
 }

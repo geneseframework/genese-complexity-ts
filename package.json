@@ -14,7 +14,9 @@
         "eol": "^0.9.1",
         "fs-extra": "^9.0.0",
         "handlebars": "^4.7.6",
-        "paths": "^0.1.1"
+        "node-sass": "^4.14.0",
+        "paths": "^0.1.1",
+        "sass": "^1.26.5"
     },
     "devDependencies": {
         "ts-node": "~8.3.0",
