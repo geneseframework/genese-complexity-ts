@@ -1,6 +1,6 @@
-import { NgCyclomaticComplexityWalker, Walker } from '../rules/ngCyclomaticComplexityRule';
 import * as ts from 'typescript';
 import * as fse from 'fs-extra';
+import { Walker } from './features/walker';
 
 const appRootPath = require('app-root-path');
 
@@ -16,7 +16,7 @@ export class Main {
         console.log(`appRoot ${this.appRoot}`);
         console.log()
         const sourceFile = ts.createSourceFile('methods.mock.ts',
-            fse.readFileSync(`${this.appRoot}/mocks/methods.mock.ts`, 'utf8'),
+            fse.readFileSync(`${this.appRoot}/src/mocks/methods.mock.ts`, 'utf8'),
             ts.ScriptTarget.Latest);
         const walker = new Walker(sourceFile);
         walker.walk();

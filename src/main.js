@@ -1,8 +1,8 @@
 "use strict";
 exports.__esModule = true;
-var ngCyclomaticComplexityRule_1 = require("../rules/ngCyclomaticComplexityRule");
 var ts = require("typescript");
 var fse = require("fs-extra");
+var walker_1 = require("./features/walker");
 var appRootPath = require('app-root-path');
 var Main = /** @class */ (function () {
     function Main() {
@@ -13,8 +13,8 @@ var Main = /** @class */ (function () {
         console.log("SOURCE " + this.source);
         console.log("appRoot " + this.appRoot);
         console.log();
-        var sourceFile = ts.createSourceFile('methods.mock.ts', fse.readFileSync(this.appRoot + "/mocks/methods.mock.ts", 'utf8'), ts.ScriptTarget.Latest);
-        var walker = new ngCyclomaticComplexityRule_1.Walker(sourceFile);
+        var sourceFile = ts.createSourceFile('methods.mock.ts', fse.readFileSync(this.appRoot + "/src/mocks/methods.mock.ts", 'utf8'), ts.ScriptTarget.Latest);
+        var walker = new walker_1.Walker(sourceFile);
         walker.walk();
     };
     Main.prototype.processFolder = function () {
