@@ -5,8 +5,16 @@
     "name": "Gilles Fabre",
     "url": "https://github.com/gillesfabre34/"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "@types/node": "^13.13.2",
+    "app-root-path": "^3.0.0",
+    "fs-extra": "^9.0.0"
+  },
+  "devDependencies": {
+    "ts-node": "~8.3.0",
+    "tslint": "~5.18.0",
+    "typescript": "^3.8.3"
+  },
   "keywords": [
     "cognitive complexity",
     "genese",
