@@ -22,12 +22,9 @@
                 <th class="column cognitiveColumn">Cognitive complexity</th>
             </tr>
             </thead>
-            <tr>
-                <td class="column fileColumn">{{filename}}</td>
-                <td class="column methodColumn">{{method}}</td>
-                <td class="column cyclomaticColumn">{{cyclomaticScore}}</td>
-                <td class="column cognitiveColumn">{{cognitiveScore}}</td>
-            </tr>
+        {{#each analyses}}
+            {{>analyse analyse=.}}
+        {{/each}}
         </table>
     </div>
 </body>
