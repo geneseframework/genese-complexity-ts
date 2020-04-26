@@ -4,21 +4,26 @@ var ts = require("typescript");
 var fse = require("fs-extra");
 var walker_1 = require("./features/walker");
 var report_service_1 = require("./features/report.service");
+var file_service_1 = require("./features/file.service");
 var appRootPath = require('app-root-path');
 var Main = /** @class */ (function () {
     function Main() {
         this.appRoot = appRootPath.toString(); // Root of the app
     }
     Main.prototype.process = function () {
-        console.log("appRoot " + this.appRoot);
-        var reportService = new report_service_1.ReportService();
-        reportService.generate();
-        var sourceFile = ts.createSourceFile('methods.mock.ts', fse.readFileSync(this.appRoot + "/src/mocks/methods.mock.ts", 'utf8'), ts.ScriptTarget.Latest);
-        // this.reportTemplate = Handlebars.compile(fse.readFileSync(`${this.appRoot}/src/mocks/methods.mock.ts`, 'utf8'));
-        // console.log('template ', this.reportTemplate);
-        // this.reportTemplate({score: 'zzz'});
+        this.evaluateFile(this.appRoot + "/src/mocks/methods.mock.ts");
+        this.generateReport();
+    };
+    Main.prototype.evaluateFile = function (pathFile) {
+        var fileName = file_service_1.getFileName(pathFile);
+        console.log('FILE NAME fileName ', fileName);
+        var sourceFile = ts.createSourceFile(fileName, fse.readFileSync(pathFile, 'utf8'), ts.ScriptTarget.Latest);
         var walker = new walker_1.Walker(sourceFile);
         walker.walk();
+    };
+    Main.prototype.generateReport = function () {
+        var reportService = new report_service_1.ReportService();
+        reportService.generate();
     };
     Main.prototype.processFolder = function () {
         return this;

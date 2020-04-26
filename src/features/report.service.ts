@@ -14,13 +14,10 @@ export class ReportService {
     outDir: string;
 
     constructor() {
-        this.outDir = `${this.appRoot}/report`;
-
+        this.outDir = `${this.appRoot}/genese/complexity`;
     }
 
-    /**
-     * Actually generates the files
-     */
+
     generate(): void {
         console.log('GENERATE');
         if (fs.existsSync(this.outDir)) {
@@ -29,15 +26,14 @@ export class ReportService {
             fs.mkdirsSync(this.outDir);
         }
         const text = eol.auto(fs.readFileSync(`${this.appRoot}/src/templates/report.handlebars`, 'utf-8'));
-        const compiled = Handlebars.compile(text);
-        this.template = compiled;
+        this.template = Handlebars.compile(text);
 
         this.writeReport();
-        console.log('FINISHED SUCCESSFULLY');
+        console.log('REPORT GENERATED SUCCESSFULLY');
     }
 
     private writeReport() {
-        const ts = this.template({score: 'zzz'});
+        const ts = this.template({score: 'aaa'});
         fs.writeFileSync(`${this.outDir}/report.html`, ts, {encoding: 'utf-8'});
     }
 }

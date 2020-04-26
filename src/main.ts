@@ -3,28 +3,37 @@ import * as fse from 'fs-extra';
 import * as Handlebars from 'handlebars';
 import { Walker } from './features/walker';
 import { ReportService } from './features/report.service';
+import { getFileName } from './features/file.service';
 
 const appRootPath = require('app-root-path');
 
 export class Main {
 
     private appRoot = appRootPath.toString();                   // Root of the app
-    private reportTemplate: HandlebarsTemplateDelegate;
 
     constructor() {}
 
     process(): void {
-        console.log(`appRoot ${this.appRoot}`);
-        const reportService = new ReportService();
-        reportService.generate();
-        const sourceFile = ts.createSourceFile('methods.mock.ts',
-            fse.readFileSync(`${this.appRoot}/src/mocks/methods.mock.ts`, 'utf8'),
+        this.evaluateFile(`${this.appRoot}/src/mocks/methods.mock.ts`);
+        this.generateReport();
+    }
+
+
+    evaluateFile(pathFile: string) {
+        const fileName = getFileName(pathFile);
+        console.log('FILE NAME fileName ', fileName);
+        const sourceFile = ts.createSourceFile(fileName,
+            fse.readFileSync(pathFile, 'utf8'),
             ts.ScriptTarget.Latest);
-        // this.reportTemplate = Handlebars.compile(fse.readFileSync(`${this.appRoot}/src/mocks/methods.mock.ts`, 'utf8'));
-        // console.log('template ', this.reportTemplate);
-        // this.reportTemplate({score: 'zzz'});
         const walker = new Walker(sourceFile);
         walker.walk();
+    }
+
+
+
+    generateReport(): void {
+        const reportService = new ReportService();
+        reportService.generate();
     }
 
 
