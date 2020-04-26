@@ -1,32 +1,37 @@
 {
-  "name": "genese-complexity-ts",
-  "version": "0.0.1",
-  "author": {
-    "name": "Gilles Fabre",
-    "url": "https://github.com/gillesfabre34/"
-  },
-  "dependencies": {
-    "@types/node": "^13.13.2",
-    "app-root-path": "^3.0.0",
-    "eol": "^0.9.1",
-    "fs-extra": "^9.0.0",
-    "handlebars": "^4.7.6",
-    "paths": "^0.1.1"
-  },
-  "devDependencies": {
-    "ts-node": "~8.3.0",
-    "tslint": "~5.18.0",
-    "typescript": "^3.8.3"
-  },
-  "keywords": [
-    "cognitive complexity",
-    "genese",
-    "cyclomatic complexity",
-    "typescript"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/geneseframework/genese-complexity-ts"
-  }
+    "name": "genese-complexity-ts",
+    "version": "0.0.1",
+    "author": {
+        "name": "Gilles Fabre",
+        "url": "https://github.com/gillesfabre34/"
+    },
+    "scripts": {
+        "start": "tsc src/**/*.ts & tsc index.ts && node index.js"
+    },
+    "dependencies": {
+        "@types/node": "^13.13.2",
+        "app-root-path": "^3.0.0",
+        "eol": "^0.9.1",
+        "fs-extra": "^9.0.0",
+        "handlebars": "^4.7.6",
+        "node-sass": "^4.14.0",
+        "paths": "^0.1.1",
+        "sass": "^1.26.5"
+    },
+    "devDependencies": {
+        "ts-node": "~8.3.0",
+        "tslint": "~5.18.0",
+        "typescript": "^3.8.3"
+    },
+    "keywords": [
+        "cognitive complexity",
+        "genese",
+        "cyclomatic complexity",
+        "typescript"
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/geneseframework/genese-complexity-ts"
+    }
 }

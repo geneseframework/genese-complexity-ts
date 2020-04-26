@@ -5,18 +5,15 @@ var typescript_1 = require("typescript");
 var complexity_service_1 = require("./complexity.service");
 var report_service_1 = require("./report.service");
 /**
- * FileWalker of the rule
- * Browse the sourceFile and calculates cognitive complexity for each method
+ * Browse the sourceFile and calculates cognitive and cyclomatic complexities for each method
  */
-var Walker = /** @class */ (function () {
-    function Walker(sourceFile) {
+var FileWalker = /** @class */ (function () {
+    function FileWalker(sourceFile) {
         this.reportService = report_service_1.ReportService.getInstance();
         this.sourceFile = sourceFile;
     }
-    Walker.prototype.walk = function () {
+    FileWalker.prototype.walk = function () {
         var _this = this;
-        var threshold = 3;
-        // const threshold: number = this.options?. as any;
         Object.assign(this.sourceFile, { depthLevel: 1 });
         var cb = function (node) {
             var _a;
@@ -35,6 +32,6 @@ var Walker = /** @class */ (function () {
         };
         return ts.forEachChild(this.sourceFile, cb);
     };
-    return Walker;
+    return FileWalker;
 }());
-exports.Walker = Walker;
+exports.FileWalker = FileWalker;

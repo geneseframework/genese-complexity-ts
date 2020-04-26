@@ -1,54 +1,45 @@
 import * as ts from 'typescript';
-import * as fse from 'fs-extra';
-import * as Handlebars from 'handlebars';
-import { Walker } from './features/walker';
+import * as fs from 'fs-extra';
+import { FileWalker } from './features/fileWalker';
 import { ReportService } from './features/report.service';
+import { getAllFiles, getFileName } from './features/file.service';
 
 const appRootPath = require('app-root-path');
 
 export class Main {
 
     private appRoot = appRootPath.toString();                   // Root of the app
-    private reportTemplate: HandlebarsTemplateDelegate;
 
     constructor() {}
 
     process(): void {
-        console.log(`appRoot ${this.appRoot}`);
-        const reportService = new ReportService();
-        reportService.generate();
-        const sourceFile = ts.createSourceFile('methods.mock.ts',
-            fse.readFileSync(`${this.appRoot}/src/mocks/methods.mock.ts`, 'utf8'),
+        console.log('START CALCULATION');
+        this.evaluateFolder(`${this.appRoot}/src/mocks/`);
+        this.evaluateFile(`${this.appRoot}/src/mocks/first.mock.ts`);
+        this.generateReport();
+        console.log('REPORT GENERATED SUCCESSFULLY');
+    }
+
+
+    evaluateFolder(path: string): void {
+        const allFiles: string[] = getAllFiles(path);
+        console.log('ALL FILES', allFiles)
+    }
+
+
+
+    evaluateFile(pathFile: string): void {
+        const fileName = getFileName(pathFile);
+        const sourceFile = ts.createSourceFile(fileName,
+            fs.readFileSync(pathFile, 'utf8'),
             ts.ScriptTarget.Latest);
-        // this.reportTemplate = Handlebars.compile(fse.readFileSync(`${this.appRoot}/src/mocks/methods.mock.ts`, 'utf8'));
-        // console.log('template ', this.reportTemplate);
-        // this.reportTemplate({score: 'zzz'});
-        const walker = new Walker(sourceFile);
+        const walker = new FileWalker(sourceFile);
         walker.walk();
     }
 
 
-    processFolder(): Main {
-        return this;
+    generateReport(): void {
+        const reportService = ReportService.getInstance();
+        reportService.generate();
     }
-
-
-    processFiles(): Main {
-        return this;
-    }
-
-
-    processFile(): void {
-    }
-
-
-    processMethods(): Main {
-        return this;
-    }
-
-
-    processMethod(): void {
-
-    }
-
 }

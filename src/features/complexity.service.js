@@ -1,6 +1,52 @@
 "use strict";
 exports.__esModule = true;
 var ts = require("typescript");
+var utils = require("tsutils");
+/**
+ * Calculates the cognitive complexity of a method
+ * @param ctx: ts.Node
+ */
+function calculateCognitiveComplexityOfMethod(ctx) {
+    var complexity = 1;
+    var depthLevel = 0;
+    ts.forEachChild(ctx, function cb(node) {
+        if (utils.isFunctionWithBody(node)) {
+            depthLevel++;
+            complexity += depthLevel;
+            ts.forEachChild(node, cb);
+        }
+        else {
+            if (increasesComplexity(node)) {
+                depthLevel++;
+                complexity += depthLevel;
+            }
+            ts.forEachChild(node, cb);
+        }
+    });
+    return complexity;
+}
+exports.calculateCognitiveComplexityOfMethod = calculateCognitiveComplexityOfMethod;
+/**
+ * Calculates the cyclomatic complexity of a method
+ * @param ctx: ts.Node
+ */
+function calculateCyclomaticComplexityOfMethod(ctx) {
+    var totalComplexity = 1;
+    ts.forEachChild(ctx, function cb(node) {
+        if (utils.isFunctionWithBody(node)) {
+            totalComplexity += 1;
+            ts.forEachChild(node, cb);
+        }
+        else {
+            if (increasesComplexity(node)) {
+                totalComplexity += 1;
+            }
+            ts.forEachChild(node, cb);
+        }
+    });
+    return totalComplexity;
+}
+exports.calculateCyclomaticComplexityOfMethod = calculateCyclomaticComplexityOfMethod;
 function increasesComplexity(node) {
     switch (node.kind) {
         case ts.SyntaxKind.CaseClause:
