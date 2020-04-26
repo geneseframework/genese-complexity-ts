@@ -1,4 +1,4 @@
-class MethodsMock {
+class FirstMock {
 
 	constructor() {
 	}

@@ -4,9 +4,6 @@ var fs = require("fs-extra");
 var eol = require("eol");
 var Handlebars = require("handlebars");
 var appRootPath = require('app-root-path');
-/**
- * Main generator class
- */
 var ReportService = /** @class */ (function () {
     function ReportService() {
         this.appRoot = appRootPath.toString(); // Root of the app

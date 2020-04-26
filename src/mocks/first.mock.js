@@ -1,7 +1,7 @@
-var MethodsMock = /** @class */ (function () {
-    function MethodsMock() {
+var FirstMock = /** @class */ (function () {
+    function FirstMock() {
     }
-    MethodsMock.prototype.sumOfPrimes = function (max) {
+    FirstMock.prototype.sumOfPrimes = function (max) {
         var total = 0;
         for (var i = 1; i < max; ++i) {
             for (var j = 2; j < i; ++j) {
@@ -13,7 +13,7 @@ var MethodsMock = /** @class */ (function () {
         }
         return total;
     };
-    MethodsMock.prototype.getWords = function (numberOfWords) {
+    FirstMock.prototype.getWords = function (numberOfWords) {
         switch (numberOfWords) {
             case 1:
                 return "one";
@@ -23,5 +23,5 @@ var MethodsMock = /** @class */ (function () {
                 return "lots";
         }
     };
-    return MethodsMock;
+    return FirstMock;
 }());

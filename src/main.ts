@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
-import * as fse from 'fs-extra';
+import * as fs from 'fs-extra';
 import { FileWalker } from './features/fileWalker';
 import { ReportService } from './features/report.service';
-import { getFileName } from './features/file.service';
+import { getAllFiles, getFileName } from './features/file.service';
 
 const appRootPath = require('app-root-path');
 
@@ -14,16 +14,24 @@ export class Main {
 
     process(): void {
         console.log('START CALCULATION');
-        this.evaluateFile(`${this.appRoot}/src/mocks/methods.mock.ts`);
+        this.evaluateFolder(`${this.appRoot}/src/mocks/`);
+        this.evaluateFile(`${this.appRoot}/src/mocks/first.mock.ts`);
         this.generateReport();
         console.log('REPORT GENERATED SUCCESSFULLY');
     }
 
 
-    evaluateFile(pathFile: string) {
+    evaluateFolder(path: string): void {
+        const allFiles: string[] = getAllFiles(path);
+        console.log('ALL FILES', allFiles)
+    }
+
+
+
+    evaluateFile(pathFile: string): void {
         const fileName = getFileName(pathFile);
         const sourceFile = ts.createSourceFile(fileName,
-            fse.readFileSync(pathFile, 'utf8'),
+            fs.readFileSync(pathFile, 'utf8'),
             ts.ScriptTarget.Latest);
         const walker = new FileWalker(sourceFile);
         walker.walk();
