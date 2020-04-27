@@ -6,7 +6,7 @@ import * as utils from 'tsutils';
  * @param ctx: ts.Node
  */
 export function calculateCognitiveComplexityOfMethod(ctx): number {
-    let complexity = 1;
+    let complexity = 0;
     let depthLevel = 0;
     ts.forEachChild(ctx, function cb(node) {
         if (utils.isFunctionWithBody(node)) {
@@ -14,7 +14,7 @@ export function calculateCognitiveComplexityOfMethod(ctx): number {
             complexity += depthLevel;
             ts.forEachChild(node, cb);
         } else {
-            if (increasesComplexity(node)) {
+            if (increasesComplexity(node, 'cognitive')) {
                 depthLevel ++;
                 complexity += depthLevel;
             }
@@ -37,7 +37,7 @@ export function calculateCyclomaticComplexityOfMethod(ctx): number {
             totalComplexity += 1;
             ts.forEachChild(node, cb);
         } else {
-            if (increasesComplexity(node)) {
+            if (increasesComplexity(node, 'cyclomatic')) {
                 totalComplexity += 1;
             }
             ts.forEachChild(node, cb);
@@ -47,10 +47,12 @@ export function calculateCyclomaticComplexityOfMethod(ctx): number {
 }
 
 
-export function increasesComplexity(node) {
+export function increasesComplexity(node, method : 'cognitive' | 'cyclomatic') {
     switch (node.kind) {
         case ts.SyntaxKind.CaseClause:
             return (node).statements.length > 0;
+        case ts.SyntaxKind.QuestionDotToken:
+            return method === 'cyclomatic';
         case ts.SyntaxKind.CatchClause:
         case ts.SyntaxKind.ConditionalExpression:
         case ts.SyntaxKind.DoStatement:
@@ -64,6 +66,7 @@ export function increasesComplexity(node) {
             switch ((node).operatorToken.kind) {
                 case ts.SyntaxKind.BarBarToken:
                 case ts.SyntaxKind.AmpersandAmpersandToken:
+                    ts.getPre
                     return true;
                 default:
                     return false;

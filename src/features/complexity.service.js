@@ -7,7 +7,7 @@ var utils = require("tsutils");
  * @param ctx: ts.Node
  */
 function calculateCognitiveComplexityOfMethod(ctx) {
-    var complexity = 1;
+    var complexity = 0;
     var depthLevel = 0;
     ts.forEachChild(ctx, function cb(node) {
         if (utils.isFunctionWithBody(node)) {
@@ -16,7 +16,7 @@ function calculateCognitiveComplexityOfMethod(ctx) {
             ts.forEachChild(node, cb);
         }
         else {
-            if (increasesComplexity(node)) {
+            if (increasesComplexity(node, 'cognitive')) {
                 depthLevel++;
                 complexity += depthLevel;
             }
@@ -38,7 +38,7 @@ function calculateCyclomaticComplexityOfMethod(ctx) {
             ts.forEachChild(node, cb);
         }
         else {
-            if (increasesComplexity(node)) {
+            if (increasesComplexity(node, 'cyclomatic')) {
                 totalComplexity += 1;
             }
             ts.forEachChild(node, cb);
@@ -47,10 +47,12 @@ function calculateCyclomaticComplexityOfMethod(ctx) {
     return totalComplexity;
 }
 exports.calculateCyclomaticComplexityOfMethod = calculateCyclomaticComplexityOfMethod;
-function increasesComplexity(node) {
+function increasesComplexity(node, method) {
     switch (node.kind) {
         case ts.SyntaxKind.CaseClause:
             return (node).statements.length > 0;
+        case ts.SyntaxKind.QuestionDotToken:
+            return method === 'cyclomatic';
         case ts.SyntaxKind.CatchClause:
         case ts.SyntaxKind.ConditionalExpression:
         case ts.SyntaxKind.DoStatement:

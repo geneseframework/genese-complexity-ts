@@ -27,8 +27,6 @@ var Main = /** @class */ (function () {
     };
     Main.prototype.evaluateFile = function (pathFile) {
         var fileName = file_service_1.getFilename(pathFile);
-        console.log('filename', fileName);
-        console.log('pathFile', pathFile);
         var sourceFile = ts.createSourceFile(fileName, fs.readFileSync(pathFile, 'utf8'), ts.ScriptTarget.Latest);
         var walker = new fileWalker_1.FileWalker(sourceFile);
         walker.walk();
