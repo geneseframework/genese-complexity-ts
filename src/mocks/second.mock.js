@@ -10,7 +10,7 @@
  * copying, modification, translation, disclosure or performance by any means whatsoever shall constitute
  * an infringement punishable by criminal or civil law and, more generally, a breach of Naval Group SA’s rights.
  */
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var SecondMock = /** @class */ (function () {
     function SecondMock() {
     }

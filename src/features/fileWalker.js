@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var typescript_1 = require("typescript");
 var complexity_service_1 = require("./complexity.service");
