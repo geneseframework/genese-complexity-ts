@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs-extra");
 var eol = require("eol");
 var Handlebars = require("handlebars");

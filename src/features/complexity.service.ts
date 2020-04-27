@@ -66,7 +66,6 @@ export function increasesComplexity(node, method : 'cognitive' | 'cyclomatic') {
             switch ((node).operatorToken.kind) {
                 case ts.SyntaxKind.BarBarToken:
                 case ts.SyntaxKind.AmpersandAmpersandToken:
-                    ts.getPre
                     return true;
                 default:
                     return false;

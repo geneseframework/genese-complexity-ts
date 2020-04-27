@@ -6,7 +6,7 @@
         "url": "https://github.com/gillesfabre34/"
     },
     "scripts": {
-        "start": "tsc src/**/*.ts & tsc index.ts && node index.js"
+        "start": "tsc -t es5 src/**/*.ts & tsc index.ts && node index.js"
     },
     "dependencies": {
         "@types/node": "^13.13.2",
