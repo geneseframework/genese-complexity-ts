@@ -2,12 +2,12 @@
 exports.__esModule = true;
 var fs = require("fs-extra");
 var path = require("path");
-function getFileName(filePath) {
+function getFilename(filePath) {
     if (filePath === void 0) { filePath = ''; }
     var splittedPath = filePath.split('/');
     return splittedPath[splittedPath.length - 1];
 }
-exports.getFileName = getFileName;
+exports.getFilename = getFilename;
 function getAllFiles(dirPath, arrayOfFiles) {
     var files = fs.readdirSync(dirPath);
     arrayOfFiles = arrayOfFiles || [];
@@ -16,9 +16,17 @@ function getAllFiles(dirPath, arrayOfFiles) {
             arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles);
         }
         else {
-            arrayOfFiles.push(path.join(__dirname, dirPath, "/", file));
+            arrayOfFiles.push(dirPath + "/" + file);
         }
     });
     return arrayOfFiles;
 }
 exports.getAllFiles = getAllFiles;
+function getTsFiles(dirPath) {
+    return getAllFiles(dirPath).filter(function (e) { return getExtension(e) === 'ts'; });
+}
+exports.getTsFiles = getTsFiles;
+function getExtension(filename) {
+    return filename.split('.').pop();
+}
+exports.getExtension = getExtension;
