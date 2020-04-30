@@ -1,7 +1,9 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var FirstMock = /** @class */ (function () {
     function FirstMock() {
     }
-    FirstMock.prototype.forforfor = function (max) {
+    FirstMock.prototype.forForFor = function (max) {
         var total = 0;
         for (var i = 1; i < max; ++i) {
             for (var j = 2; j < i; ++j) {
@@ -11,9 +13,9 @@ var FirstMock = /** @class */ (function () {
             }
             total += i;
         }
-        return total;
+        return { cyclomaticValue: 4, cognitiveValue: 6 };
     };
-    FirstMock.prototype.ififif = function (data) {
+    FirstMock.prototype.ifIfIf = function (data) {
         if (data > 2) {
             if (data > 3) {
                 if (data > 4) {
@@ -21,8 +23,9 @@ var FirstMock = /** @class */ (function () {
                 }
             }
         }
+        return { cyclomaticValue: 4, cognitiveValue: 6 };
     };
-    FirstMock.prototype.ifififelse = function (data) {
+    FirstMock.prototype.ifIfIfElse = function (data) {
         if (data > 2) {
             if (data > 3) {
                 if (data > 4) {
@@ -33,6 +36,7 @@ var FirstMock = /** @class */ (function () {
                 }
             }
         }
+        return { cyclomaticValue: 4, cognitiveValue: 6 };
     };
     FirstMock.prototype.ifAnd = function (a, b) {
         if (a && b) {
