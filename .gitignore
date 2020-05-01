@@ -5,7 +5,9 @@
 /tmp
 /out-tsc
 
-# Tests
+# js
+/src/**/*.js
+/src/**/*.js.map
 
 # Only exists if Bazel was run
 /bazel-out

@@ -26,6 +26,22 @@ var CymsMock = /** @class */ (function () {
         return Object(acc[curr]) === acc[curr] ? acc[curr] : (acc[curr] = isNaN(+path[index + 1]) ? {} : []);
     };
     /**
+     * Keep the incidents count up to date
+     * And set the top buttons labels
+     * @returns {void}
+     */
+    CymsMock.prototype.setCountByStatusText = function () {
+        var _a;
+        var _b = this.incidentsListService.filters, capacity = _b.target_capacity, highCapacity = _b.target_high_capacity;
+        // const CAPACITY = capacity
+        //     ? this.capacityService.getCapacityConfig(highCapacity, capacity)
+        //     : this.capacityService.getHighCapacityConfig(highCapacity);
+        for (var _i = 0, _c = this.incidentsListService || []; _i < _c.length; _i++) {
+            var tb = _c[_i];
+            tb.text = (((_a = this.CAPACITY) === null || _a === void 0 ? void 0 : _a.label) || this.LABELS.ALL) + " - " + this.LABELS[tb.status] + " (" + this.countByStatus[tb.status] + ")";
+        }
+    };
+    /**
      * Get an item from local storage
      * @param key the ke yof the item
      * @param parse boolean to know if we parse the item or not

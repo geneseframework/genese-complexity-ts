@@ -1,6 +1,13 @@
 
 export class CymsMock {
 
+    capacityService: any;
+    incidentsListService: any;
+    CAPACITY: any;
+    LABELS: any;
+    countByStatus: any;
+
+
     constructor() {}
 
     /**
@@ -23,6 +30,20 @@ export class CymsMock {
 
     reducer(acc: Object, curr: any, index: number, path: number) {
         return Object(acc[curr]) === acc[curr] ? acc[curr] : (acc[curr] = isNaN(+path[index + 1]) ? {} : []);
+    }
+    /**
+     * Keep the incidents count up to date
+     * And set the top buttons labels
+     * @returns {void}
+     */
+    setCountByStatusText(): void {
+        const { target_capacity: capacity, target_high_capacity: highCapacity } = this.incidentsListService.filters;
+        // const CAPACITY = capacity
+        //     ? this.capacityService.getCapacityConfig(highCapacity, capacity)
+        //     : this.capacityService.getHighCapacityConfig(highCapacity);
+        for (const tb of this.incidentsListService || []) {
+            tb.text = `${this.CAPACITY?.label || this.LABELS.ALL} - ${this.LABELS[tb.status]} (${this.countByStatus[tb.status]})`;
+        }
     }
 
     /**
