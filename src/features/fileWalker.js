@@ -14,12 +14,11 @@ var FileWalker = /** @class */ (function () {
     }
     FileWalker.prototype.walk = function () {
         var _this = this;
-        Object.assign(this.sourceFile, { depthLevel: 1 });
         var cb = function (node) {
             var _a;
             if (node.kind === typescript_1.SyntaxKind.MethodDeclaration) {
-                var cognitiveValue = complexity_service_1.calculateCognitiveComplexityOfMethod(node);
-                var cyclomaticValue = complexity_service_1.calculateCyclomaticComplexityOfMethod(node);
+                var cognitiveValue = complexity_service_1.getMethodCognitiveComplexity(node);
+                var cyclomaticValue = complexity_service_1.getMethodCyclomaticComplexity(node);
                 var evaluation = {
                     filename: _this.sourceFile.fileName,
                     methodName: (_a = node === null || node === void 0 ? void 0 : node['name']) === null || _a === void 0 ? void 0 : _a['escapedText'],

@@ -4,12 +4,12 @@ var ts = require("typescript");
 var utils = require("tsutils");
 /**
  * Calculates the cognitive complexity of a method
- * @param ctx: ts.Node
+ * @param method: ts.Node
  */
-function calculateCognitiveComplexityOfMethod(ctx) {
+function getMethodCognitiveComplexity(method) {
     var complexity = 0;
     var depthLevel = 0;
-    ts.forEachChild(ctx, function cb(node) {
+    ts.forEachChild(method, function cb(node) {
         if (utils.isFunctionWithBody(node)) {
             depthLevel++;
             complexity += depthLevel;
@@ -25,14 +25,14 @@ function calculateCognitiveComplexityOfMethod(ctx) {
     });
     return complexity;
 }
-exports.calculateCognitiveComplexityOfMethod = calculateCognitiveComplexityOfMethod;
+exports.getMethodCognitiveComplexity = getMethodCognitiveComplexity;
 /**
  * Calculates the cyclomatic complexity of a method
- * @param ctx: ts.Node
+ * @param node: ts.Node
  */
-function calculateCyclomaticComplexityOfMethod(ctx) {
+function getMethodCyclomaticComplexity(node) {
     var totalComplexity = 1;
-    ts.forEachChild(ctx, function cb(node) {
+    ts.forEachChild(node, function cb(node) {
         if (utils.isFunctionWithBody(node)) {
             totalComplexity += 1;
             ts.forEachChild(node, cb);
@@ -46,7 +46,7 @@ function calculateCyclomaticComplexityOfMethod(ctx) {
     });
     return totalComplexity;
 }
-exports.calculateCyclomaticComplexityOfMethod = calculateCyclomaticComplexityOfMethod;
+exports.getMethodCyclomaticComplexity = getMethodCyclomaticComplexity;
 function increasesComplexity(node, method) {
     switch (node.kind) {
         case ts.SyntaxKind.CaseClause:

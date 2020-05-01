@@ -1,13 +1,19 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
+var ts = require("typescript");
 var fs = require("fs-extra");
-var path = require("path");
+var ts_folder_1 = require("../models/ts-folder");
+var ts_file_1 = require("../models/ts-file");
 function getFilename(filePath) {
     if (filePath === void 0) { filePath = ''; }
     var splittedPath = filePath.split('/');
     return splittedPath[splittedPath.length - 1];
 }
 exports.getFilename = getFilename;
+function getSourceFile(path) {
+    return ts.createSourceFile(getFilename(path), fs.readFileSync(path, 'utf-8'), ts.ScriptTarget.Latest);
+}
+exports.getSourceFile = getSourceFile;
 function getAllFiles(dirPath, arrayOfFiles) {
     var files = fs.readdirSync(dirPath);
     arrayOfFiles = arrayOfFiles || [];
@@ -22,10 +28,42 @@ function getAllFiles(dirPath, arrayOfFiles) {
     return arrayOfFiles;
 }
 exports.getAllFiles = getAllFiles;
-function getTsFiles(dirPath) {
+function createTsFolder(path, extension, folder) {
+    if (folder === void 0) { folder = new ts_folder_1.TsFolder(); }
+    var tsFolder = new ts_folder_1.TsFolder();
+    tsFolder.path = path;
+    var filesOrDirs = fs.readdirSync(path);
+    filesOrDirs.forEach(function (elementName) {
+        var pathElement = path + elementName;
+        if (fs.statSync(pathElement).isDirectory()) {
+            var subFolder = new ts_folder_1.TsFolder();
+            subFolder = createTsFolder(pathElement + "/", extension, subFolder);
+            subFolder.parent = folder;
+            subFolder.path = pathElement;
+            tsFolder.subFolders.push(subFolder);
+        }
+        else {
+            if (!extension || extension === getExtension(pathElement)) {
+                tsFolder.tsFiles.push(createTsFile(pathElement, folder));
+            }
+        }
+    });
+    return tsFolder;
+}
+exports.createTsFolder = createTsFolder;
+function createTsFile(path, tsFolder) {
+    if (tsFolder === void 0) { tsFolder = new ts_folder_1.TsFolder(); }
+    var tsFile = new ts_file_1.TsFile();
+    tsFile.sourceFile = getSourceFile(path);
+    tsFile.tsFolder = tsFolder;
+    tsFile.setName();
+    return tsFile;
+}
+exports.createTsFile = createTsFile;
+function getTypescriptFiles(dirPath) {
     return getAllFiles(dirPath).filter(function (e) { return getExtension(e) === 'ts'; });
 }
-exports.getTsFiles = getTsFiles;
+exports.getTypescriptFiles = getTypescriptFiles;
 function getExtension(filename) {
     return filename.split('.').pop();
 }

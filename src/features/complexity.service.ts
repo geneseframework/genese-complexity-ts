@@ -3,12 +3,12 @@ import * as utils from 'tsutils';
 
 /**
  * Calculates the cognitive complexity of a method
- * @param ctx: ts.Node
+ * @param method: ts.Node
  */
-export function calculateCognitiveComplexityOfMethod(ctx): number {
+export function getMethodCognitiveComplexity(method: ts.Node): number {
     let complexity = 0;
     let depthLevel = 0;
-    ts.forEachChild(ctx, function cb(node) {
+    ts.forEachChild(method, function cb(node) {
         if (utils.isFunctionWithBody(node)) {
             depthLevel ++;
             complexity += depthLevel;
@@ -28,11 +28,11 @@ export function calculateCognitiveComplexityOfMethod(ctx): number {
 
 /**
  * Calculates the cyclomatic complexity of a method
- * @param ctx: ts.Node
+ * @param node: ts.Node
  */
-export function calculateCyclomaticComplexityOfMethod(ctx): number {
+export function getMethodCyclomaticComplexity(node: ts.Node): number {
     let totalComplexity = 1;
-    ts.forEachChild(ctx, function cb(node) {
+    ts.forEachChild(node, function cb(node) {
         if (utils.isFunctionWithBody(node)) {
             totalComplexity += 1;
             ts.forEachChild(node, cb);

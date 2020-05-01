@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import { SyntaxKind } from 'typescript';
-import { calculateCognitiveComplexityOfMethod, calculateCyclomaticComplexityOfMethod } from './complexity.service';
+import { getMethodCognitiveComplexity, getMethodCyclomaticComplexity } from './complexity.service';
 import { ReportService } from './report.service';
 import { Evaluation } from '../models/evaluation';
 
@@ -18,11 +18,10 @@ export class FileWalker  {
     }
 
     public walk(): void {
-        Object.assign(this.sourceFile, {depthLevel: 1});
         const cb = (node: ts.Node): void => {
             if (node.kind === SyntaxKind.MethodDeclaration) {
-                const cognitiveValue = calculateCognitiveComplexityOfMethod(node);
-                const cyclomaticValue = calculateCyclomaticComplexityOfMethod(node);
+                const cognitiveValue = getMethodCognitiveComplexity(node);
+                const cyclomaticValue = getMethodCyclomaticComplexity(node);
                 const evaluation: Evaluation = {
                     filename: this.sourceFile.fileName,
                     methodName: node?.['name']?.['escapedText'],
