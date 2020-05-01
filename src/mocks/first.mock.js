@@ -42,31 +42,44 @@ var FirstMock = /** @class */ (function () {
         if (a && b) {
             console.log(a);
         }
+        return { cyclomaticValue: 3, cognitiveValue: 2 };
     };
     FirstMock.prototype.ifOr = function (a, b) {
         if (a || b) {
             console.log(a);
         }
+        return { cyclomaticValue: 3, cognitiveValue: 2 };
     };
     FirstMock.prototype.ifAndAnd = function (a, b, c) {
         if (a && b && c) {
             console.log(a);
         }
+        return { cyclomaticValue: 4, cognitiveValue: 2 };
     };
     FirstMock.prototype.ifAndOr = function (a, b, c) {
         if (a && b || c) {
             console.log(a);
         }
+        return { cyclomaticValue: 4, cognitiveValue: 3 };
+    };
+    FirstMock.prototype.ifAndAndOrAnd = function (a, b, c, d, e, f) {
+        if (a && b && c || d && e && f) {
+            console.log(a);
+        }
+        return { cyclomaticValue: 7, cognitiveValue: 4 };
     };
     FirstMock.prototype.switches = function (numberOfWords) {
         switch (numberOfWords) {
             case 1:
-                return "one";
+                console.log("one");
+                break;
             case 2:
-                return "a couple";
+                console.log("a couple");
+                break;
             default:
-                return "lots";
+                console.log("lots");
         }
+        return { cyclomaticValue: 4, cognitiveValue: 6 };
     };
     return FirstMock;
 }());
