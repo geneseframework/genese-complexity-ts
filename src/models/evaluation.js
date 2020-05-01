@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var Evaluation = /** @class */ (function () {
     function Evaluation() {
         this.cognitiveValue = 0;

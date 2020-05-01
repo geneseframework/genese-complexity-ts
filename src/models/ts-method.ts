@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import * as utils from 'tsutils';
-import { increasesComplexity } from '../features/complexity.service';
+import { increasesComplexity } from '../services/complexity.service';
 import { TsFile } from './ts-file';
 import { TsTree } from './ts-tree.model';
 
@@ -15,7 +15,7 @@ export class TsMethod {
 
     constructor(node: ts.Node) {
         this.node = node;
-        this.calculateCognitiveComplexity(node);
+        // this.calculateCognitiveComplexity(node);
     }
 
 

@@ -1,11 +1,12 @@
 import * as ts from 'typescript';
 import * as fs from 'fs-extra';
-import { FileWalker } from './features/fileWalker';
-import { ReportService } from './features/report.service';
-import { getFilename, getSourceFile, createTsFolder, getTypescriptFiles } from './features/file.service';
-import { Ast } from './features/ast.service';
+import { FileWalker } from './services/fileWalker';
+import { ReportService } from './services/report.service';
+import { getFilename, getSourceFile, getTypescriptFiles } from './services/file.service';
+import { Ast } from './services/ast.service';
 import { TsFolder } from './models/ts-folder';
 import { TsTree } from './models/ts-tree.model';
+import { TsFolderService } from './services/ts-folder.service';
 
 
 export class Process {
@@ -23,6 +24,7 @@ export class Process {
         console.log('START CALCULATION');
         // this.getTree()
         this.setTsFolder()
+            .addTsMethods()
             .generateReport();
         console.log('REPORT GENERATED SUCCESSFULLY');
     }
@@ -37,8 +39,13 @@ export class Process {
 
 
     setTsFolder(): Process {
-        this.tsFolder = createTsFolder(this.path, 'ts');
+        this.tsFolder = TsFolderService.generate(this.path, 'ts');
         console.log('TS FOLDER ', this.tsFolder);
+        return this;
+    }
+
+
+    addTsMethods(): Process {
         return this;
     }
 
@@ -51,7 +58,6 @@ export class Process {
         }
         return this;
     }
-
 
 
     evaluateFile(pathFile: string): void {
