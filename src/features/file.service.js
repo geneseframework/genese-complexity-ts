@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var ts = require("typescript");
 var fs = require("fs-extra");
 var ts_folder_1 = require("../models/ts-folder");
@@ -11,7 +11,6 @@ function getFilename(filePath) {
 }
 exports.getFilename = getFilename;
 function getSourceFile(path) {
-    console.log('GET SOURCE FILE filename', getFilename(path));
     return ts.createSourceFile(getFilename(path), fs.readFileSync(path, 'utf-8'), ts.ScriptTarget.Latest);
 }
 exports.getSourceFile = getSourceFile;
@@ -32,17 +31,16 @@ exports.getAllFiles = getAllFiles;
 function createTsFolder(path, extension, folder) {
     if (folder === void 0) { folder = new ts_folder_1.TsFolder(); }
     var tsFolder = new ts_folder_1.TsFolder();
+    tsFolder.path = path;
     var filesOrDirs = fs.readdirSync(path);
-    console.log('FILE OR DIRS', filesOrDirs);
     filesOrDirs.forEach(function (elementName) {
         var pathElement = path + elementName;
-        console.log('FILE OR DIRS pathElement', pathElement);
         if (fs.statSync(pathElement).isDirectory()) {
             var subFolder = new ts_folder_1.TsFolder();
+            subFolder = createTsFolder(pathElement + "/", extension, subFolder);
             subFolder.parent = folder;
             subFolder.path = pathElement;
             tsFolder.subFolders.push(subFolder);
-            createTsFolder(pathElement + "/", extension, subFolder);
         }
         else {
             if (!extension || extension === getExtension(pathElement)) {
