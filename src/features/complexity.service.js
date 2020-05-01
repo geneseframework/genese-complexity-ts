@@ -4,12 +4,12 @@ var ts = require("typescript");
 var utils = require("tsutils");
 /**
  * Calculates the cognitive complexity of a method
- * @param node: ts.Node
+ * @param method: ts.Node
  */
-function getMethodCognitiveComplexity(node) {
+function getMethodCognitiveComplexity(method) {
     var complexity = 0;
     var depthLevel = 0;
-    ts.forEachChild(node, function cb(node) {
+    ts.forEachChild(method, function cb(node) {
         if (utils.isFunctionWithBody(node)) {
             depthLevel++;
             complexity += depthLevel;

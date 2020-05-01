@@ -2,37 +2,49 @@ import * as ts from 'typescript';
 import * as fs from 'fs-extra';
 import { FileWalker } from './features/fileWalker';
 import { ReportService } from './features/report.service';
-import { getFilename, getSourceFile, getTsFiles } from './features/file.service';
+import { getFilename, getSourceFile, getSubFolders, getTypescriptFiles } from './features/file.service';
 import { Ast } from './features/ast.service';
 import { TsFolder } from './models/ts-folder';
+import { TsTree } from './models/ts-tree.model';
 
-const appRootPath = require('app-root-path');
 
-export class Main {
+export class Process {
 
-    private appRoot = appRootPath.toString();                   // Root of the app
+    private readonly path: string;
+    private tree: TsTree = new TsTree();
     private tsFolder?: TsFolder = new TsFolder();
 
-    constructor() {}
+    constructor(path: string) {
+        this.path = path;
+        console.log('PATH this.path', this.path);
+    }
 
-    process(): void {
+    start(): void {
         console.log('START CALCULATION');
-        this.getTree()
-            .evaluateFolder(`${this.appRoot}/src/mocks/`)
+        // this.getTree()
+        this.setTsFolder()
             .generateReport();
         console.log('REPORT GENERATED SUCCESSFULLY');
     }
 
-    getTree(): Main {
-        const sourceFile = getSourceFile(`${this.appRoot}/src/mocks/ast.mock.ts`);
-        const tree = Ast.getTree(sourceFile);
-        console.log('TREE 0 = ', tree.children[0]);
+    getTree(): Process {
+        console.log('PATH this.path', this.path);
+        const sourceFile = getSourceFile(this.path);
+        this.tree = Ast.getTree(sourceFile);
+        console.log('TREE 0 = ', this.tree.children[0]);
         return this;
     }
 
 
-    evaluateFolder(dirPath: string): Main {
-        const tsFiles: string[] = getTsFiles(dirPath);
+    setTsFolder(): Process {
+        this.tsFolder.subFolders = getSubFolders(this.path);
+        console.log('TS FOLDER ', this.tsFolder);
+        return this;
+    }
+
+
+    evaluateFolder(dirPath: string): Process {
+        const tsFiles: string[] = getTypescriptFiles(dirPath);
         console.log('TS FILES', tsFiles);
         for (const file of tsFiles) {
             this.evaluateFile(file);

@@ -19,7 +19,7 @@ export class TsMethod {
     }
 
 
-    get cognitiveComplexity() {
+    getCognitiveComplexity() {
         return this._cognitiveComplexity;
     }
 
