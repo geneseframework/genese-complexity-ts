@@ -26,7 +26,7 @@ export function getAllFiles(dirPath: string, arrayOfFiles?: string[]): string[] 
 }
 
 
-export function getTypescriptFiles(dirPath: string) {
+export function getTypescriptFiles(dirPath: string): string[] {
     return getAllFiles(dirPath).filter(e => getExtension(e) === 'ts');
 }
 

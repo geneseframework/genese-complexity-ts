@@ -42,7 +42,7 @@ var Main = /** @class */ (function () {
     Main.prototype.evaluateFile = function (pathFile) {
         var fileName = file_service_1.getFilename(pathFile);
         var sourceFile = ts.createSourceFile(fileName, fs.readFileSync(pathFile, 'utf8'), ts.ScriptTarget.Latest);
-        var walker = new fileWalker_1.FileWalker(sourceFile);
+        var walker = new fileWalker_1.FileWalkerService(sourceFile);
         walker.walk();
     };
     Main.prototype.generateReport = function () {

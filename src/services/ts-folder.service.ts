@@ -16,7 +16,7 @@ export class TsFolderService {
             const pathElement = path + elementName;
             if (fs.statSync(pathElement).isDirectory()) {
                 // let subFolder = new TsFolder();
-                // subFolder = TsFolderService.generate(`${pathElement}/`, extension, subFolder);
+                // subFolder = TsFolderService.generateReport(`${pathElement}/`, extension, subFolder);
                 // subFolder.parent = folder;
                 // subFolder.path = pathElement;
                 // tsFolder.subFolders.push(subFolder);
