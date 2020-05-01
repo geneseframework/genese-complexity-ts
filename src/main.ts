@@ -24,7 +24,15 @@ export class Main {
 
     parseNodes(): void {
         const sourceFile = getSourceFile(`${this.appRoot}/src/mocks/ast.mock.ts`)
-        Ast.getChildNodes(sourceFile);
+        const nodes = Ast.parseChildNodes(sourceFile, (childNode) => {
+            const name = Ast.getSyntaxKindName(childNode);
+            console.log('CHILD KIND ', childNode.kind, ' / ', name);
+        });
+        console.log('PARSE NODES LENGTH', nodes.length);
+        const children = sourceFile.getChildren();
+        console.log('PARSE NODES children LENGTH', children.length);
+        const childrenCount = sourceFile.getChildCount();
+        console.log('PARSE NODES childrenCount', childrenCount);
     }
 
 
