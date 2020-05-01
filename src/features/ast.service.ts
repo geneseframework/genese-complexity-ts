@@ -3,8 +3,6 @@ import { TsTree } from '../models/ts-tree.model';
 
 export class Ast {
 
-    private _tree: TsTree = new TsTree();
-
     static getTree(node: ts.Node, tree?: TsTree): TsTree {
         const newTree = tree ?? new TsTree()
         newTree.syntaxKindName = Ast.getSyntaxKindName(node);
@@ -20,19 +18,17 @@ export class Ast {
 
 
     static parseChildNodes(node: ts.Node, action?: (node: ts.Node) => any): TsTree {
-        const nodes: ts.Node[] = [];
-        // console.log('PARENT NODE', node.parent);
+        const tree = new TsTree();
+        tree.syntaxKindName = Ast.getSyntaxKindName(node);
         ts.forEachChild(node, (childNode: ts.Node) => {
             if (action) {
                 action(childNode);
             }
             childNode.parent = node;
-            nodes.push(childNode);
-            this.parseChildNodes(childNode, action);
+            const childTree: TsTree = this.parseChildNodes(childNode, action);
+            tree.children.push(childTree);
         });
-        const tree = new TsTree();
-        tree.syntaxKindName = Ast.getSyntaxKindName(node);
-        tree.childNodes = nodes;
+        tree.node = node;
         return tree;
     }
 

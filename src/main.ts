@@ -29,13 +29,9 @@ export class Main {
         // console.log('TREE PN ', tree);
         // tree.node = sourceFile;
         // console.log('TREE TRACE', tree.getTrace());
-        const tree = Ast.parseChildNodes(sourceFile, (childNode) => {
-            const name = Ast.getSyntaxKindName(childNode);
-            console.log('CHILD KIND ', childNode.kind, ' / ', name);
-        });
+        const tree = Ast.parseChildNodes(sourceFile);
         console.log('TREE  = ', tree);
-        // console.log('NODE length = ', nodes.length);
-        // console.log('NODE 1 = ', nodes[1]);
+        console.log('TREE 0 = ', tree.children[0]);
     }
 
 

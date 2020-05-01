@@ -25,13 +25,9 @@ var Main = /** @class */ (function () {
         // console.log('TREE PN ', tree);
         // tree.node = sourceFile;
         // console.log('TREE TRACE', tree.getTrace());
-        var tree = ast_service_1.Ast.parseChildNodes(sourceFile, function (childNode) {
-            var name = ast_service_1.Ast.getSyntaxKindName(childNode);
-            console.log('CHILD KIND ', childNode.kind, ' / ', name);
-        });
+        var tree = ast_service_1.Ast.parseChildNodes(sourceFile);
         console.log('TREE  = ', tree);
-        // console.log('NODE length = ', nodes.length);
-        // console.log('NODE 1 = ', nodes[1]);
+        console.log('TREE 0 = ', tree.children[0]);
     };
     Main.prototype.evaluateFolder = function (dirPath) {
         var tsFiles = file_service_1.getTsFiles(dirPath);
