@@ -13,21 +13,16 @@ var Main = /** @class */ (function () {
     }
     Main.prototype.process = function () {
         console.log('START CALCULATION');
-        this.parseNodes();
-        // this.evaluateFolder(`${this.appRoot}/src/mocks/`);
-        // // this.evaluateFile(`${this.appRoot}/src/mocks/first.mock.ts`);
-        // this.generateReport();
+        this.getTree()
+            .evaluateFolder(this.appRoot + "/src/mocks/")
+            .generateReport();
         console.log('REPORT GENERATED SUCCESSFULLY');
     };
-    Main.prototype.parseNodes = function () {
+    Main.prototype.getTree = function () {
         var sourceFile = file_service_1.getSourceFile(this.appRoot + "/src/mocks/ast.mock.ts");
-        // const tree = Ast.getTree(sourceFile);
-        // console.log('TREE PN ', tree);
-        // tree.node = sourceFile;
-        // console.log('TREE TRACE', tree.getTrace());
-        var tree = ast_service_1.Ast.parseChildNodes(sourceFile);
-        console.log('TREE  = ', tree);
+        var tree = ast_service_1.Ast.getTree(sourceFile);
         console.log('TREE 0 = ', tree.children[0]);
+        return this;
     };
     Main.prototype.evaluateFolder = function (dirPath) {
         var tsFiles = file_service_1.getTsFiles(dirPath);
@@ -36,6 +31,7 @@ var Main = /** @class */ (function () {
             var file = tsFiles_1[_i];
             this.evaluateFile(file);
         }
+        return this;
     };
     Main.prototype.evaluateFile = function (pathFile) {
         var fileName = file_service_1.getFilename(pathFile);

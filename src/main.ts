@@ -4,43 +4,40 @@ import { FileWalker } from './features/fileWalker';
 import { ReportService } from './features/report.service';
 import { getFilename, getSourceFile, getTsFiles } from './features/file.service';
 import { Ast } from './features/ast.service';
-import { TsTree } from './models/ts-tree.model';
+import { TsFolder } from './models/ts-folder';
 
 const appRootPath = require('app-root-path');
 
 export class Main {
 
     private appRoot = appRootPath.toString();                   // Root of the app
+    private tsFolder?: TsFolder = new TsFolder();
 
     constructor() {}
 
     process(): void {
         console.log('START CALCULATION');
-        this.parseNodes();
-        // this.evaluateFolder(`${this.appRoot}/src/mocks/`);
-        // // this.evaluateFile(`${this.appRoot}/src/mocks/first.mock.ts`);
-        // this.generateReport();
+        this.getTree()
+            .evaluateFolder(`${this.appRoot}/src/mocks/`)
+            .generateReport();
         console.log('REPORT GENERATED SUCCESSFULLY');
     }
 
-    parseNodes(): void {
+    getTree(): Main {
         const sourceFile = getSourceFile(`${this.appRoot}/src/mocks/ast.mock.ts`);
-        // const tree = Ast.getTree(sourceFile);
-        // console.log('TREE PN ', tree);
-        // tree.node = sourceFile;
-        // console.log('TREE TRACE', tree.getTrace());
-        const tree = Ast.parseChildNodes(sourceFile);
-        console.log('TREE  = ', tree);
+        const tree = Ast.getTree(sourceFile);
         console.log('TREE 0 = ', tree.children[0]);
+        return this;
     }
 
 
-    evaluateFolder(dirPath: string): void {
+    evaluateFolder(dirPath: string): Main {
         const tsFiles: string[] = getTsFiles(dirPath);
         console.log('TS FILES', tsFiles);
         for (const file of tsFiles) {
             this.evaluateFile(file);
         }
+        return this;
     }
 
 
