@@ -16,14 +16,19 @@ var SecondMock = /** @class */ (function () {
     }
     SecondMock.prototype.questionDotToken = function (time) {
         time = time === null || time === void 0 ? void 0 : time.name;
+        return { cyclomaticValue: 1, cognitiveValue: 0 };
     };
-    SecondMock.prototype.ifElse = function (data) {
-        if (data === 'a') {
-            data = 'b';
+    SecondMock.prototype.forForFor = function (max) {
+        var total = 0;
+        for (var i = 1; i < max; ++i) {
+            for (var j = 2; j < i; ++j) {
+                for (var k = 2; k < 10; ++k) {
+                    console.log("k = " + k);
+                }
+            }
+            total += i;
         }
-        else {
-            data = 'c';
-        }
+        return { cyclomaticValue: 4, cognitiveValue: 6 };
     };
     SecondMock.prototype.tryCatch = function () {
         try {
@@ -32,6 +37,7 @@ var SecondMock = /** @class */ (function () {
         catch (e) {
             console.log(e);
         }
+        return { cyclomaticValue: 2, cognitiveValue: 1 };
     };
     return SecondMock;
 }());

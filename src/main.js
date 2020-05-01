@@ -5,6 +5,7 @@ var fs = require("fs-extra");
 var fileWalker_1 = require("./features/fileWalker");
 var report_service_1 = require("./features/report.service");
 var file_service_1 = require("./features/file.service");
+var ast_service_1 = require("./features/ast.service");
 var appRootPath = require('app-root-path');
 var Main = /** @class */ (function () {
     function Main() {
@@ -12,10 +13,15 @@ var Main = /** @class */ (function () {
     }
     Main.prototype.process = function () {
         console.log('START CALCULATION');
-        this.evaluateFolder(this.appRoot + "/src/mocks/");
-        // this.evaluateFile(`${this.appRoot}/src/mocks/first.mock.ts`);
-        this.generateReport();
+        this.parseNodes();
+        // this.evaluateFolder(`${this.appRoot}/src/mocks/`);
+        // // this.evaluateFile(`${this.appRoot}/src/mocks/first.mock.ts`);
+        // this.generateReport();
         console.log('REPORT GENERATED SUCCESSFULLY');
+    };
+    Main.prototype.parseNodes = function () {
+        var sourceFile = file_service_1.getSourceFile(this.appRoot + "/src/mocks/ast.mock.ts");
+        ast_service_1.Ast.getChildNodes(sourceFile);
     };
     Main.prototype.evaluateFolder = function (dirPath) {
         var tsFiles = file_service_1.getTsFiles(dirPath);

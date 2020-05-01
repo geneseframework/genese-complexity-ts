@@ -3,40 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var FirstMock = /** @class */ (function () {
     function FirstMock() {
     }
-    FirstMock.prototype.forForFor = function (max) {
-        var total = 0;
-        for (var i = 1; i < max; ++i) {
-            for (var j = 2; j < i; ++j) {
-                for (var k = 2; k < 10; ++k) {
-                    console.log("k = " + k);
-                }
-            }
-            total += i;
+    FirstMock.prototype.ifElse = function (data) {
+        if (data === 'a') {
+            data = 'b';
         }
-        return { cyclomaticValue: 4, cognitiveValue: 6 };
-    };
-    FirstMock.prototype.ifIfIf = function (data) {
-        if (data > 2) {
-            if (data > 3) {
-                if (data > 4) {
-                    console.log('data > 4');
-                }
-            }
+        else {
+            data = 'c';
         }
-        return { cyclomaticValue: 4, cognitiveValue: 6 };
-    };
-    FirstMock.prototype.ifIfIfElse = function (data) {
-        if (data > 2) {
-            if (data > 3) {
-                if (data > 4) {
-                    console.log('data > 4');
-                }
-                else {
-                    console.log('data <= 4');
-                }
-            }
-        }
-        return { cyclomaticValue: 4, cognitiveValue: 6 };
+        return { cyclomaticValue: 2, cognitiveValue: 1 };
     };
     FirstMock.prototype.ifAnd = function (a, b) {
         if (a && b) {
@@ -62,6 +36,29 @@ var FirstMock = /** @class */ (function () {
         }
         return { cyclomaticValue: 4, cognitiveValue: 3 };
     };
+    FirstMock.prototype.ifIfIf = function (data) {
+        if (data > 2) {
+            if (data > 3) {
+                if (data > 4) {
+                    console.log('data > 4');
+                }
+            }
+        }
+        return { cyclomaticValue: 4, cognitiveValue: 6 };
+    };
+    FirstMock.prototype.ifIfIfElse = function (data) {
+        if (data > 2) {
+            if (data > 3) {
+                if (data > 4) {
+                    console.log('data > 4');
+                }
+                else {
+                    console.log('data <= 4');
+                }
+            }
+        }
+        return { cyclomaticValue: 4, cognitiveValue: 6 };
+    };
     FirstMock.prototype.ifAndAndOrAnd = function (a, b, c, d, e, f) {
         if (a && b && c || d && e && f) {
             console.log(a);
@@ -79,7 +76,7 @@ var FirstMock = /** @class */ (function () {
             default:
                 console.log("lots");
         }
-        return { cyclomaticValue: 4, cognitiveValue: 6 };
+        return { cyclomaticValue: 3, cognitiveValue: 1 };
     };
     return FirstMock;
 }());

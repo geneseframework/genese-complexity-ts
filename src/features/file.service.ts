@@ -1,4 +1,4 @@
-
+import * as ts from 'typescript';
 import * as fs from 'fs-extra';
 const path = require("path")
 
@@ -7,6 +7,10 @@ export function getFilename(filePath = ''): string {
     return splittedPath[splittedPath.length - 1];
 }
 
+export function getSourceFile(path: string): ts.SourceFile {
+    console.log('GET SOURCE FILE filename', getFilename(path));
+    return ts.createSourceFile(getFilename(path), fs.readFileSync(path, 'utf-8'), ts.ScriptTarget.Latest);
+}
 
 export function getAllFiles(dirPath: string, arrayOfFiles?: string[]): string[] {
     const files = fs.readdirSync(dirPath)

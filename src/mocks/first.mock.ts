@@ -6,44 +6,14 @@ class FirstMock {
     }
 
 
-    forForFor(max: number): Evaluation {
-        let total = 0;
-        for (let i = 1; i < max; ++i) {
-            for (let j = 2; j < i; ++j) {
-                for (let k = 2; k < 10; ++k) {
-                    console.log(`k = ${k}`);
-                }
-            }
-            total += i;
+
+    ifElse(data): Evaluation {
+        if (data === 'a') {
+            data = 'b';
+        } else {
+            data = 'c';
         }
-        return {cyclomaticValue: 4, cognitiveValue: 6};
-    }
-
-
-    ifIfIf(data: number): Evaluation {
-        if (data > 2) {
-            if (data > 3) {
-                if (data > 4) {
-                    console.log('data > 4');
-                }
-            }
-        }
-        return {cyclomaticValue: 4, cognitiveValue: 6};
-    }
-
-
-
-    ifIfIfElse(data: number): Evaluation {
-        if (data > 2) {
-            if (data > 3) {
-                if (data > 4) {
-                    console.log('data > 4');
-                } else {
-                    console.log('data <= 4');
-                }
-            }
-        }
-        return {cyclomaticValue: 4, cognitiveValue: 6};
+        return {cyclomaticValue: 2, cognitiveValue: 1};
     }
 
 
@@ -78,6 +48,32 @@ class FirstMock {
         return {cyclomaticValue: 4, cognitiveValue: 3};
     }
 
+    ifIfIf(data: number): Evaluation {
+        if (data > 2) {
+            if (data > 3) {
+                if (data > 4) {
+                    console.log('data > 4');
+                }
+            }
+        }
+        return {cyclomaticValue: 4, cognitiveValue: 6};
+    }
+
+
+
+    ifIfIfElse(data: number): Evaluation {
+        if (data > 2) {
+            if (data > 3) {
+                if (data > 4) {
+                    console.log('data > 4');
+                } else {
+                    console.log('data <= 4');
+                }
+            }
+        }
+        return {cyclomaticValue: 4, cognitiveValue: 6};
+    }
+
 
     ifAndAndOrAnd(a, b, c, d, e, f): Evaluation {
         if (a && b && c || d && e && f) {
@@ -99,6 +95,6 @@ class FirstMock {
             default:
                 console.log("lots");
         }
-        return {cyclomaticValue: 4, cognitiveValue: 6};
+        return {cyclomaticValue: 3, cognitiveValue: 1};
     }
 }

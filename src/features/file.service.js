@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var ts = require("typescript");
 var fs = require("fs-extra");
 var path = require("path");
 function getFilename(filePath) {
@@ -8,6 +9,11 @@ function getFilename(filePath) {
     return splittedPath[splittedPath.length - 1];
 }
 exports.getFilename = getFilename;
+function getSourceFile(path) {
+    console.log('GET SOURCE FILE filename', getFilename(path));
+    return ts.createSourceFile(getFilename(path), fs.readFileSync(path, 'utf-8'), ts.ScriptTarget.Latest);
+}
+exports.getSourceFile = getSourceFile;
 function getAllFiles(dirPath, arrayOfFiles) {
     var files = fs.readdirSync(dirPath);
     arrayOfFiles = arrayOfFiles || [];

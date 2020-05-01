@@ -2,7 +2,8 @@ import * as ts from 'typescript';
 import * as fs from 'fs-extra';
 import { FileWalker } from './features/fileWalker';
 import { ReportService } from './features/report.service';
-import { getAllFiles, getFilename, getTsFiles } from './features/file.service';
+import { getFilename, getSourceFile, getTsFiles } from './features/file.service';
+import { Ast } from './features/ast.service';
 
 const appRootPath = require('app-root-path');
 
@@ -14,10 +15,16 @@ export class Main {
 
     process(): void {
         console.log('START CALCULATION');
-        this.evaluateFolder(`${this.appRoot}/src/mocks/`);
-        // this.evaluateFile(`${this.appRoot}/src/mocks/first.mock.ts`);
-        this.generateReport();
+        this.parseNodes();
+        // this.evaluateFolder(`${this.appRoot}/src/mocks/`);
+        // // this.evaluateFile(`${this.appRoot}/src/mocks/first.mock.ts`);
+        // this.generateReport();
         console.log('REPORT GENERATED SUCCESSFULLY');
+    }
+
+    parseNodes(): void {
+        const sourceFile = getSourceFile(`${this.appRoot}/src/mocks/ast.mock.ts`)
+        Ast.getChildNodes(sourceFile);
     }
 
 
