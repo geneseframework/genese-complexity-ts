@@ -2,7 +2,7 @@ import * as ts from 'typescript';
 import * as fs from 'fs-extra';
 import { FileWalker } from './features/fileWalker';
 import { ReportService } from './features/report.service';
-import { getFilename, getSourceFile, getSubFolders, getTypescriptFiles } from './features/file.service';
+import { getFilename, getSourceFile, createTsFolder, getTypescriptFiles } from './features/file.service';
 import { Ast } from './features/ast.service';
 import { TsFolder } from './models/ts-folder';
 import { TsTree } from './models/ts-tree.model';
@@ -31,13 +31,13 @@ export class Process {
         console.log('PATH this.path', this.path);
         const sourceFile = getSourceFile(this.path);
         this.tree = Ast.getTree(sourceFile);
-        console.log('TREE 0 = ', this.tree.children[0]);
+        // console.log('TREE 0 = ', this.tree.children[0]);
         return this;
     }
 
 
     setTsFolder(): Process {
-        this.tsFolder.subFolders = getSubFolders(this.path);
+        this.tsFolder = createTsFolder(this.path, 'ts');
         console.log('TS FOLDER ', this.tsFolder);
         return this;
     }

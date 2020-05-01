@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var fs = require("fs-extra");
 var ts_folder_1 = require("../models/ts-folder");
@@ -29,37 +29,36 @@ function getAllFiles(dirPath, arrayOfFiles) {
     return arrayOfFiles;
 }
 exports.getAllFiles = getAllFiles;
-function getSubFolders(path, folder) {
+function createTsFolder(path, extension, folder) {
     if (folder === void 0) { folder = new ts_folder_1.TsFolder(); }
-    var tsFolders = [];
+    var tsFolder = new ts_folder_1.TsFolder();
     var filesOrDirs = fs.readdirSync(path);
     console.log('FILE OR DIRS', filesOrDirs);
     filesOrDirs.forEach(function (elementName) {
         var pathElement = path + elementName;
         console.log('FILE OR DIRS pathElement', pathElement);
         if (fs.statSync(pathElement).isDirectory()) {
-            console.log('IS DIR fs.statSync()');
             var subFolder = new ts_folder_1.TsFolder();
             subFolder.parent = folder;
             subFolder.path = pathElement;
-            folder.subFolders.push(subFolder);
-            getSubFolders(pathElement + "/", subFolder);
+            tsFolder.subFolders.push(subFolder);
+            createTsFolder(pathElement + "/", extension, subFolder);
         }
         else {
-            console.log('IS NOT DIR fs.statSync()');
-            folder.tsFiles.push(createTsFile(pathElement, folder));
+            if (!extension || extension === getExtension(pathElement)) {
+                tsFolder.tsFiles.push(createTsFile(pathElement, folder));
+            }
         }
     });
-    return tsFolders;
+    return tsFolder;
 }
-exports.getSubFolders = getSubFolders;
+exports.createTsFolder = createTsFolder;
 function createTsFile(path, tsFolder) {
     if (tsFolder === void 0) { tsFolder = new ts_folder_1.TsFolder(); }
-    console.log('CREATE TS FILE path', path);
     var tsFile = new ts_file_1.TsFile();
     tsFile.sourceFile = getSourceFile(path);
     tsFile.tsFolder = tsFolder;
-    console.log('CREATE TS FILE tsFile', tsFile);
+    tsFile.setName();
     return tsFile;
 }
 exports.createTsFile = createTsFile;
