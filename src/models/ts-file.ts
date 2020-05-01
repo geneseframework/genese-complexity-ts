@@ -20,15 +20,13 @@ export class TsFile {
 
 
     addMethods(): void {
-        ts.forEachChild(this.sourceFile, node => {
+        const methods: TsMethod[] = [];
+        ts.forEachChild(this.sourceFile, function cb(node) {
             if (node.kind === ts.SyntaxKind.MethodDeclaration) {
-                this.methods.push(new TsMethod(node));
+                methods.push(new TsMethod(node));
             }
-        })
+            ts.forEachChild(node, cb);
+        });
+        this.methods = methods;
     }
-
-
-    // addMethod(node: ts.Node): void {
-    //     const method: TsMethod = new TsMethod(node);
-    // }
 }

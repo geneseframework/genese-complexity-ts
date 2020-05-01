@@ -15,11 +15,11 @@ export class TsFolderService {
         filesOrDirs.forEach(function(elementName) {
             const pathElement = path + elementName;
             if (fs.statSync(pathElement).isDirectory()) {
-                let subFolder = new TsFolder();
-                subFolder = TsFolderService.generate(`${pathElement}/`, extension, subFolder);
-                subFolder.parent = folder;
-                subFolder.path = pathElement;
-                tsFolder.subFolders.push(subFolder);
+                // let subFolder = new TsFolder();
+                // subFolder = TsFolderService.generate(`${pathElement}/`, extension, subFolder);
+                // subFolder.parent = folder;
+                // subFolder.path = pathElement;
+                // tsFolder.subFolders.push(subFolder);
             } else {
                 if (!extension || extension === getExtension(pathElement)) {
                     tsFolder.tsFiles.push(TsFileService.generate(pathElement, folder));
