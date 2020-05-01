@@ -4,6 +4,7 @@ import { FileWalker } from './features/fileWalker';
 import { ReportService } from './features/report.service';
 import { getFilename, getSourceFile, getTsFiles } from './features/file.service';
 import { Ast } from './features/ast.service';
+import { TsTree } from './models/ts-tree.model';
 
 const appRootPath = require('app-root-path');
 
@@ -23,16 +24,18 @@ export class Main {
     }
 
     parseNodes(): void {
-        const sourceFile = getSourceFile(`${this.appRoot}/src/mocks/ast.mock.ts`)
-        const nodes = Ast.parseChildNodes(sourceFile, (childNode) => {
+        const sourceFile = getSourceFile(`${this.appRoot}/src/mocks/ast.mock.ts`);
+        // const tree = Ast.getTree(sourceFile);
+        // console.log('TREE PN ', tree);
+        // tree.node = sourceFile;
+        // console.log('TREE TRACE', tree.getTrace());
+        const tree = Ast.parseChildNodes(sourceFile, (childNode) => {
             const name = Ast.getSyntaxKindName(childNode);
             console.log('CHILD KIND ', childNode.kind, ' / ', name);
         });
-        console.log('PARSE NODES LENGTH', nodes.length);
-        const children = sourceFile.getChildren();
-        console.log('PARSE NODES children LENGTH', children.length);
-        const childrenCount = sourceFile.getChildCount();
-        console.log('PARSE NODES childrenCount', childrenCount);
+        console.log('TREE  = ', tree);
+        // console.log('NODE length = ', nodes.length);
+        // console.log('NODE 1 = ', nodes[1]);
     }
 
 

@@ -21,15 +21,17 @@ var Main = /** @class */ (function () {
     };
     Main.prototype.parseNodes = function () {
         var sourceFile = file_service_1.getSourceFile(this.appRoot + "/src/mocks/ast.mock.ts");
-        var nodes = ast_service_1.Ast.parseChildNodes(sourceFile, function (childNode) {
+        // const tree = Ast.getTree(sourceFile);
+        // console.log('TREE PN ', tree);
+        // tree.node = sourceFile;
+        // console.log('TREE TRACE', tree.getTrace());
+        var tree = ast_service_1.Ast.parseChildNodes(sourceFile, function (childNode) {
             var name = ast_service_1.Ast.getSyntaxKindName(childNode);
             console.log('CHILD KIND ', childNode.kind, ' / ', name);
         });
-        console.log('PARSE NODES LENGTH', nodes.length);
-        var children = sourceFile.getChildren();
-        console.log('PARSE NODES children LENGTH', children.length);
-        var childrenCount = sourceFile.getChildCount();
-        console.log('PARSE NODES childrenCount', childrenCount);
+        console.log('TREE  = ', tree);
+        // console.log('NODE length = ', nodes.length);
+        // console.log('NODE 1 = ', nodes[1]);
     };
     Main.prototype.evaluateFolder = function (dirPath) {
         var tsFiles = file_service_1.getTsFiles(dirPath);
