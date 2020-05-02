@@ -7,10 +7,12 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="prettify.css" />
     <link rel="stylesheet" href="report.css" />
+    <link rel="stylesheet" href="styles.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
+<div class="mainContainer">
     <h1>Genese complexity report</h1>
     <table class="coverage-summary">
         <thead>
@@ -21,6 +23,12 @@
                 <th class="column cognitiveColumn">Cognitive complexity</th>
             </tr>
         </thead>
+            <tr>
+                <td class="column fileColumn">ast.mock.ts</td>
+                <td class="column methodColumn">ifElse</td>
+                <td class="column cyclomaticColumn">2</td>
+                <td class="column cognitiveColumn">1</td>
+            </tr>
             <tr>
                 <td class="column fileColumn">first.mock.ts</td>
                 <td class="column methodColumn">ifElse</td>
@@ -76,6 +84,54 @@
                 <td class="column cognitiveColumn">3</td>
             </tr>
             <tr>
+                <td class="column fileColumn">cyms.mock.ts</td>
+                <td class="column methodColumn">set</td>
+                <td class="column cyclomaticColumn">5</td>
+                <td class="column cognitiveColumn">10</td>
+            </tr>
+            <tr>
+                <td class="column fileColumn">cyms.mock.ts</td>
+                <td class="column methodColumn">reducer</td>
+                <td class="column cyclomaticColumn">3</td>
+                <td class="column cognitiveColumn">3</td>
+            </tr>
+            <tr>
+                <td class="column fileColumn">cyms.mock.ts</td>
+                <td class="column methodColumn">setCountByStatusText</td>
+                <td class="column cyclomaticColumn">5</td>
+                <td class="column cognitiveColumn">6</td>
+            </tr>
+            <tr>
+                <td class="column fileColumn">cyms.mock.ts</td>
+                <td class="column methodColumn">getFromLocalStorage</td>
+                <td class="column cyclomaticColumn">2</td>
+                <td class="column cognitiveColumn">1</td>
+            </tr>
+            <tr>
+                <td class="column fileColumn">cyms.mock.ts</td>
+                <td class="column methodColumn">setToLocalStorage</td>
+                <td class="column cyclomaticColumn">1</td>
+                <td class="column cognitiveColumn">0</td>
+            </tr>
+            <tr>
+                <td class="column fileColumn">cyms.mock.ts</td>
+                <td class="column methodColumn">dateIsAfter</td>
+                <td class="column cyclomaticColumn">3</td>
+                <td class="column cognitiveColumn">3</td>
+            </tr>
+            <tr>
+                <td class="column fileColumn">cyms.mock.ts</td>
+                <td class="column methodColumn">getZuluDate</td>
+                <td class="column cyclomaticColumn">4</td>
+                <td class="column cognitiveColumn">6</td>
+            </tr>
+            <tr>
+                <td class="column fileColumn">cyms.mock.ts</td>
+                <td class="column methodColumn">getZuluTime</td>
+                <td class="column cyclomaticColumn">5</td>
+                <td class="column cognitiveColumn">10</td>
+            </tr>
+            <tr>
                 <td class="column fileColumn">second.mock.ts</td>
                 <td class="column methodColumn">questionDotToken</td>
                 <td class="column cyclomaticColumn">2</td>
@@ -94,5 +150,6 @@
                 <td class="column cognitiveColumn">1</td>
             </tr>
     </table>
+</div>
 </body>
 </html>
