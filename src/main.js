@@ -2,10 +2,10 @@
 exports.__esModule = true;
 var ts = require("typescript");
 var fs = require("fs-extra");
-var fileWalker_1 = require("./features/fileWalker");
-var report_service_1 = require("./features/report.service");
-var file_service_1 = require("./features/file.service");
-var ast_service_1 = require("./features/ast.service");
+var fileWalker_1 = require("./services/fileWalker");
+var report_service_1 = require("./services/report.service");
+var file_service_1 = require("./services/file.service");
+var ast_service_1 = require("./services/ast.service");
 var ts_folder_1 = require("./models/ts-folder");
 var appRootPath = require('app-root-path');
 var Main = /** @class */ (function () {
@@ -42,7 +42,7 @@ var Main = /** @class */ (function () {
     Main.prototype.evaluateFile = function (pathFile) {
         var fileName = file_service_1.getFilename(pathFile);
         var sourceFile = ts.createSourceFile(fileName, fs.readFileSync(pathFile, 'utf8'), ts.ScriptTarget.Latest);
-        var walker = new fileWalker_1.FileWalker(sourceFile);
+        var walker = new fileWalker_1.FileWalkerService(sourceFile);
         walker.walk();
     };
     Main.prototype.generateReport = function () {
