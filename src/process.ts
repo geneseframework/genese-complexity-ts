@@ -19,9 +19,9 @@ export class Process {
 
     start(): void {
         console.log('START CALCULATION');
-        // this.getDebugReport();
-        this.setTsFolder()
-            .generateReport();
+        this.getDebugReport();
+        // this.setTsFolder()
+        //     .generateReport();
         console.log('REPORT GENERATED SUCCESSFULLY');
     }
 

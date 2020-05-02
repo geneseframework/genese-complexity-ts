@@ -11,10 +11,7 @@ export class ComplexityService {
         if (tsBloc) {
             for (const bloc of tsBloc?.children) {
                 console.log('TSBLOC', ts.SyntaxKind[bloc.node.kind]);
-                if (ComplexityService.increasesCognitiveComplexity(bloc.node)) {
-                    console.log('depth', bloc.depth);
-                    complexity += bloc.depth + 1;
-                }
+                complexity += ComplexityService.addCognitiveComplexity(bloc);
                 complexity += ComplexityService.calculateCognitiveComplexity(bloc);
             }
         }
@@ -74,6 +71,7 @@ export class ComplexityService {
             case ts.SyntaxKind.ForInStatement:
             case ts.SyntaxKind.ForOfStatement:
             case ts.SyntaxKind.IfStatement:
+            case ts.SyntaxKind.MethodDeclaration:
             case ts.SyntaxKind.WhileStatement:
                 newDepth = depth + 1;
                 break;
@@ -86,10 +84,11 @@ export class ComplexityService {
     }
 
 
-    static increasesCognitiveComplexity(node: ts.Node): boolean {
-        switch (node.kind) {
-            case ts.SyntaxKind.CaseClause:
-                // return (node).statements.length > 0;
+    static addCognitiveComplexity(tsBloc: TsBloc): number {
+        if (!tsBloc?.node || !tsBloc?.depth) {
+            return 0;
+        }
+        switch (tsBloc.node.kind) {
             case ts.SyntaxKind.QuestionDotToken:
             case ts.SyntaxKind.CatchClause:
             case ts.SyntaxKind.ConditionalExpression:
@@ -99,9 +98,11 @@ export class ComplexityService {
             case ts.SyntaxKind.ForOfStatement:
             case ts.SyntaxKind.IfStatement:
             case ts.SyntaxKind.WhileStatement:
-                return true;
-            // case ts.SyntaxKind.BinaryExpression:
-            //     switch ((node).operatorToken.kind) {
+                return tsBloc.depth + 1;
+            case ts.SyntaxKind.BinaryExpression:
+                console.log('BINARY')
+                return 1;
+                // switch ((node).operatorToken.kind) {
             //         case ts.SyntaxKind.BarBarToken:
             //         case ts.SyntaxKind.AmpersandAmpersandToken:
             //             return true;
@@ -109,7 +110,7 @@ export class ComplexityService {
             //             return false;
             //     }
             default:
-                return false;
+                return 0;
         }
     }
 
