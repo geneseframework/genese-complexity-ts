@@ -25,7 +25,7 @@ export class Ast {
 
 
     static getSyntaxKindName(node: ts.Node): string {
-        return Object.keys(ts.SyntaxKind).find(key => ts.SyntaxKind[key] === node.kind);
+        return node ? ts.SyntaxKind[node.kind] : '';
     }
 
 

@@ -10,7 +10,7 @@
  * an infringement punishable by criminal or civil law and, more generally, a breach of Naval Group SA’s rights.
  */
 
-import { Evaluation } from '../../models/evaluation';
+import { Evaluation } from '../../models/evaluation.model';
 
 export class SecondMock {
 

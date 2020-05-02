@@ -1,6 +1,6 @@
-import { TsFile } from './ts-file';
+import { TsFile } from './ts-file.model';
 import { getTypescriptFiles } from '../services/file.service';
-import { Evaluation } from './evaluation';
+import { Evaluation } from './evaluation.model';
 
 export class TsFolder {
 

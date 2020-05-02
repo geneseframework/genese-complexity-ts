@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
 import * as utils from 'tsutils';
-import { TsFile } from './ts-file';
+import { TsFile } from './ts-file.model';
 import { TsTree } from './ts-tree.model';
 import { Ast } from '../services/ast.service';
-import { Evaluation } from './evaluation';
+import { Evaluation } from './evaluation.model';
 
 export class TsMethod {
 
@@ -19,6 +19,8 @@ export class TsMethod {
 
 
     getEvaluation(): Evaluation {
+        console.log('TREE children', this.tsTree.children);
+        console.log('TREE NB children', this.tsTree.children.length);
         return this._evaluation ?? this.evaluate();
     }
 

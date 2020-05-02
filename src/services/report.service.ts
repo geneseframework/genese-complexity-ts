@@ -1,8 +1,8 @@
 import * as fs from 'fs-extra';
 import * as eol from "eol";
 import * as Handlebars from "handlebars";
-import { Evaluation } from '../models/evaluation';
-import { TsFolder } from '../models/ts-folder';
+import { Evaluation } from '../models/evaluation.model';
+import { TsFolder } from '../models/ts.folder.model';
 
 const appRootPath = require('app-root-path');
 

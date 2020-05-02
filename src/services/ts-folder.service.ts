@@ -1,5 +1,5 @@
 import * as fs from 'fs-extra';
-import { TsFolder } from '../models/ts-folder';
+import { TsFolder } from '../models/ts.folder.model';
 import { getExtension } from './file.service';
 import { TsFileService } from './ts-file.service';
 

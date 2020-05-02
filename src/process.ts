@@ -1,9 +1,13 @@
 import * as ts from 'typescript';
 import { ReportService } from './services/report.service';
-import { TsFolder } from './models/ts-folder';
+import { TsFolder } from './models/ts.folder.model';
 import { TsFolderService } from './services/ts-folder.service';
+import { TsFile } from './models/ts-file.model';
+import { TsFileService } from './services/ts-file.service';
 
+const appRootPath = require('app-root-path');
 
+const appRoot = appRootPath.toString();
 export class Process {
 
     private readonly path: string;
@@ -15,9 +19,16 @@ export class Process {
 
     start(): void {
         console.log('START CALCULATION');
-        this.setTsFolder()
-            .generateReport();
+        this.getDebugReport();
+        // this.setTsFolder()
+        //     .generateReport();
         console.log('REPORT GENERATED SUCCESSFULLY');
+    }
+
+
+    getDebugReport() {
+        const tsFile: TsFile = TsFileService.generate(`${appRoot}/src/mocks/ast.mock.ts`);
+        tsFile.getEvaluation();
     }
 
 
