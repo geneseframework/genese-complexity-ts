@@ -19,27 +19,6 @@ export class ComplexityService {
     }
 
 
-
-    // static calculateCognitiveComplexity(node: ts.Node): number {
-    //     let complexity = 0;
-    //     let depthLevel = 0;
-    //     ts.forEachChild(node, function cb(node) {
-    //         if (utils.isFunctionWithBody(node)) {
-    //             depthLevel ++;
-    //             complexity += depthLevel;
-    //             ts.forEachChild(node, cb);
-    //         } else {
-    //             if (ComplexityService.increasesComplexity(node, 'cognitive')) {
-    //                 depthLevel ++;
-    //                 complexity += depthLevel;
-    //             }
-    //             ts.forEachChild(node, cb);
-    //         }
-    //     });
-    //     return complexity;
-    // }
-
-
     /**
      * Calculates the cyclomatic complexity of a method
      * @param node: ts.Node
@@ -100,9 +79,8 @@ export class ComplexityService {
             case ts.SyntaxKind.WhileStatement:
                 return tsBloc.depth + 1;
             case ts.SyntaxKind.BinaryExpression:
-                console.log('BINARY', tsBloc);
-                return 1;
-                // switch ((node).operatorToken.kind) {
+                return ComplexityService.addBinaryCognitiveComplexity(tsBloc);
+            // switch ((node).operatorToken.kind) {
             //         case ts.SyntaxKind.BarBarToken:
             //         case ts.SyntaxKind.AmpersandAmpersandToken:
             //             return true;
@@ -115,8 +93,15 @@ export class ComplexityService {
     }
 
 
-    addBinaryCognitiveComplexity(tsBloc: TsBloc) {
-
+    static addBinaryCognitiveComplexity(tsBloc: TsBloc): number {
+        let complexity = 1;
+        // TODO : add condition if && && ||
+        if (tsBloc?.parent?.syntaxKindName === 'BinaryExpression') {
+            console.log('BINARY STATEMENT', tsBloc);
+            return 0;
+        }
+        // console.log('BINARY TOKEN', tsBloc.node['operatorToken']);
+        return complexity;
     }
 
 
@@ -148,3 +133,148 @@ export class ComplexityService {
         }
     }
 }
+// const zzz = {
+//     children: [
+//         TsBloc {
+//             children: [],
+//             depth: 1,
+//             tsMethod: [TsMethod],
+//             node: [IdentifierObject],
+//             parent: [Circular],
+//             syntaxKindName: 'Identifier'
+//         },
+//         TsBloc {
+//             children: [],
+//             depth: 1,
+//             tsMethod: [TsMethod],
+//             node: [TokenObject],
+//             parent: [Circular],
+//             syntaxKindName: 'AmpersandAmpersandToken'
+//         },
+//         TsBloc {
+//             children: [],
+//             depth: 1,
+//             tsMethod: [TsMethod],
+//             node: [IdentifierObject],
+//             parent: [Circular],
+//             syntaxKindName: 'Identifier'
+//         }
+//     ],
+//     depth: 1,
+//     tsMethod: TsMethod {
+//         node: NodeObject {
+//             pos: 22,
+//                 end: 123,
+//                 flags: 0,
+//                 modifierFlagsCache: 0,
+//                 transformFlags: 0,
+//                 parent: undefined,
+//                 kind: 161,
+//                 decorators: undefined,
+//                 modifiers: undefined,
+//                 name: [IdentifierObject],
+//                 questionToken: undefined,
+//                 asteriskToken: undefined,
+//                 typeParameters: undefined,
+//                 parameters: [Array],
+//                 type: [TokenObject],
+//                 body: [NodeObject]
+//         },
+//         _evaluation: undefined,
+//             tsFile: TsFile {
+//             _evaluation: undefined,
+//                 tsMethods: [Array],
+//                 name: 'ast.mock.ts',
+//                 sourceFile: [SourceFileObject],
+//                 tsFolder: [TsFolder]
+//         },
+//         _tsBloc: TsBloc {
+//             children: [Array],
+//                 depth: 0,
+//                 tsMethod: [Circular],
+//                 node: [NodeObject],
+//                 syntaxKindName: 'MethodDeclaration'
+//         }
+//     },
+//     node: NodeObject {
+//         pos: 71,
+//             end: 77,
+//             flags: 0,
+//             modifierFlagsCache: 0,
+//             transformFlags: 0,
+//             parent: NodeObject {
+//             pos: 71,
+//                 end: 82,
+//                 flags: 0,
+//                 modifierFlagsCache: 0,
+//                 transformFlags: 0,
+//                 parent: [NodeObject],
+//                 kind: 209,
+//                 left: [Circular],
+//                 operatorToken: [TokenObject],
+//                 right: [IdentifierObject]
+//         },
+//         kind: 209,
+//             left: IdentifierObject {
+//             pos: 71,
+//                 end: 72,
+//                 flags: 0,
+//                 modifierFlagsCache: 0,
+//                 transformFlags: 0,
+//                 parent: [Circular],
+//                 kind: 75,
+//                 escapedText: 'a'
+//         },
+//         operatorToken: TokenObject {
+//             pos: 72,
+//                 end: 75,
+//                 flags: 0,
+//                 modifierFlagsCache: 0,
+//                 transformFlags: 0,
+//                 parent: [Circular],
+//                 kind: 55
+//         },
+//         right: IdentifierObject {
+//             pos: 75,
+//                 end: 77,
+//                 flags: 0,
+//                 modifierFlagsCache: 0,
+//                 transformFlags: 0,
+//                 parent: [Circular],
+//                 kind: 75,
+//                 escapedText: 'b'
+//         }
+//     },
+//     parent: TsBloc {
+//         children: [ [Circular], [TsBloc], [TsBloc] ],
+//             depth: 1,
+//             tsMethod: TsMethod {
+//             node: [NodeObject],
+//                 _evaluation: undefined,
+//                 tsFile: [TsFile],
+//                 _tsBloc: [TsBloc]
+//         },
+//         node: NodeObject {
+//             pos: 71,
+//                 end: 82,
+//                 flags: 0,
+//                 modifierFlagsCache: 0,
+//                 transformFlags: 0,
+//                 parent: [NodeObject],
+//                 kind: 209,
+//                 left: [NodeObject],
+//                 operatorToken: [TokenObject],
+//                 right: [IdentifierObject]
+//         },
+//         parent: TsBloc {
+//             children: [Array],
+//                 depth: 1,
+//                 tsMethod: [TsMethod],
+//                 node: [NodeObject],
+//                 parent: [TsBloc],
+//                 syntaxKindName: 'IfStatement'
+//         },
+//         syntaxKindName: 'BinaryExpression'
+//     },
+//     syntaxKindName: 'BinaryExpression'
+// }
