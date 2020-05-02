@@ -22,11 +22,14 @@ export class ReportService {
 
 
     private addEvaluations(): void {
-        for (const subFolder of this.tsFolder.subFolders)
-        for (const tsFile of this.tsFolder.tsFiles) {
-            console.log('FILE NAME ', tsFile.sourceFile.fileName);
-            for (const tsMethod of tsFile.tsMethods) {
-                this.evaluations.push(tsMethod.getEvaluation());
+        console.log('FOLDER ', this.tsFolder);
+        for (const subFolder of this.tsFolder.subFolders) {
+            console.log('SUBFOLDER ', subFolder);
+            for (const tsFile of subFolder.tsFiles) {
+                console.log('FILE NAME ', tsFile.sourceFile.fileName);
+                for (const tsMethod of tsFile.tsMethods) {
+                    this.evaluations.push(tsMethod.getEvaluation());
+                }
             }
         }
     }
