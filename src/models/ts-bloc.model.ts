@@ -5,5 +5,5 @@ export class TsBloc extends TsTree {
 
     depth ?= 0;
     tsMethod?: TsMethod = undefined;
-
+    children?: TsBloc[] = [];
 }

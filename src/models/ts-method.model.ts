@@ -31,14 +31,15 @@ export class TsMethod {
             tsBloc.node = this.node;
             tsBloc.depth = 0;
             this._tsBloc = Ast.getBloc(tsBloc);
-            // console.log('TS BLOCS children', this._tsBloc.children[6]);
+            return this._tsBloc;
         }
     }
 
 
     private evaluate(): Evaluation {
         const evaluation: Evaluation = new Evaluation();
-        evaluation.cognitiveValue = CS.calculateCognitiveComplexity(this.node);
+        evaluation.cognitiveValue = CS.calculateCognitiveComplexity(this._tsBloc);
+        console.log('CX ', evaluation.cognitiveValue);
         evaluation.cyclomaticValue = CS.calculateCyclomaticComplexity(this.node);
         evaluation.methodName = Ast.getMethodName(this.node);
         evaluation.filename = this.tsFile?.sourceFile?.fileName ?? '';
