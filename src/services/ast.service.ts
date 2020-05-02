@@ -28,6 +28,7 @@ export class Ast {
             if (isBloc) {
                 newTree.depth = CS.increaseDepth(childNode, depth);
                 newTree.tsMethod = tree.tsMethod;
+                newTree.parent = tree;
             }
             const childTree = this.parseChildNodes(newTree, isBloc);
             tree.children.push(childTree);

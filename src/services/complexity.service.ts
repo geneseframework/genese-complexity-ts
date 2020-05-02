@@ -10,7 +10,7 @@ export class ComplexityService {
         let complexity = 0;
         if (tsBloc) {
             for (const bloc of tsBloc?.children) {
-                console.log('TSBLOC', ts.SyntaxKind[bloc.node.kind]);
+                // console.log('TSBLOC', ts.SyntaxKind[bloc.node.kind]);
                 complexity += ComplexityService.addCognitiveComplexity(bloc);
                 complexity += ComplexityService.calculateCognitiveComplexity(bloc);
             }
@@ -100,7 +100,7 @@ export class ComplexityService {
             case ts.SyntaxKind.WhileStatement:
                 return tsBloc.depth + 1;
             case ts.SyntaxKind.BinaryExpression:
-                console.log('BINARY')
+                console.log('BINARY', tsBloc);
                 return 1;
                 // switch ((node).operatorToken.kind) {
             //         case ts.SyntaxKind.BarBarToken:
@@ -112,6 +112,11 @@ export class ComplexityService {
             default:
                 return 0;
         }
+    }
+
+
+    addBinaryCognitiveComplexity(tsBloc: TsBloc) {
+
     }
 
 

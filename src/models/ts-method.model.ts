@@ -30,6 +30,7 @@ export class TsMethod {
             const tsBloc: TsBloc = new TsBloc();
             tsBloc.node = this.node;
             tsBloc.depth = 0;
+            tsBloc.tsMethod = this;
             this._tsBloc = Ast.getBloc(tsBloc);
             return this._tsBloc;
         }

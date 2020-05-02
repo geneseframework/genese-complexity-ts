@@ -4,6 +4,7 @@ import { TsTree } from './ts-tree.model';
 export class TsBloc extends TsTree {
 
     depth ?= 0;
-    tsMethod?: TsMethod = undefined;
+    parent?: TsBloc;
     children?: TsBloc[] = [];
+    tsMethod?: TsMethod = undefined;
 }
