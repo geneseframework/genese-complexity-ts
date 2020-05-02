@@ -1,27 +1,41 @@
 import * as ts from 'typescript';
 import * as utils from 'tsutils';
 import { TsFile } from './ts-file.model';
-import { TsTree } from './ts-tree.model';
 import { Ast } from '../services/ast.service';
 import { Evaluation } from './evaluation.model';
+import { TsBloc } from './ts-bloc.model';
 
 export class TsMethod {
 
     node: ts.Node = undefined;
     private _evaluation?: Evaluation = undefined;
     tsFile?: TsFile = new TsFile();
-    tsTree?: TsTree = new TsTree();
+    _tsBloc?: TsBloc = undefined;
 
     constructor(node: ts.Node) {
         this.node = node;
-        this.tsTree = Ast.getTree(node);
+        this._tsBloc = this.getTsBlocs();
     }
 
 
     getEvaluation(): Evaluation {
-        console.log('TREE children', this.tsTree.children);
-        console.log('TREE NB children', this.tsTree.children.length);
+        // console.log('TREE children', this._tsBloc.children);
+        // console.log('TREE NB children', this._tsBloc.children.length);
         return this._evaluation ?? this.evaluate();
+    }
+
+
+    getTsBlocs(): TsBloc {
+        if (this._tsBloc) {
+            return this._tsBloc;
+        } else {
+            const tsBloc: TsBloc = new TsBloc();
+            tsBloc.node = this.node;
+            tsBloc.depth = 0;
+            // this._tsBloc = TsBlocService.getBloc(tsBloc);œ
+            this._tsBloc = Ast.getBloc(tsBloc);
+            console.log('TS BLOCS children', this._tsBloc);
+        }
     }
 
 

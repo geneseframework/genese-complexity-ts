@@ -1,25 +1,35 @@
 import * as ts from 'typescript';
 import { TsTree } from '../models/ts-tree.model';
+import { TsBloc } from '../models/ts-bloc.model';
 
 export class Ast {
 
     static getTree(node: ts.Node): TsTree {
-        return Ast.parseChildNodes(node);
+        const tree = new TsTree();
+        tree.node = node;
+        return Ast.parseChildNodes(tree);
     }
 
+    static getBloc(tsBloc: TsBloc): TsBloc {
+        return Ast.parseChildNodes(tsBloc);
+    }
 
-    static parseChildNodes(node: ts.Node, action?: (node: ts.Node) => any): TsTree {
-        const tree = new TsTree();
-        tree.syntaxKindName = Ast.getSyntaxKindName(node);
-        ts.forEachChild(node, (childNode: ts.Node) => {
-            if (action) {
-                action(childNode);
+    static parseChildNodes(tree: TsBloc): TsBloc;
+    static parseChildNodes(tree: TsTree): TsTree;
+    static parseChildNodes(tree: any): TsTree | TsBloc {
+        tree.syntaxKindName = Ast.getSyntaxKindName(tree.node);
+        ts.forEachChild(tree.node, (childNode: ts.Node) => {
+            const newTree = tree.depth ? new TsBloc() : new TsTree();
+            childNode.parent = tree.node;
+            newTree.node = childNode;
+            const childTree = this.parseChildNodes(newTree as any);
+            if (tree.depth) {
+                childTree.depth = tree.depth++;
+                childTree.tsMethod = tree.tsMethod;
             }
-            childNode.parent = node;
-            const childTree: TsTree = this.parseChildNodes(childNode, action);
             tree.children.push(childTree);
         });
-        tree.node = node;
+        // tree.node = node;
         return tree;
     }
 

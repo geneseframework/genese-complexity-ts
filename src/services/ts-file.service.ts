@@ -11,7 +11,7 @@ export class TsFileService {
         tsFile.sourceFile = getSourceFile(path);
         tsFile.tsFolder = tsFolder;
         tsFile.setName();
-        tsFile.tsMethods = TsMethodService.generate(tsFile);
+        tsFile.tsMethods = TsMethodService.generateMethods(tsFile);
         return tsFile;
     }
 

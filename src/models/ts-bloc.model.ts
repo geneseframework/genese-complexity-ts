@@ -3,7 +3,7 @@ import { TsTree } from './ts-tree.model';
 
 export class TsBloc extends TsTree {
 
-    depth = 0;
-    tsMethod: TsMethod = undefined;
+    depth ?= 0;
+    tsMethod?: TsMethod = undefined;
 
 }
