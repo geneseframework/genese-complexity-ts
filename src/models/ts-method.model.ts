@@ -34,7 +34,7 @@ export class TsMethod {
             tsBloc.depth = 0;
             // this._tsBloc = TsBlocService.getBloc(tsBloc);œ
             this._tsBloc = Ast.getBloc(tsBloc);
-            console.log('TS BLOCS children', this._tsBloc);
+            console.log('TS BLOCS children', this._tsBloc.children[6]);
         }
     }
 

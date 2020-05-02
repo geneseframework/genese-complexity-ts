@@ -11,22 +11,26 @@ export class Ast {
     }
 
     static getBloc(tsBloc: TsBloc): TsBloc {
-        return Ast.parseChildNodes(tsBloc);
+        return Ast.parseChildNodes(tsBloc, true);
     }
 
-    static parseChildNodes(tree: TsBloc): TsBloc;
-    static parseChildNodes(tree: TsTree): TsTree;
-    static parseChildNodes(tree: any): TsTree | TsBloc {
+    static parseChildNodes(tree: TsBloc, isBloc?: true): TsBloc;
+    static parseChildNodes(tree: TsTree, isBloc?: false): TsTree;
+    static parseChildNodes(tree: any, isBloc?: boolean): TsTree | TsBloc;
+    static parseChildNodes(tree: any, isBloc = false): TsTree | TsBloc {
         tree.syntaxKindName = Ast.getSyntaxKindName(tree.node);
+        const depth: number = isBloc ? tree.depth : undefined;
         ts.forEachChild(tree.node, (childNode: ts.Node) => {
-            const newTree = tree.depth ? new TsBloc() : new TsTree();
+            console.log('DEPTH', tree.depth);
+            const newTree = isBloc ? new TsBloc() : new TsTree() as TsBloc;
             childNode.parent = tree.node;
             newTree.node = childNode;
-            const childTree = this.parseChildNodes(newTree as any);
-            if (tree.depth) {
-                childTree.depth = tree.depth++;
-                childTree.tsMethod = tree.tsMethod;
+            if (isBloc) {
+                newTree.depth = depth + 1;
+                console.log('NEW DEPTH', newTree.depth);
+                newTree.tsMethod = tree.tsMethod;
             }
+            const childTree = this.parseChildNodes(newTree, isBloc);
             tree.children.push(childTree);
         });
         // tree.node = node;
