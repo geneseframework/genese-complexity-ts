@@ -1,8 +1,6 @@
-import * as ts from 'typescript';
 import * as fs from 'fs-extra';
 import { TsFolder } from '../models/ts-folder';
 import { getExtension } from './file.service';
-import { TsFile } from '../models/ts-file';
 import { TsFileService } from './ts-file.service';
 
 export class TsFolderService {
@@ -22,7 +20,6 @@ export class TsFolderService {
                 tsFolder.subFolders.push(subFolder);
             } else {
                 if (!extension || extension === getExtension(pathElement)) {
-                    console.log('FILE path ', pathElement);
                     tsFolder.tsFiles.push(TsFileService.generate(pathElement, folder));
                 }
             }

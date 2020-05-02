@@ -9,7 +9,6 @@ export class TsMethod {
 
     node: ts.Node = undefined;
     private _evaluation?: Evaluation = undefined;
-    currentDepth = 0;
     tsFile?: TsFile = new TsFile();
     tsTree?: TsTree = new TsTree();
 

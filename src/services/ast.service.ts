@@ -29,9 +29,9 @@ export class Ast {
     }
 
 
-    static getMethodName(method: ts.Node): string {
-        if (method?.kind === ts.SyntaxKind.MethodDeclaration) {
-                return method?.['name']?.['escapedText'] && '';
+    static getMethodName(node: ts.Node): string {
+        if (node?.kind === ts.SyntaxKind.MethodDeclaration) {
+                return node?.['name']?.['escapedText'] ?? '';
         } else {
             return '';
         }

@@ -1,8 +1,6 @@
 import * as ts from 'typescript';
 import { TsMethod } from './ts-method';
 import { TsFolder } from './ts-folder';
-import { TsTree } from './ts-tree.model';
-import { Ast } from '../services/ast.service';
 import { Evaluation } from './evaluation';
 
 export class TsFile {
@@ -12,7 +10,6 @@ export class TsFile {
     name ?= '';
     sourceFile?: ts.SourceFile = undefined;
     tsFolder?: TsFolder = new TsFolder();
-    tsTree?: TsTree = new TsTree();
 
     constructor() {
     }
@@ -28,17 +25,13 @@ export class TsFile {
     }
 
 
-    setTree(): void {
-        this.tsTree = Ast.getTree(this.sourceFile);
-    }
-
-
     addMethods(): void {
         const methods: TsMethod[] = [];
+        let __self = this;
         ts.forEachChild(this.sourceFile, function cb(node) {
             if (node.kind === ts.SyntaxKind.MethodDeclaration) {
                 const newMethod: TsMethod = new TsMethod(node);
-                newMethod.tsFile = this;
+                newMethod.tsFile = __self;
                 methods.push(newMethod);
             }
             ts.forEachChild(node, cb);

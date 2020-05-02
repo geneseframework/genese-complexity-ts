@@ -22,11 +22,8 @@ export class ReportService {
 
 
     private addEvaluations(): void {
-        console.log('FOLDER ', this.tsFolder);
         for (const subFolder of this.tsFolder.subFolders) {
-            console.log('SUBFOLDER ', subFolder);
             for (const tsFile of subFolder.tsFiles) {
-                console.log('FILE NAME ', tsFile.sourceFile.fileName);
                 for (const tsMethod of tsFile.tsMethods) {
                     this.evaluations.push(tsMethod.getEvaluation());
                 }
@@ -37,7 +34,6 @@ export class ReportService {
 
     generateReport(): void {
         this.addEvaluations();
-        console.log('EVALUATIONS ', this.evaluations);
         if (fs.existsSync(this.outDir)) {
             fs.emptyDirSync(this.outDir);
         } else {
