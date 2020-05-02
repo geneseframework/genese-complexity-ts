@@ -45,6 +45,29 @@ export class ComplexityService {
         return totalComplexity;
     }
 
+
+
+    static increaseDepth(node: ts.Node, depth: number): number {
+        let newDepth: number;
+        switch (node?.kind) {
+            case ts.SyntaxKind.CatchClause:
+            case ts.SyntaxKind.DoStatement:
+            case ts.SyntaxKind.ForStatement:
+            case ts.SyntaxKind.ForInStatement:
+            case ts.SyntaxKind.ForOfStatement:
+            case ts.SyntaxKind.IfStatement:
+            case ts.SyntaxKind.WhileStatement:
+                newDepth = depth + 1;
+                break;
+            default:
+                newDepth = depth;
+                break;
+        }
+        // console.log(`NODE ${ts.SyntaxKind[node?.kind]} depth ${newDepth}`);
+        return newDepth;
+    }
+
+
     static increasesComplexity(node, method : 'cognitive' | 'cyclomatic') {
         switch (node.kind) {
             case ts.SyntaxKind.CaseClause:

@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+import { ComplexityService as CS } from '../services/complexity.service';
 import { TsTree } from '../models/ts-tree.model';
 import { TsBloc } from '../models/ts-bloc.model';
 
@@ -25,7 +26,7 @@ export class Ast {
             childNode.parent = tree.node;
             newTree.node = childNode;
             if (isBloc) {
-                newTree.depth = Ast.increaseDepth(childNode, depth);
+                newTree.depth = CS.increaseDepth(childNode, depth);
                 newTree.tsMethod = tree.tsMethod;
             }
             const childTree = this.parseChildNodes(newTree, isBloc);
@@ -53,18 +54,4 @@ export class Ast {
         return node;
     }
 
-
-    static increaseDepth(node: ts.Node, depth: number): number {
-        let newDepth: number;
-        switch (node?.kind) {
-            case ts.SyntaxKind.IfStatement:
-                newDepth = depth + 1;
-                break;
-            default:
-                newDepth = depth;
-                break;
-        }
-        console.log(`NODE ${ts.SyntaxKind[node?.kind]} depth ${newDepth}`);
-        return newDepth;
-    }
 }

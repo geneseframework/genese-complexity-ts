@@ -10,22 +10,20 @@ export class TsMethod {
     node: ts.Node = undefined;
     private _evaluation?: Evaluation = undefined;
     tsFile?: TsFile = new TsFile();
-    _tsBloc?: TsBloc = undefined;
+    private _tsBloc?: TsBloc = undefined;
 
     constructor(node: ts.Node) {
         this.node = node;
-        this._tsBloc = this.getTsBlocs();
+        this._tsBloc = this.getTsBloc();
     }
 
 
     getEvaluation(): Evaluation {
-        // console.log('TREE children', this._tsBloc.children);
-        // console.log('TREE NB children', this._tsBloc.children.length);
         return this._evaluation ?? this.evaluate();
     }
 
 
-    getTsBlocs(): TsBloc {
+    getTsBloc(): TsBloc {
         if (this._tsBloc) {
             return this._tsBloc;
         } else {
@@ -33,7 +31,7 @@ export class TsMethod {
             tsBloc.node = this.node;
             tsBloc.depth = 0;
             this._tsBloc = Ast.getBloc(tsBloc);
-            console.log('TS BLOCS children', this._tsBloc.children[6]);
+            // console.log('TS BLOCS children', this._tsBloc.children[6]);
         }
     }
 
