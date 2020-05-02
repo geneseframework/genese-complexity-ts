@@ -1,6 +1,7 @@
-import { TsFolder } from '../models/ts-folder';
-import { TsFile } from '../models/ts-file';
+import { TsFolder } from '../models/ts.folder.model';
+import { TsFile } from '../models/ts-file.model';
 import { getSourceFile } from './file.service';
+import { TsMethodService } from './ts-method.service';
 
 export class TsFileService {
 
@@ -10,10 +11,8 @@ export class TsFileService {
         tsFile.sourceFile = getSourceFile(path);
         tsFile.tsFolder = tsFolder;
         tsFile.setName();
-        tsFile.addMethods();
+        tsFile.tsMethods = TsMethodService.generateMethods(tsFile);
         return tsFile;
     }
-
-
 
 }

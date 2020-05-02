@@ -1,8 +1,8 @@
 import * as fs from 'fs-extra';
 import * as eol from "eol";
 import * as Handlebars from "handlebars";
-import { Evaluation } from '../models/evaluation';
-import { TsFolder } from '../models/ts-folder';
+import { Evaluation } from '../models/evaluation.model';
+import { TsFolder } from '../models/ts.folder.model';
 
 const appRootPath = require('app-root-path');
 
@@ -21,19 +21,28 @@ export class ReportService {
     }
 
 
-    private addEvaluations(): void {
-        for (const subFolder of this.tsFolder.subFolders) {
+    private getEvaluations(): void {
+        const tsFolder: TsFolder = new TsFolder();
+        tsFolder.subFolders.push(this.tsFolder);
+        this.evaluations = this.getEvaluationsOfTsFolder(tsFolder);
+    }
+
+    private getEvaluationsOfTsFolder(tsFolder: TsFolder): Evaluation[] {
+        let evaluations: Evaluation[] = [];
+        for (const subFolder of tsFolder.subFolders) {
             for (const tsFile of subFolder.tsFiles) {
                 for (const tsMethod of tsFile.tsMethods) {
-                    this.evaluations.push(tsMethod.getEvaluation());
+                    evaluations.push(tsMethod.getEvaluation());
                 }
             }
+            evaluations = evaluations.concat(this.getEvaluationsOfTsFolder(subFolder));
         }
+        return evaluations;
     }
 
 
     generateReport(): void {
-        this.addEvaluations();
+        this.getEvaluations();
         if (fs.existsSync(this.outDir)) {
             fs.emptyDirSync(this.outDir);
         } else {
@@ -51,6 +60,7 @@ export class ReportService {
         const ts = this.template({report: this.evaluations});
         fs.writeFileSync(`${this.outDir}/report.html`, ts, {encoding: 'utf-8'});
         fs.copyFileSync(`${this.appRoot}/src/templates/report.css`, `${this.outDir}/report.css`);
+        fs.copyFileSync(`${this.appRoot}/src/templates/styles.css`, `${this.outDir}/styles.css`);
         fs.copyFileSync(`${this.appRoot}/src/templates/prettify.css`, `${this.outDir}/prettify.css`);
     }
 }

@@ -1,10 +1,8 @@
 export class AstMock {
 
-    ifElse(a: number): number {
-        if (a > 2) {
+    binaries(a, b, c, d): number {
+        if (a && b && c) {
             return 3;
-        } else {
-            return 4;
         }
     }
 }

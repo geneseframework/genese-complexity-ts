@@ -1,4 +1,4 @@
-import { Evaluation } from '../models/evaluation';
+import { Evaluation } from '../models/evaluation.model';
 
 export class EvaluationService {
 

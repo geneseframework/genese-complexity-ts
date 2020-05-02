@@ -6,7 +6,7 @@ var fileWalker_1 = require("./services/fileWalker");
 var report_service_1 = require("./services/report.service");
 var file_service_1 = require("./services/file.service");
 var ast_service_1 = require("./services/ast.service");
-var ts_folder_1 = require("./models/ts-folder");
+var ts_folder_1 = require("./models/ts.folder.model");
 var appRootPath = require('app-root-path');
 var Main = /** @class */ (function () {
     function Main() {

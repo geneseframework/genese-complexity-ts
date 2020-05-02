@@ -1,37 +1,50 @@
 import * as ts from 'typescript';
+import { ComplexityService as CS } from '../services/complexity.service';
 import { TsTree } from '../models/ts-tree.model';
+import { TsBloc } from '../models/ts-bloc.model';
 
 export class Ast {
 
     static getTree(node: ts.Node): TsTree {
-        return Ast.parseChildNodes(node);
+        const tree = new TsTree();
+        tree.node = node;
+        return Ast.parseChildNodes(tree);
     }
 
+    static getBloc(tsBloc: TsBloc): TsBloc {
+        return Ast.parseChildNodes(tsBloc, true);
+    }
 
-    static parseChildNodes(node: ts.Node, action?: (node: ts.Node) => any): TsTree {
-        const tree = new TsTree();
-        tree.syntaxKindName = Ast.getSyntaxKindName(node);
-        ts.forEachChild(node, (childNode: ts.Node) => {
-            if (action) {
-                action(childNode);
+    static parseChildNodes(tree: TsBloc, isBloc?: true): TsBloc;
+    static parseChildNodes(tree: TsTree, isBloc?: false): TsTree;
+    static parseChildNodes(tree: any, isBloc?: boolean): TsTree | TsBloc;
+    static parseChildNodes(tree: any, isBloc = false): TsTree | TsBloc {
+        tree.syntaxKindName = Ast.getSyntaxKindName(tree.node);
+        const depth: number = isBloc ? tree.depth : undefined;
+        ts.forEachChild(tree.node, (childNode: ts.Node) => {
+            const newTree = isBloc ? new TsBloc() : new TsTree() as TsBloc;
+            childNode.parent = tree.node;
+            newTree.node = childNode;
+            if (isBloc) {
+                newTree.depth = CS.increaseDepth(childNode, depth);
+                newTree.tsMethod = tree.tsMethod;
+                newTree.parent = tree;
             }
-            childNode.parent = node;
-            const childTree: TsTree = this.parseChildNodes(childNode, action);
+            const childTree = this.parseChildNodes(newTree, isBloc);
             tree.children.push(childTree);
         });
-        tree.node = node;
         return tree;
     }
 
 
     static getSyntaxKindName(node: ts.Node): string {
-        return Object.keys(ts.SyntaxKind).find(key => ts.SyntaxKind[key] === node.kind);
+        return node ? ts.SyntaxKind[node.kind] : '';
     }
 
 
     static getMethodName(node: ts.Node): string {
         if (node?.kind === ts.SyntaxKind.MethodDeclaration) {
-                return node?.['name']?.['escapedText'] ?? '';
+            return node?.['name']?.['escapedText'] ?? '';
         } else {
             return '';
         }
@@ -41,4 +54,5 @@ export class Ast {
     static getPreviousNode(node: ts.Node, parentNode: ts.Node): ts.Node {
         return node;
     }
+
 }
