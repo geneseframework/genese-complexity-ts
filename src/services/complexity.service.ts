@@ -1,6 +1,7 @@
 import * as ts from 'typescript';
 import * as utils from 'tsutils';
 import { TsBloc } from '../models/ts-bloc.model';
+import { Ast } from './ast.service';
 
 export class ComplexityService {
 
@@ -95,12 +96,11 @@ export class ComplexityService {
 
     static addBinaryCognitiveComplexity(tsBloc: TsBloc): number {
         let complexity = 1;
-        // TODO : add condition if && && ||
-        if (tsBloc?.parent?.syntaxKindName === 'BinaryExpression') {
-            console.log('BINARY STATEMENT', tsBloc);
-            return 0;
+        if (Ast.isBinary(tsBloc?.parent?.node) && Ast.isSameOperatorToken(tsBloc.node, tsBloc.parent.node)) {
+            console.log('BINARY BLOC', Ast.getSyntaxKindName(tsBloc.node['operatorToken']));
+            console.log('BINARY PARENT', Ast.getSyntaxKindName(tsBloc.parent.node['operatorToken']));
+            complexity = 0;
         }
-        // console.log('BINARY TOKEN', tsBloc.node['operatorToken']);
         return complexity;
     }
 
