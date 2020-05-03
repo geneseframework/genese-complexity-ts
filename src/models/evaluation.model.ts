@@ -1,4 +1,6 @@
-export class Evaluation {
+import { EvaluationValues } from '../interfaces/evaluation-values';
+
+export class Evaluation implements EvaluationValues {
 
     cognitiveValue?= 0;
     cyclomaticValue?= 0;

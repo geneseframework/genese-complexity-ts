@@ -19,7 +19,7 @@ export class Ast {
     static parseChildNodes(tree: TsTree, isBloc?: false): TsTree;
     static parseChildNodes(tree: any, isBloc?: boolean): TsTree | TsBloc;
     static parseChildNodes(tree: any, isBloc = false): TsTree | TsBloc {
-        tree.syntaxKindName = Ast.getSyntaxKindName(tree.node);
+        tree.syntaxKindName = Ast.getType(tree.node);
         const depth: number = isBloc ? tree.depth : undefined;
         ts.forEachChild(tree.node, (childNode: ts.Node) => {
             const newTree = isBloc ? new TsBloc() : new TsTree() as TsBloc;
@@ -37,7 +37,7 @@ export class Ast {
     }
 
 
-    static getSyntaxKindName(node: ts.Node): string {
+    static getType(node: ts.Node): string {
         return node ? ts.SyntaxKind[node.kind] : '';
     }
 
@@ -58,6 +58,21 @@ export class Ast {
 
     static isBinary(node: ts.Node): boolean {
         return node?.kind === ts.SyntaxKind.BinaryExpression ?? false;
+    }
+
+
+    static isLogicDoor(node: ts.Node): boolean {
+        return (node?.['operatorToken']?.kind === ts.SyntaxKind.AmpersandAmpersandToken
+            || node?.['operatorToken']?.kind === ts.SyntaxKind.BarBarToken)
+            ?? false;
+    }
+
+
+    static isOrTokenBetweenBinaries(node: ts.Node): boolean {
+        return (node?.['operatorToken']?.kind === ts.SyntaxKind.BarBarToken
+            && node?.['left']?.kind === ts.SyntaxKind.BinaryExpression
+            && node?.['right']?.kind === ts.SyntaxKind.BinaryExpression)
+            ?? false;
     }
 
 

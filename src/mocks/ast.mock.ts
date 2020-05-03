@@ -1,8 +1,11 @@
+import { EvaluationValues } from '../interfaces/evaluation-values';
+
 export class AstMock {
 
-    binaries(a, b, c, d): number {
-        if (a && b && c || d || a && b && c && a) {
-            return 3;
+    ifAndAndOrAndAndOrOr(a, b, c, d, e, f): EvaluationValues {
+        if (b && c || d && f || a) {
+            console.log(a);
         }
+        return {cyclomaticValue: 9, cognitiveValue: 5};
     }
 }

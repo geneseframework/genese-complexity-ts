@@ -30,7 +30,7 @@ export class ComplexityService {
                 totalComplexity += 1;
                 ts.forEachChild(node, cb);
             } else {
-                if (ComplexityService.increasesComplexity(node, 'cyclomatic')) {
+                if (ComplexityService.increasesCyclomaticComplexity(node)) {
                     totalComplexity += 1;
                 }
                 ts.forEachChild(node, cb);
@@ -51,6 +51,7 @@ export class ComplexityService {
                 case ts.SyntaxKind.ForInStatement:
                 case ts.SyntaxKind.ForOfStatement:
                 case ts.SyntaxKind.IfStatement:
+                case ts.SyntaxKind.SwitchStatement:
                 case ts.SyntaxKind.WhileStatement:
                     newDepth = depth + 1;
                     break;
@@ -80,6 +81,7 @@ export class ComplexityService {
             case ts.SyntaxKind.ForOfStatement:
             case ts.SyntaxKind.IfStatement:
             case ts.SyntaxKind.MethodDeclaration:
+            case ts.SyntaxKind.SwitchStatement:
             case ts.SyntaxKind.WhileStatement:
                 complexity = tsBloc.depth + 1;
                 break;
@@ -94,20 +96,26 @@ export class ComplexityService {
 
 
     static addBinaryCognitiveComplexity(tsBloc: TsBloc): number {
-        let complexity = 1;
-        if (Ast.isBinary(tsBloc?.parent?.node) && Ast.isSameOperatorToken(tsBloc.node, tsBloc.parent.node)) {
-            complexity = 0;
+        if (!tsBloc?.node || !tsBloc.parent.node) {
+            return 0;
+        }
+        let complexity = 0;
+        if (Ast.isBinary(tsBloc.node) && Ast.isLogicDoor(tsBloc.node)) {
+            if (Ast.isSameOperatorToken(tsBloc.node, tsBloc.parent.node) && !Ast.isOrTokenBetweenBinaries(tsBloc.node)) {
+                complexity = 0;
+            } else {
+                complexity = 1;
+            }
         }
         return complexity;
     }
 
 
-    static increasesComplexity(node, method : 'cognitive' | 'cyclomatic') {
+    static increasesCyclomaticComplexity(node) {
         switch (node.kind) {
             case ts.SyntaxKind.CaseClause:
                 return (node).statements.length > 0;
             case ts.SyntaxKind.QuestionDotToken:
-                return method === 'cyclomatic';
             case ts.SyntaxKind.CatchClause:
             case ts.SyntaxKind.ConditionalExpression:
             case ts.SyntaxKind.DoStatement:

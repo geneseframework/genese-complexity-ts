@@ -28,7 +28,8 @@ export class Process {
 
     getDebugReport() {
         const tsFile: TsFile = TsFileService.generate(`${appRoot}/src/mocks/ast.mock.ts`);
-        tsFile.getEvaluation();
+        const evaluation = tsFile.getEvaluation();
+        // console.log('FILE EVALUATION', evaluation);
     }
 
 
