@@ -3,7 +3,7 @@ exports.__esModule = true;
 var ts = require("typescript");
 var fs = require("fs-extra");
 var fileWalker_1 = require("./services/fileWalker");
-var report_service_1 = require("./services/report.service");
+var report_service_1 = require("./services/ts-folder-report.service");
 var file_service_1 = require("./services/file.service");
 var ast_service_1 = require("./services/ast.service");
 var ts_folder_1 = require("./models/ts.folder.model");
@@ -45,8 +45,8 @@ var Main = /** @class */ (function () {
         var walker = new fileWalker_1.FileWalkerService(sourceFile);
         walker.walk();
     };
-    Main.prototype.generateReportOfTsFolder = function () {
-        var reportService = report_service_1.ReportService.getInstance();
+    Main.prototype.generateReport = function () {
+        var reportService = report_service_1.TsFolderReportService.getInstance();
         reportService.generate();
     };
     return Main;

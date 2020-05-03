@@ -1,6 +1,7 @@
 import { TsFile } from './ts-file.model';
 import { getTypescriptFiles } from '../services/file.service';
 import { Evaluation } from './evaluation.model';
+import { TsFolderService } from '../services/ts-folder.service';
 
 export class TsFolder {
 
@@ -9,6 +10,7 @@ export class TsFolder {
     subFolders?: TsFolder[] = [];
     parent?: TsFolder = undefined;
     path ?= '';
+    private numberOfFiles: number = undefined;
     tsFiles?: TsFile[] = [];
 
     constructor() {
@@ -17,6 +19,14 @@ export class TsFolder {
 
     getEvaluation(): Evaluation {
         return this._evaluation ?? this.evaluate();
+    }
+
+
+    getNumberOfFiles(): number {
+        if (!this.numberOfFiles) {
+            this.numberOfFiles = TsFolderService.getNumberOfFiles(this);
+        }
+        return this.numberOfFiles;
     }
 
 

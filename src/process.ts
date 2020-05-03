@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import * as fs from 'fs-extra';
-import { ReportService } from './services/report.service';
+import { TsFolderReportService } from './services/ts-folder-report.service';
 import { TsFolder } from './models/ts.folder.model';
 import { TsFolderService } from './services/ts-folder.service';
 import { TsFile } from './models/ts-file.model';
@@ -50,8 +50,8 @@ export class Process {
 
 
     generateReport(): void {
-        const reportService: ReportService = new ReportService();
-        reportService.generateReportOfTsFolder(this.tsFolder);
+        const reportService: TsFolderReportService = new TsFolderReportService(this.tsFolder);
+        reportService.generateReport();
     }
 
 

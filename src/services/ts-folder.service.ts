@@ -26,4 +26,13 @@ export class TsFolderService {
         });
         return tsFolder;
     }
+
+
+    static getNumberOfFiles(tsFolder: TsFolder): number {
+        let nbFiles = tsFolder?.tsFiles?.length ?? 0;
+        for (const subFolder of tsFolder.subFolders) {
+            nbFiles += TsFolderService.getNumberOfFiles(subFolder);
+        }
+        return nbFiles;
+    }
 }

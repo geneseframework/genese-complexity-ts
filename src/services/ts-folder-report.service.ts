@@ -4,20 +4,23 @@ import * as Handlebars from "handlebars";
 import { Evaluation } from '../models/evaluation.model';
 import { TsFolder } from '../models/ts.folder.model';
 import { Options } from '../models/options';
+import { TsFolderService } from './ts-folder.service';
 
 const appRoot = require('app-root-path').toString();
 
-export class ReportService {
+export class TsFolderReportService {
 
     private evaluations: Evaluation[] = [];
     template: HandlebarsTemplateDelegate;
+    tsFolder: TsFolder = undefined;
 
 
-    constructor() {
+    constructor(tsFolder: TsFolder) {
+        this.tsFolder = tsFolder;
     }
 
 
-    getEvaluationsOfTsFolder(tsFolder: TsFolder): Evaluation[] {
+    getEvaluations(tsFolder: TsFolder): Evaluation[] {
         let evaluations: Evaluation[] = [];
         for (const subFolder of tsFolder.subFolders) {
             for (const tsFile of subFolder.tsFiles) {
@@ -25,24 +28,27 @@ export class ReportService {
                     evaluations.push(tsMethod.getEvaluation());
                 }
             }
-            evaluations = evaluations.concat(this.getEvaluationsOfTsFolder(subFolder));
+            evaluations = evaluations.concat(this.getEvaluations(subFolder));
         }
         return evaluations;
     }
 
 
-    generateReportOfTsFolder(tsFolder: TsFolder): void {
-        const evaluations = this.getEvaluationsOfTsFolder(tsFolder);
+    generateReport(): void {
+        this.evaluations = this.getEvaluations(this.tsFolder);
         const rowTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/row.handlebars`, 'utf-8'));
         Handlebars.registerPartial("analyse", rowTemplate);
         const reportTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/report.handlebars`, 'utf-8'));
         this.template = Handlebars.compile(reportTemplate);
-        this.writeReport(evaluations);
+        this.writeReport();
     }
 
 
-    private writeReport(evaluations: Evaluation[]) {
-        const ts = this.template({report: evaluations});
+    private writeReport() {
+        const ts = this.template({
+            numberOfFiles: this.tsFolder.getNumberOfFiles(),
+            report: this.evaluations
+        });
         fs.writeFileSync(`${Options.outDir}/report.html`, ts, {encoding: 'utf-8'});
         fs.copyFileSync(`${appRoot}/src/templates/report.css`, `${Options.outDir}/report.css`);
         fs.copyFileSync(`${appRoot}/src/templates/styles.css`, `${Options.outDir}/styles.css`);
