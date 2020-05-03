@@ -1,9 +1,17 @@
+import * as fs from 'fs-extra';
 import * as ts from 'typescript';
 import { ComplexityService as CS } from '../services/complexity.service';
 import { TsTree } from '../models/ts-tree.model';
 import { TsBloc } from '../models/ts-bloc.model';
+import { getFilename } from './file.service';
 
 export class Ast {
+
+
+    static getSourceFile(path: string): ts.SourceFile {
+        return ts.createSourceFile(getFilename(path), fs.readFileSync(path, 'utf-8'), ts.ScriptTarget.Latest);
+    }
+
 
     static getTree(node: ts.Node): TsTree {
         const tree = new TsTree();

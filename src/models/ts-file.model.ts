@@ -2,8 +2,6 @@ import * as ts from 'typescript';
 import { TsMethod } from './ts-method.model';
 import { TsFolder } from './ts-folder.model';
 import { Evaluation } from './evaluation.model';
-import { TsFolderStats } from './ts-folder-stats.interface';
-import { TsFolderService } from '../services/ts-folder.service';
 import { TsFileStats } from './ts-file-stats.interface';
 import { TsFileService } from '../services/ts-file.service';
 
