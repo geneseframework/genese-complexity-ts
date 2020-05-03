@@ -11,7 +11,7 @@ export class ComplexityService {
         let complexity = 0;
         if (tsBloc) {
             for (const bloc of tsBloc?.children) {
-                // console.log('TSBLOC', ts.SyntaxKind[bloc.node.kind]);
+                // console.log('CALCULATE COMPLEXITY', ts.SyntaxKind[bloc.node.kind]);
                 complexity += ComplexityService.addCognitiveComplexity(bloc);
                 complexity += ComplexityService.calculateCognitiveComplexity(bloc);
             }
@@ -44,20 +44,25 @@ export class ComplexityService {
 
     static increaseDepth(node: ts.Node, depth: number): number {
         let newDepth: number;
-        switch (node?.kind) {
-            case ts.SyntaxKind.CatchClause:
-            case ts.SyntaxKind.DoStatement:
-            case ts.SyntaxKind.ForStatement:
-            case ts.SyntaxKind.ForInStatement:
-            case ts.SyntaxKind.ForOfStatement:
-            case ts.SyntaxKind.IfStatement:
-            case ts.SyntaxKind.MethodDeclaration:
-            case ts.SyntaxKind.WhileStatement:
-                newDepth = depth + 1;
-                break;
-            default:
-                newDepth = depth;
-                break;
+        if (node?.kind === ts.SyntaxKind.Block) {
+            // console.log('CALCULATE COMPLEXITY increaseDepth', Ast.getSyntaxKindName(node));
+            switch (node?.parent.kind) {
+                case ts.SyntaxKind.CatchClause:
+                case ts.SyntaxKind.DoStatement:
+                case ts.SyntaxKind.ForStatement:
+                case ts.SyntaxKind.ForInStatement:
+                case ts.SyntaxKind.ForOfStatement:
+                case ts.SyntaxKind.IfStatement:
+                case ts.SyntaxKind.WhileStatement:
+                    newDepth = depth + 1;
+                    console.log('INCREASE DEPTH node?.parent', Ast.getSyntaxKindName(node?.parent), 'depth', newDepth);
+                    break;
+                default:
+                    newDepth = depth;
+                    break;
+            }
+        } else {
+            newDepth = 0;
         }
         // console.log(`NODE ${ts.SyntaxKind[node?.kind]} depth ${newDepth}`);
         return newDepth;
@@ -65,32 +70,38 @@ export class ComplexityService {
 
 
     static addCognitiveComplexity(tsBloc: TsBloc): number {
-        if (!tsBloc?.node || !tsBloc?.depth) {
+        // console.log('ADD ', Ast.getSyntaxKindName(tsBloc.node) , 'DEPTH', tsBloc.depth);
+        let complexity = 0;
+        if (!tsBloc?.node || tsBloc?.depth === undefined) {
             return 0;
         }
-        switch (tsBloc.node.kind) {
-            case ts.SyntaxKind.QuestionDotToken:
-            case ts.SyntaxKind.CatchClause:
-            case ts.SyntaxKind.ConditionalExpression:
-            case ts.SyntaxKind.DoStatement:
-            case ts.SyntaxKind.ForStatement:
-            case ts.SyntaxKind.ForInStatement:
-            case ts.SyntaxKind.ForOfStatement:
-            case ts.SyntaxKind.IfStatement:
-            case ts.SyntaxKind.WhileStatement:
-                return tsBloc.depth + 1;
-            case ts.SyntaxKind.BinaryExpression:
-                return ComplexityService.addBinaryCognitiveComplexity(tsBloc);
-            // switch ((node).operatorToken.kind) {
-            //         case ts.SyntaxKind.BarBarToken:
-            //         case ts.SyntaxKind.AmpersandAmpersandToken:
-            //             return true;
-            //         default:
-            //             return false;
-            //     }
-            default:
-                return 0;
-        }
+        // console.log('KIND ', Ast.getSyntaxKindName(tsBloc.node) , 'DEPTH', tsBloc.depth);
+        // console.log('DEPTH ', tsBloc.depth);
+        // if (tsBloc.node?.kind === ts.SyntaxKind.Block) {
+            switch (tsBloc.node.kind) {
+                case ts.SyntaxKind.QuestionDotToken:
+                case ts.SyntaxKind.CatchClause:
+                case ts.SyntaxKind.ConditionalExpression:
+                case ts.SyntaxKind.DoStatement:
+                case ts.SyntaxKind.ForStatement:
+                case ts.SyntaxKind.ForInStatement:
+                case ts.SyntaxKind.ForOfStatement:
+                case ts.SyntaxKind.IfStatement:
+                case ts.SyntaxKind.MethodDeclaration:
+                case ts.SyntaxKind.WhileStatement:
+                    complexity = tsBloc.depth + 1;
+                    console.log('ADD CPX ', complexity);
+                    break;
+                case ts.SyntaxKind.BinaryExpression:
+                    complexity = ComplexityService.addBinaryCognitiveComplexity(tsBloc);
+                    break;
+                default:
+                    complexity = 0;
+            }
+        // } else {
+        //     complexity = 0
+        // }
+        return complexity;
     }
 
 

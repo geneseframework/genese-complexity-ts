@@ -15,6 +15,7 @@ export class TsMethod {
     constructor(node: ts.Node) {
         this.node = node;
         this._tsBloc = this.getTsBloc();
+        // console.log('BLOC', this._tsBloc);
     }
 
 
