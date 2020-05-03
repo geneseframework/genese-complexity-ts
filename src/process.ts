@@ -1,14 +1,15 @@
 import * as ts from 'typescript';
-import { ReportService } from './services/report.service';
-import { TsFolder } from './models/ts.folder.model';
+import * as fs from 'fs-extra';
+import { TsFolderReportService } from './services/ts-folder-report.service';
+import { TsFolder } from './models/ts-folder.model';
 import { TsFolderService } from './services/ts-folder.service';
 import { TsFile } from './models/ts-file.model';
 import { TsFileService } from './services/ts-file.service';
 import { Options } from './models/options';
 
 const appRootPath = require('app-root-path');
-
 const appRoot = appRootPath.toString();
+
 export class Process {
 
     private readonly path: string;
@@ -20,16 +21,18 @@ export class Process {
 
     start(options: any): void {
         console.log('START CALCULATION');
-        this.setOptions(options);
         // this.getDebugReport();
-        this.setTsFolder()
+        this.setOptions(options)
+            .createOutDir()
+            .setTsFolder()
             .generateReport();
         console.log('REPORT GENERATED SUCCESSFULLY');
     }
 
 
-    setOptions(options: any): void {
-        Options.threshold = options?.threshold;
+    setOptions(options: any): Process {
+        Options.setOptions(options);
+        return this;
     }
 
 
@@ -47,7 +50,17 @@ export class Process {
 
 
     generateReport(): void {
-        const reportService: ReportService = new ReportService(this.tsFolder);
+        const reportService: TsFolderReportService = new TsFolderReportService(this.tsFolder);
         reportService.generateReport();
+    }
+
+
+    createOutDir(): Process {
+        if (fs.existsSync(Options.outDir)) {
+            fs.emptyDirSync(Options.outDir);
+        } else {
+            fs.mkdirsSync(Options.outDir);
+        }
+        return this;
     }
 }

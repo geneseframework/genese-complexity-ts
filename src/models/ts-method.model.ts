@@ -41,13 +41,12 @@ export class TsMethod {
     private evaluate(): Evaluation {
         const evaluation: Evaluation = new Evaluation();
         evaluation.cognitiveValue = CS.calculateCognitiveComplexity(this._tsBloc);
-        evaluation.cognitiveAboveThreshold = evaluation.cognitiveValue > Options.threshold;
+        evaluation.cognitiveAboveThreshold = evaluation.cognitiveValue > Options.cognitiveThreshold;
         evaluation.cyclomaticValue = CS.calculateCyclomaticComplexity(this.node);
-        evaluation.cyclomaticAboveThreshold = evaluation.cyclomaticValue > Options.threshold;
+        evaluation.cyclomaticAboveThreshold = evaluation.cyclomaticValue > Options.cyclomaticThreshold;
         evaluation.methodName = Ast.getMethodName(this.node);
         evaluation.filename = this.tsFile?.sourceFile?.fileName ?? '';
         this._evaluation = evaluation;
-        // console.log('METHOD EVALUATION ', evaluation);
         return evaluation;
     }
 

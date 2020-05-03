@@ -1,7 +1,11 @@
 import * as ts from 'typescript';
 import { TsMethod } from './ts-method.model';
-import { TsFolder } from './ts.folder.model';
+import { TsFolder } from './ts-folder.model';
 import { Evaluation } from './evaluation.model';
+import { TsFolderStats } from './ts-folder-stats.interface';
+import { TsFolderService } from '../services/ts-folder.service';
+import { TsFileStats } from './ts-file-stats.interface';
+import { TsFileService } from '../services/ts-file.service';
 
 export class TsFile {
 
@@ -9,6 +13,7 @@ export class TsFile {
     tsMethods?: TsMethod[] = [];
     name ?= '';
     sourceFile?: ts.SourceFile = undefined;
+    stats?: TsFileStats = undefined;
     tsFolder?: TsFolder = new TsFolder();
 
     constructor() {
@@ -17,6 +22,14 @@ export class TsFile {
 
     getEvaluation(): Evaluation {
         return this._evaluation ?? this.evaluate();
+    }
+
+
+    getStats(): TsFileStats {
+        if (!this.stats) {
+            this.stats = TsFileService.getStats(this);
+        }
+        return this.stats;
     }
 
 

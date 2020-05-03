@@ -1,7 +1,9 @@
 import * as fs from 'fs-extra';
-import { TsFolder } from '../models/ts.folder.model';
+import { TsFolder } from '../models/ts-folder.model';
 import { getExtension } from './file.service';
 import { TsFileService } from './ts-file.service';
+import { TsFolderStats } from '../models/ts-folder-stats.interface';
+import { Tools } from './tools.service';
 
 export class TsFolderService {
 
@@ -25,5 +27,51 @@ export class TsFolderService {
             }
         });
         return tsFolder;
+    }
+
+
+    static getNumberOfFiles(tsFolder: TsFolder): number {
+        let nbFiles = tsFolder?.tsFiles?.length ?? 0;
+        for (const subFolder of tsFolder.subFolders) {
+            nbFiles += TsFolderService.getNumberOfFiles(subFolder);
+        }
+        return nbFiles;
+    }
+
+
+    static getStats(tsFolder: TsFolder): TsFolderStats {
+        let nbFiles = tsFolder?.tsFiles?.length ?? 0;
+        let nbMethods = 0;
+        let methodsUnderCognitiveThreshold = 0;
+        let methodsUnderCyclomaticThreshold = 0;
+        for (const subFolder of tsFolder.subFolders) {
+            for (const file of subFolder.tsFiles) {
+                nbMethods += file.tsMethods?.length ?? 0;
+                methodsUnderCognitiveThreshold += file.getStats().methodsUnderCognitiveThreshold;
+                methodsUnderCyclomaticThreshold += file.getStats().methodsUnderCyclomaticThreshold;
+            }
+            nbFiles += TsFolderService.getStats(subFolder)?.numberOfFiles;
+        }
+        const stats: TsFolderStats = {
+            methodsUnderCognitiveThreshold: methodsUnderCognitiveThreshold,
+            methodsUnderCyclomaticThreshold: methodsUnderCyclomaticThreshold,
+            numberOfFiles: nbFiles,
+            numberOfMethods: nbMethods,
+            percentUnderCognitiveThreshold: Tools.percent(methodsUnderCognitiveThreshold, nbMethods),
+            percentUnderCyclomaticThreshold: Tools.percent(methodsUnderCyclomaticThreshold, nbMethods)
+        }
+        return stats;
+    }
+
+
+    static getNumberOfMethods(tsFolder: TsFolder): number {
+        let nbMethods = 0;
+        for (const subFolder of tsFolder.subFolders) {
+            for (const file of subFolder.tsFiles) {
+                nbMethods += file.tsMethods?.length ?? 0;
+            }
+            TsFolderService.getNumberOfMethods(subFolder);
+        }
+        return nbMethods;
     }
 }
