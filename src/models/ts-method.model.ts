@@ -4,6 +4,7 @@ import { Ast } from '../services/ast.service';
 import { ComplexityService as CS } from '../services/complexity.service';
 import { Evaluation } from './evaluation.model';
 import { TsBloc } from './ts-bloc.model';
+import { Options } from './options';
 
 export class TsMethod {
 
@@ -40,7 +41,9 @@ export class TsMethod {
     private evaluate(): Evaluation {
         const evaluation: Evaluation = new Evaluation();
         evaluation.cognitiveValue = CS.calculateCognitiveComplexity(this._tsBloc);
+        evaluation.cognitiveAboveThreshold = evaluation.cognitiveValue > Options.threshold;
         evaluation.cyclomaticValue = CS.calculateCyclomaticComplexity(this.node);
+        evaluation.cyclomaticAboveThreshold = evaluation.cyclomaticValue > Options.threshold;
         evaluation.methodName = Ast.getMethodName(this.node);
         evaluation.filename = this.tsFile?.sourceFile?.fileName ?? '';
         this._evaluation = evaluation;
