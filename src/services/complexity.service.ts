@@ -102,9 +102,10 @@ export class ComplexityService {
             if (Ast.isLogicDoor(tsBloc.node)) {
                 console.log('IS LOGIC DOOR')
                 if (Ast.isSameOperatorToken(tsBloc.node, tsBloc.parent.node)) {
+                    console.log('SAME TOKEN')
                     complexity = 0;
                 } else {
-                    console.log('NOT SAME TOKEN')
+                    console.log('NOT SAME TOKEN : + 1')
                     complexity = 1;
                 }
             }

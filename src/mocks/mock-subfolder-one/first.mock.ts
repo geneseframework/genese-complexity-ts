@@ -48,6 +48,23 @@ class FirstMock {
         return {cyclomaticValue: 4, cognitiveValue: 3};
     }
 
+
+    ifAndAndOrAnd(a, b, c, d, e, f): EvaluationValues {
+        if (a && b && c || d && e && f) {
+            console.log(a);
+        }
+        return {cyclomaticValue: 7, cognitiveValue: 4};
+    }
+
+
+    ifAndAndOrAndAndOrOr(a, b, c, d, e, f): EvaluationValues {
+        if (a && b && c || d && e && f || a || b) {
+            console.log(a);
+        }
+        return {cyclomaticValue: 9, cognitiveValue: 5};
+    }
+
+
     ifIfIf(data: number): EvaluationValues {
         if (data > 2) {
             if (data > 3) {
@@ -72,14 +89,6 @@ class FirstMock {
             }
         }
         return {cyclomaticValue: 4, cognitiveValue: 6};
-    }
-
-
-    ifAndAndOrAnd(a, b, c, d, e, f): EvaluationValues {
-        if (a && b && c || d && e && f) {
-            console.log(a);
-        }
-        return {cyclomaticValue: 7, cognitiveValue: 4};
     }
 
 

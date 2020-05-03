@@ -2,12 +2,10 @@ import { EvaluationValues } from '../interfaces/evaluation-values';
 
 export class AstMock {
 
-
-
-    ifAndOr(a, b, c, d): EvaluationValues {
-        if (a && b && c || d || a && c) {
+    ifAndAndOrAndAndOrOr(a, b, c, d, e, f): EvaluationValues {
+        if (a && b && c || d && e && f || a || b) {
             console.log(a);
         }
-        return {cyclomaticValue: 4, cognitiveValue: 3};
+        return {cyclomaticValue: 9, cognitiveValue: 5};
     }
 }

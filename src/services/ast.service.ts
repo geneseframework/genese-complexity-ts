@@ -57,8 +57,6 @@ export class Ast {
 
 
     static isBinary(node: ts.Node): boolean {
-        // console.log('NODE ', node);
-        console.log('NODE expression ', Ast.getType(node?.['expression']?.['operatorToken']));
         return node?.kind === ts.SyntaxKind.BinaryExpression ?? false;
     }
 
@@ -67,7 +65,6 @@ export class Ast {
         // console.log('NODE ', node);
         // console.log('NODE expression ', node['expression']['operatorToken'].kind);
         console.log('NODE SK ', ts.SyntaxKind[node?.['operatorToken'].kind]);
-        console.log('NODE expression ', Ast.getType(node?.['expression']?.['operatorToken']));
         return (node?.['operatorToken']?.kind === ts.SyntaxKind.AmpersandAmpersandToken
             || node?.['operatorToken']?.kind === ts.SyntaxKind.BarBarToken)
             ?? false;
