@@ -62,11 +62,16 @@ export class Ast {
 
 
     static isLogicDoor(node: ts.Node): boolean {
-        // console.log('NODE ', node);
-        // console.log('NODE expression ', node['expression']['operatorToken'].kind);
-        console.log('NODE SK ', ts.SyntaxKind[node?.['operatorToken'].kind]);
         return (node?.['operatorToken']?.kind === ts.SyntaxKind.AmpersandAmpersandToken
             || node?.['operatorToken']?.kind === ts.SyntaxKind.BarBarToken)
+            ?? false;
+    }
+
+
+    static isOrTokenBetweenBinaries(node: ts.Node): boolean {
+        return (node?.['operatorToken']?.kind === ts.SyntaxKind.BarBarToken
+            && node?.['left']?.kind === ts.SyntaxKind.BinaryExpression
+            && node?.['right']?.kind === ts.SyntaxKind.BinaryExpression)
             ?? false;
     }
 

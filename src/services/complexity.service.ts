@@ -98,14 +98,10 @@ export class ComplexityService {
     static addBinaryCognitiveComplexity(tsBloc: TsBloc): number {
         let complexity = 0;
         if (Ast.isBinary(tsBloc?.node)) {
-            console.log('IS BINARY')
             if (Ast.isLogicDoor(tsBloc.node)) {
-                console.log('IS LOGIC DOOR')
-                if (Ast.isSameOperatorToken(tsBloc.node, tsBloc.parent.node)) {
-                    console.log('SAME TOKEN')
+                if (Ast.isSameOperatorToken(tsBloc.node, tsBloc.parent.node) && !Ast.isOrTokenBetweenBinaries(tsBloc.node)) {
                     complexity = 0;
                 } else {
-                    console.log('NOT SAME TOKEN : + 1')
                     complexity = 1;
                 }
             }
