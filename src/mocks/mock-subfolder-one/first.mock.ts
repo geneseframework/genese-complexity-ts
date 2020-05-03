@@ -1,4 +1,4 @@
-import { Evaluation } from '../../models/evaluation.model';
+import { EvaluationValues } from '../../interfaces/evaluation-values';
 
 class FirstMock {
 
@@ -7,7 +7,7 @@ class FirstMock {
 
 
 
-    ifElse(data): Evaluation {
+    ifElse(data): EvaluationValues {
         if (data === 'a') {
             data = 'b';
         } else {
@@ -17,7 +17,7 @@ class FirstMock {
     }
 
 
-    ifAnd(a, b): Evaluation {
+    ifAnd(a, b): EvaluationValues {
         if (a && b) {
             console.log(a);
         }
@@ -25,7 +25,7 @@ class FirstMock {
     }
 
 
-    ifOr(a, b): Evaluation {
+    ifOr(a, b): EvaluationValues {
         if (a || b) {
             console.log(a);
         }
@@ -33,7 +33,7 @@ class FirstMock {
     }
 
 
-    ifAndAnd(a, b, c): Evaluation {
+    ifAndAnd(a, b, c): EvaluationValues {
         if (a && b && c) {
             console.log(a);
         }
@@ -41,14 +41,14 @@ class FirstMock {
     }
 
 
-    ifAndOr(a, b, c): Evaluation {
+    ifAndOr(a, b, c): EvaluationValues {
         if (a && b || c) {
             console.log(a);
         }
         return {cyclomaticValue: 4, cognitiveValue: 3};
     }
 
-    ifIfIf(data: number): Evaluation {
+    ifIfIf(data: number): EvaluationValues {
         if (data > 2) {
             if (data > 3) {
                 if (data > 4) {
@@ -61,7 +61,7 @@ class FirstMock {
 
 
 
-    ifIfIfElse(data: number): Evaluation {
+    ifIfIfElse(data: number): EvaluationValues {
         if (data > 2) {
             if (data > 3) {
                 if (data > 4) {
@@ -75,7 +75,7 @@ class FirstMock {
     }
 
 
-    ifAndAndOrAnd(a, b, c, d, e, f): Evaluation {
+    ifAndAndOrAnd(a, b, c, d, e, f): EvaluationValues {
         if (a && b && c || d && e && f) {
             console.log(a);
         }
@@ -84,7 +84,7 @@ class FirstMock {
 
 
 
-    switches(numberOfWords: number): Evaluation {
+    switches(numberOfWords: number): EvaluationValues {
         switch (numberOfWords) {
             case 1:
                 console.log("one");

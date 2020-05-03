@@ -19,16 +19,17 @@ export class Process {
 
     start(): void {
         console.log('START CALCULATION');
-        // this.getDebugReport();
-        this.setTsFolder()
-            .generateReport();
+        this.getDebugReport();
+        // this.setTsFolder()
+        //     .generateReport();
         console.log('REPORT GENERATED SUCCESSFULLY');
     }
 
 
     getDebugReport() {
         const tsFile: TsFile = TsFileService.generate(`${appRoot}/src/mocks/ast.mock.ts`);
-        tsFile.getEvaluation();
+        const evaluation = tsFile.getEvaluation();
+        // console.log('FILE EVALUATION', evaluation);
     }
 
 

@@ -51,6 +51,7 @@ export class ComplexityService {
                 case ts.SyntaxKind.ForInStatement:
                 case ts.SyntaxKind.ForOfStatement:
                 case ts.SyntaxKind.IfStatement:
+                case ts.SyntaxKind.SwitchStatement:
                 case ts.SyntaxKind.WhileStatement:
                     newDepth = depth + 1;
                     break;
@@ -80,6 +81,7 @@ export class ComplexityService {
             case ts.SyntaxKind.ForOfStatement:
             case ts.SyntaxKind.IfStatement:
             case ts.SyntaxKind.MethodDeclaration:
+            case ts.SyntaxKind.SwitchStatement:
             case ts.SyntaxKind.WhileStatement:
                 complexity = tsBloc.depth + 1;
                 break;
@@ -94,9 +96,18 @@ export class ComplexityService {
 
 
     static addBinaryCognitiveComplexity(tsBloc: TsBloc): number {
-        let complexity = 1;
-        if (Ast.isBinary(tsBloc?.parent?.node) && Ast.isSameOperatorToken(tsBloc.node, tsBloc.parent.node)) {
-            complexity = 0;
+        let complexity = 0;
+        if (Ast.isBinary(tsBloc?.node)) {
+            console.log('IS BINARY')
+            if (Ast.isLogicDoor(tsBloc.node)) {
+                console.log('IS LOGIC DOOR')
+                if (Ast.isSameOperatorToken(tsBloc.node, tsBloc.parent.node)) {
+                    complexity = 0;
+                } else {
+                    console.log('NOT SAME TOKEN')
+                    complexity = 1;
+                }
+            }
         }
         return complexity;
     }
