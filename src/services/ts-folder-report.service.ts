@@ -46,7 +46,8 @@ export class TsFolderReportService {
 
     private writeReport() {
         const ts = this.template({
-            numberOfFiles: this.tsFolder.getNumberOfFiles(),
+            numberOfFiles: this.tsFolder.getStats()?.numberOfFiles,
+            numberOfMethods: this.tsFolder.getStats()?.numberOfMethods,
             report: this.evaluations
         });
         fs.writeFileSync(`${Options.outDir}/report.html`, ts, {encoding: 'utf-8'});
