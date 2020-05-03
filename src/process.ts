@@ -4,6 +4,7 @@ import { TsFolder } from './models/ts.folder.model';
 import { TsFolderService } from './services/ts-folder.service';
 import { TsFile } from './models/ts-file.model';
 import { TsFileService } from './services/ts-file.service';
+import { Options } from './models/options';
 
 const appRootPath = require('app-root-path');
 
@@ -17,12 +18,18 @@ export class Process {
         this.path = path;
     }
 
-    start(): void {
+    start(options: any): void {
         console.log('START CALCULATION');
+        this.setOptions(options);
         // this.getDebugReport();
         this.setTsFolder()
             .generateReport();
         console.log('REPORT GENERATED SUCCESSFULLY');
+    }
+
+
+    setOptions(options: any): void {
+        Options.threshold = options?.threshold;
     }
 
 
