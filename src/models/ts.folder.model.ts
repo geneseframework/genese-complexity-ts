@@ -26,7 +26,6 @@ export class TsFolder {
             return null;
         }
         const tsFiles: string[] = getTypescriptFiles(this.path);
-        console.log('TS FILES', tsFiles);
         let evaluation: Evaluation = new Evaluation();
         for (const file of this.tsFiles) {
             evaluation.add(file.getEvaluation());

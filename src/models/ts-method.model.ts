@@ -40,7 +40,6 @@ export class TsMethod {
     private evaluate(): Evaluation {
         const evaluation: Evaluation = new Evaluation();
         evaluation.cognitiveValue = CS.calculateCognitiveComplexity(this._tsBloc);
-        console.log('CX ', evaluation.cognitiveValue);
         evaluation.cyclomaticValue = CS.calculateCyclomaticComplexity(this.node);
         evaluation.methodName = Ast.getMethodName(this.node);
         evaluation.filename = this.tsFile?.sourceFile?.fileName ?? '';

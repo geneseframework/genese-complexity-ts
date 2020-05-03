@@ -55,4 +55,13 @@ export class Ast {
         return node;
     }
 
+
+    static isBinary(node: ts.Node): boolean {
+        return node?.kind === ts.SyntaxKind.BinaryExpression ?? false;
+    }
+
+
+    static isSameOperatorToken(firstNode: ts.Node, secondNode: ts.Node): boolean {
+        return firstNode?.['operatorToken']?.kind === secondNode?.['operatorToken']?.kind ?? false;
+    }
 }
