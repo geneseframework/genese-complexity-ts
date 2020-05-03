@@ -30,7 +30,7 @@ export class ComplexityService {
                 totalComplexity += 1;
                 ts.forEachChild(node, cb);
             } else {
-                if (ComplexityService.increasesComplexity(node, 'cyclomatic')) {
+                if (ComplexityService.increasesCyclomaticComplexity(node)) {
                     totalComplexity += 1;
                 }
                 ts.forEachChild(node, cb);
@@ -96,26 +96,26 @@ export class ComplexityService {
 
 
     static addBinaryCognitiveComplexity(tsBloc: TsBloc): number {
+        if (!tsBloc?.node || !tsBloc.parent.node) {
+            return 0;
+        }
         let complexity = 0;
-        if (Ast.isBinary(tsBloc?.node)) {
-            if (Ast.isLogicDoor(tsBloc.node)) {
-                if (Ast.isSameOperatorToken(tsBloc.node, tsBloc.parent.node) && !Ast.isOrTokenBetweenBinaries(tsBloc.node)) {
-                    complexity = 0;
-                } else {
-                    complexity = 1;
-                }
+        if (Ast.isBinary(tsBloc.node) && Ast.isLogicDoor(tsBloc.node)) {
+            if (Ast.isSameOperatorToken(tsBloc.node, tsBloc.parent.node) && !Ast.isOrTokenBetweenBinaries(tsBloc.node)) {
+                complexity = 0;
+            } else {
+                complexity = 1;
             }
         }
         return complexity;
     }
 
 
-    static increasesComplexity(node, method : 'cognitive' | 'cyclomatic') {
+    static increasesCyclomaticComplexity(node) {
         switch (node.kind) {
             case ts.SyntaxKind.CaseClause:
                 return (node).statements.length > 0;
             case ts.SyntaxKind.QuestionDotToken:
-                return method === 'cyclomatic';
             case ts.SyntaxKind.CatchClause:
             case ts.SyntaxKind.ConditionalExpression:
             case ts.SyntaxKind.DoStatement:
