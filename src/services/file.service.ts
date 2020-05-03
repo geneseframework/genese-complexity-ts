@@ -6,10 +6,6 @@ export function getFilename(filePath = ''): string {
     return splittedPath[splittedPath.length - 1];
 }
 
-export function getSourceFile(path: string): ts.SourceFile {
-    return ts.createSourceFile(getFilename(path), fs.readFileSync(path, 'utf-8'), ts.ScriptTarget.Latest);
-}
-
 export function getAllFiles(dirPath: string, arrayOfFiles?: string[]): string[] {
     const files = fs.readdirSync(dirPath)
 

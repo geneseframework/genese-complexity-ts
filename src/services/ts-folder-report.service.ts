@@ -4,7 +4,6 @@ import * as Handlebars from "handlebars";
 import { Evaluation } from '../models/evaluation.model';
 import { TsFolder } from '../models/ts-folder.model';
 import { Options } from '../models/options';
-import { TsFolderService } from './ts-folder.service';
 
 const appRoot = require('app-root-path').toString();
 
