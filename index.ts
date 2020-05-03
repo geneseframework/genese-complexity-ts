@@ -1,5 +1,4 @@
 import { Process } from './src/process';
-import { Options } from './src/models/options';
 
 const appRootPath = require('app-root-path');
 

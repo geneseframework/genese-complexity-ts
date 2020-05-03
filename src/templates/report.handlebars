@@ -14,6 +14,31 @@
 <body>
 <div class="mainContainer">
     <h1>Genese complexity report</h1>
+    <div class="clearfix">
+
+        <div class='fl pad1y space-right2'>
+            <span class="strong">{{nbFiles}}</span>
+            <span class="quiet">Files</span>
+        </div>
+
+        <div class='fl pad1y space-right2'>
+            <span class="strong">{{nbMethods}}</span>
+            <span class="quiet">Methods</span>
+        </div>
+
+        <div class='fl pad1y space-right2'>
+            <span class="strong">{{percentCyclomatic}}</span>
+            <span class="quiet">Cyclomatic complexity</span>
+            <span class='fraction'>{{cyclomaticUnderThreshold}}/{{nbMethods}}</span>
+        </div>
+
+        <div class='fl pad1y space-right2'>
+            <span class="strong">{{percentCognitive}}</span>
+            <span class="quiet">Cognitive complexity</span>
+            <span class='fraction'>{{cyclomaticUnderThreshold}}/{{nbMethods}}</span>
+        </div>
+
+    </div>
     <table class="coverage-summary">
         <thead>
             <tr>

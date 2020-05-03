@@ -47,7 +47,7 @@ export class TsMethod {
         evaluation.methodName = Ast.getMethodName(this.node);
         evaluation.filename = this.tsFile?.sourceFile?.fileName ?? '';
         this._evaluation = evaluation;
-        console.log('METHOD EVALUATION ', evaluation);
+        // console.log('METHOD EVALUATION ', evaluation);
         return evaluation;
     }
 
