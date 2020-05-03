@@ -1,8 +1,8 @@
 import * as fs from 'fs-extra';
-import { TsFolder } from '../models/ts.folder.model';
+import { TsFolder } from '../models/ts-folder.model';
 import { getExtension } from './file.service';
 import { TsFileService } from './ts-file.service';
-import { TsFolderStats } from '../models/ts-folder-stats.model';
+import { TsFolderStats } from '../models/ts-folder-stats.interface';
 
 export class TsFolderService {
 
@@ -41,13 +41,19 @@ export class TsFolderService {
     static getStats(tsFolder: TsFolder): TsFolderStats {
         let nbFiles = tsFolder?.tsFiles?.length ?? 0;
         let nbMethods = 0;
+        let methodsUnderCognitiveThreshold = 0;
+        let methodsUnderCyclomaticThreshold = 0;
         for (const subFolder of tsFolder.subFolders) {
             for (const file of subFolder.tsFiles) {
                 nbMethods += file.tsMethods?.length ?? 0;
+                methodsUnderCognitiveThreshold += file.getStats().methodsUnderCognitiveThreshold;
+                methodsUnderCyclomaticThreshold += file.getStats().methodsUnderCyclomaticThreshold;
             }
             nbFiles += TsFolderService.getStats(subFolder)?.numberOfFiles;
         }
         const stats: TsFolderStats = {
+            methodsUnderCognitiveThreshold: methodsUnderCognitiveThreshold,
+            methodsUnderCyclomaticThreshold: methodsUnderCyclomaticThreshold,
             numberOfFiles: nbFiles,
             numberOfMethods: nbMethods
         }

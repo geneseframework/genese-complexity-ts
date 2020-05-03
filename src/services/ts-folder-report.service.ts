@@ -2,7 +2,7 @@ import * as fs from 'fs-extra';
 import * as eol from "eol";
 import * as Handlebars from "handlebars";
 import { Evaluation } from '../models/evaluation.model';
-import { TsFolder } from '../models/ts.folder.model';
+import { TsFolder } from '../models/ts-folder.model';
 import { Options } from '../models/options';
 import { TsFolderService } from './ts-folder.service';
 
@@ -46,6 +46,8 @@ export class TsFolderReportService {
 
     private writeReport() {
         const ts = this.template({
+            methodsUnderCognitiveThreshold: this.tsFolder.getStats()?.methodsUnderCognitiveThreshold,
+            methodsUnderCyclomaticThreshold: this.tsFolder.getStats()?.methodsUnderCyclomaticThreshold,
             numberOfFiles: this.tsFolder.getStats()?.numberOfFiles,
             numberOfMethods: this.tsFolder.getStats()?.numberOfMethods,
             report: this.evaluations
