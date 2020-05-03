@@ -14,43 +14,49 @@
 <body>
 <div class="mainContainer">
     <h1>Genese complexity report</h1>
+    <div class="header">
+        <div class="stats">
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">4</span>
+                    <span class="quiet">Files</span>
+                </div>
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">13</span>
+                    <span class="quiet">Methods</span>
+                </div>
+            </div>
 
-    <div class="clearfix">
-        <div class='fl pad1y space-right2'>
-            <span class="strong">4</span>
-            <span class="quiet">Files</span>
-        </div>
-        <div class='fl pad1y space-right2'>
-            <span class="strong">13</span>
-            <span class="quiet">Methods</span>
-        </div>
-    </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">46.2 %</span>
+                    <span class="quiet">Cyclomatic complexity</span>
+                    <span class='fraction'>6/13</span>
+                    <span class="quiet">(threshold : 3)</span>
+                </div>
+            </div>
 
-    <div class="clearfix">
-        <div class='fl pad1y space-right2'>
-            <span class="strong">46.2 %</span>
-            <span class="quiet">Cyclomatic complexity</span>
-            <span class='fraction'>6/13</span>
-            <span class="quiet">(threshold : 3)</span>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">92.3 %</span>
+                    <span class="quiet">Cognitive complexity</span>
+                    <span class='fraction'>12/13</span>
+                    <span class="quiet">(threshold : 4)</span>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <div class="clearfix">
-        <div class='fl pad1y space-right2'>
-            <span class="strong">92.3 %</span>
-            <span class="quiet">Cognitive complexity</span>
-            <span class='fraction'>12/13</span>
-            <span class="quiet">(threshold : 4)</span>
+        <div class="charts">
+            <canvas id="myChart"></canvas>
         </div>
     </div>
     <table class="coverage-summary">
         <thead>
-            <tr>
-                <th class="file">File</th>
-                <th class="column methodColumn">Method</th>
-                <th class="column cyclomaticColumn">Cyclomatic complexity</th>
-                <th class="column cognitiveColumn">Cognitive complexity</th>
-            </tr>
+        <tr>
+            <th class="file">File</th>
+            <th class="column methodColumn">Method</th>
+            <th class="column cyclomaticColumn">Cyclomatic complexity</th>
+            <th class="column cognitiveColumn">Cognitive complexity</th>
+        </tr>
         </thead>
             <tr>
                 <td class="column fileColumn">first.mock.ts</td>
@@ -180,5 +186,37 @@
             </tr>
     </table>
 </div>
+<script src="../../node_modules/chart.js/dist/Chart.js"></script>
+<script>
+    var ctx = document.getElementById('myChart').getContext("2d");
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [92.3, 100 - 92.3],
+                backgroundColor: [
+                    "rgba(54, 162, 235, 0.2)",
+                    "rgba(255, 99, 132, 0.2)",
+                ]
+            }],
+            labels: [
+                'complexity < 4',
+                'complexity > 4',
+            ]
+        },
+        options: {
+            layout: {
+                padding: {
+                    maintainAspectRatio: false,
+                    responsive: false,
+                    left: 50,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            }
+        }
+    });
+</script>
 </body>
 </html>
