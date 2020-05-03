@@ -45,7 +45,7 @@ var Main = /** @class */ (function () {
         var walker = new fileWalker_1.FileWalkerService(sourceFile);
         walker.walk();
     };
-    Main.prototype.generateReport = function () {
+    Main.prototype.generateReportOfTsFolder = function () {
         var reportService = report_service_1.ReportService.getInstance();
         reportService.generate();
     };

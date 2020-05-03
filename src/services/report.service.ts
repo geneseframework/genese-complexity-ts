@@ -3,31 +3,21 @@ import * as eol from "eol";
 import * as Handlebars from "handlebars";
 import { Evaluation } from '../models/evaluation.model';
 import { TsFolder } from '../models/ts.folder.model';
+import { Options } from '../models/options';
 
-const appRootPath = require('app-root-path');
+const appRoot = require('app-root-path').toString();
 
 export class ReportService {
 
-    private appRoot = appRootPath.toString();                   // Root of the app
     private evaluations: Evaluation[] = [];
     template: HandlebarsTemplateDelegate;
-    outDir: string;
-    private tsFolder: TsFolder;
 
 
-    constructor(tsFolder: TsFolder) {
-        this.tsFolder = tsFolder;
-        this.outDir = `${this.appRoot}/genese/complexity`;
+    constructor() {
     }
 
 
-    private getEvaluations(): void {
-        const tsFolder: TsFolder = new TsFolder();
-        tsFolder.subFolders.push(this.tsFolder);
-        this.evaluations = this.getEvaluationsOfTsFolder(tsFolder);
-    }
-
-    private getEvaluationsOfTsFolder(tsFolder: TsFolder): Evaluation[] {
+    getEvaluationsOfTsFolder(tsFolder: TsFolder): Evaluation[] {
         let evaluations: Evaluation[] = [];
         for (const subFolder of tsFolder.subFolders) {
             for (const tsFile of subFolder.tsFiles) {
@@ -41,26 +31,21 @@ export class ReportService {
     }
 
 
-    generateReport(): void {
-        this.getEvaluations();
-        if (fs.existsSync(this.outDir)) {
-            fs.emptyDirSync(this.outDir);
-        } else {
-            fs.mkdirsSync(this.outDir);
-        }
-        const rowTemplate = eol.auto(fs.readFileSync(`${this.appRoot}/src/templates/row.handlebars`, 'utf-8'));
+    generateReportOfTsFolder(tsFolder: TsFolder): void {
+        const evaluations = this.getEvaluationsOfTsFolder(tsFolder);
+        const rowTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/row.handlebars`, 'utf-8'));
         Handlebars.registerPartial("analyse", rowTemplate);
-        const reportTemplate = eol.auto(fs.readFileSync(`${this.appRoot}/src/templates/report.handlebars`, 'utf-8'));
+        const reportTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/report.handlebars`, 'utf-8'));
         this.template = Handlebars.compile(reportTemplate);
-        this.writeReport();
+        this.writeReport(evaluations);
     }
 
 
-    private writeReport() {
-        const ts = this.template({report: this.evaluations});
-        fs.writeFileSync(`${this.outDir}/report.html`, ts, {encoding: 'utf-8'});
-        fs.copyFileSync(`${this.appRoot}/src/templates/report.css`, `${this.outDir}/report.css`);
-        fs.copyFileSync(`${this.appRoot}/src/templates/styles.css`, `${this.outDir}/styles.css`);
-        fs.copyFileSync(`${this.appRoot}/src/templates/prettify.css`, `${this.outDir}/prettify.css`);
+    private writeReport(evaluations: Evaluation[]) {
+        const ts = this.template({report: evaluations});
+        fs.writeFileSync(`${Options.outDir}/report.html`, ts, {encoding: 'utf-8'});
+        fs.copyFileSync(`${appRoot}/src/templates/report.css`, `${Options.outDir}/report.css`);
+        fs.copyFileSync(`${appRoot}/src/templates/styles.css`, `${Options.outDir}/styles.css`);
+        fs.copyFileSync(`${appRoot}/src/templates/prettify.css`, `${Options.outDir}/prettify.css`);
     }
 }
