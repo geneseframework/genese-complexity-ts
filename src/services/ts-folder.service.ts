@@ -3,6 +3,7 @@ import { TsFolder } from '../models/ts-folder.model';
 import { getExtension } from './file.service';
 import { TsFileService } from './ts-file.service';
 import { TsFolderStats } from '../models/ts-folder-stats.interface';
+import { Tools } from './tools.service';
 
 export class TsFolderService {
 
@@ -55,7 +56,9 @@ export class TsFolderService {
             methodsUnderCognitiveThreshold: methodsUnderCognitiveThreshold,
             methodsUnderCyclomaticThreshold: methodsUnderCyclomaticThreshold,
             numberOfFiles: nbFiles,
-            numberOfMethods: nbMethods
+            numberOfMethods: nbMethods,
+            percentUnderCognitiveThreshold: Tools.percent(methodsUnderCognitiveThreshold, nbMethods),
+            percentUnderCyclomaticThreshold: Tools.percent(methodsUnderCyclomaticThreshold, nbMethods)
         }
         return stats;
     }

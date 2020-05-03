@@ -46,10 +46,14 @@ export class TsFolderReportService {
 
     private writeReport() {
         const ts = this.template({
+            cyclomaticThreshold: Options.cyclomaticThreshold,
+            cognitiveThreshold: Options.cognitiveThreshold,
             methodsUnderCognitiveThreshold: this.tsFolder.getStats()?.methodsUnderCognitiveThreshold,
             methodsUnderCyclomaticThreshold: this.tsFolder.getStats()?.methodsUnderCyclomaticThreshold,
             numberOfFiles: this.tsFolder.getStats()?.numberOfFiles,
             numberOfMethods: this.tsFolder.getStats()?.numberOfMethods,
+            percentUnderCognitiveThreshold: this.tsFolder.getStats()?.percentUnderCognitiveThreshold,
+            percentUnderCyclomaticThreshold: this.tsFolder.getStats()?.percentUnderCyclomaticThreshold,
             report: this.evaluations
         });
         fs.writeFileSync(`${Options.outDir}/report.html`, ts, {encoding: 'utf-8'});

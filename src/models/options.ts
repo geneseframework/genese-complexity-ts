@@ -3,8 +3,9 @@ const appRoot = appRootPath.toString();
 
 export class Options {
 
+    static cognitiveThreshold = 4;
+    static cyclomaticThreshold = 3;
     static outDir = `${appRoot}/genese/complexity`;
-    static threshold = 4;
 
 
     static setOption(key: string, value: string): void {
