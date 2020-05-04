@@ -4,7 +4,8 @@ import { getExtension } from './file.service';
 import { TsFileService } from './ts-file.service';
 import { TsFolderStats } from '../models/ts-folder-stats.interface';
 import { Tools } from './tools.service';
-import { Point } from '../models/point.model';
+import { TsFile } from '../models/ts-file.model';
+import { BarchartService } from './barchart.service';
 
 export class TsFolderService {
 
@@ -12,6 +13,7 @@ export class TsFolderService {
 
     constructor() {
     }
+
 
     static generate(path: string, extension?: string, folder: TsFolder = new TsFolder()): TsFolder {
         const tsFolder: TsFolder = new TsFolder();
@@ -35,15 +37,6 @@ export class TsFolderService {
     }
 
 
-    static getNumberOfFiles(tsFolder: TsFolder): number {
-        let nbFiles = tsFolder?.tsFiles?.length ?? 0;
-        for (const subFolder of tsFolder.subFolders) {
-            nbFiles += TsFolderService.getNumberOfFiles(subFolder);
-        }
-        return nbFiles;
-    }
-
-
     static getStats(tsFolder: TsFolder): TsFolderStats {
         if (TsFolderService._stats) {
             return TsFolderService._stats
@@ -51,22 +44,20 @@ export class TsFolderService {
             TsFolderService._stats = new TsFolderStats();
             TsFolderService.calculateStats(tsFolder);
             TsFolderService.addPercentages();
+            console.log('STATS', TsFolderService._stats);
             return TsFolderService._stats;
         }
     }
 
 
-    static calculateStats(tsFolder: TsFolder): TsFolderStats {
+    static calculateStats(tsFolder: TsFolder): void {
         TsFolderService._stats.numberOfFiles += tsFolder?.tsFiles?.length ?? 0;
         for (const subFolder of tsFolder.subFolders) {
             for (const file of subFolder.tsFiles) {
-                TsFolderService._stats.numberOfMethods += file.tsMethods?.length ?? 0;
-                TsFolderService._stats.methodsUnderCognitiveThreshold += file.getStats().methodsUnderCognitiveThreshold;
-                TsFolderService._stats.methodsUnderCyclomaticThreshold += file.getStats().methodsUnderCyclomaticThreshold;
+                TsFolderService.addFileStats(file);
             }
             TsFolderService.calculateStats(subFolder);
         }
-        return this._stats;
     }
 
 
@@ -76,14 +67,16 @@ export class TsFolderService {
     }
 
 
-    static getNumberOfMethods(tsFolder: TsFolder): number {
-        let nbMethods = 0;
-        for (const subFolder of tsFolder.subFolders) {
-            for (const file of subFolder.tsFiles) {
-                nbMethods += file.tsMethods?.length ?? 0;
-            }
-            TsFolderService.getNumberOfMethods(subFolder);
+    static addFileStats(tsFile: TsFile) {
+        if (!tsFile) {
+            return TsFolderService._stats;
         }
-        return nbMethods;
+        let tsFileStats = tsFile.getStats();
+        TsFolderService._stats.numberOfMethods += tsFileStats.numberOfMethods;
+        TsFolderService._stats.methodsUnderCognitiveThreshold += tsFileStats.methodsUnderCognitiveThreshold;
+        TsFolderService._stats.methodsUnderCyclomaticThreshold += tsFileStats.methodsUnderCyclomaticThreshold;
+        TsFolderService._stats.barChartCognitive = BarchartService.concat(TsFolderService._stats.barChartCognitive, tsFileStats.barChartCognitive);
+        TsFolderService._stats.barChartCyclomatic = BarchartService.concat(TsFolderService._stats.barChartCyclomatic, tsFileStats.barChartCyclomatic);
     }
+
 }

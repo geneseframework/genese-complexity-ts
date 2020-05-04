@@ -51,8 +51,8 @@
 //         folderStats.numberOfMethods += tsFileStats.numberOfMethods;
 //         folderStats.methodsUnderCognitiveThreshold += tsFileStats.methodsUnderCognitiveThreshold;
 //         folderStats.methodsUnderCyclomaticThreshold += tsFileStats.methodsUnderCyclomaticThreshold;
-//         folderStats.methodsByCognitiveCpx = folderStats.methodsByCognitiveCpx.concat(tsFileStats.methodsByCognitiveCpx);
-//         folderStats.methodsByCyclomaticCpx = folderStats.methodsByCyclomaticCpx.concat(tsFileStats.methodsByCyclomaticCpx);
+//         folderStats.barChartCognitive = folderStats.barChartCognitive.concat(tsFileStats.barChartCognitive);
+//         folderStats.barChartCyclomatic = folderStats.barChartCyclomatic.concat(tsFileStats.barChartCyclomatic);
 //         return folderStats;
 //     }
 //
@@ -65,8 +65,8 @@
 //         tsFolderStats.numberOfMethods += folderStats.numberOfMethods;
 //         tsFolderStats.methodsUnderCognitiveThreshold += folderStats.methodsUnderCognitiveThreshold ?? 0;
 //         tsFolderStats.methodsUnderCyclomaticThreshold += folderStats.methodsUnderCyclomaticThreshold ?? 0;
-//         tsFolderStats.methodsByCognitiveCpx = tsFolderStats.methodsByCognitiveCpx.concat(folderStats.methodsByCognitiveCpx);
-//         tsFolderStats.methodsByCyclomaticCpx = tsFolderStats.methodsByCyclomaticCpx.concat(folderStats.methodsByCyclomaticCpx);
+//         tsFolderStats.barChartCognitive = tsFolderStats.barChartCognitive.concat(folderStats.barChartCognitive);
+//         tsFolderStats.barChartCyclomatic = tsFolderStats.barChartCyclomatic.concat(folderStats.barChartCyclomatic);
 //         console.log('NB FILES', tsFolderStats.numberOfFiles);
 //         return tsFolderStats;
 //     }
@@ -90,8 +90,8 @@
 //         // let nbMethods = 0;
 //         // let methodsUnderCognitiveThreshold = 0;
 //         // let methodsUnderCyclomaticThreshold = 0;
-//         // let methodsByCognitiveCpx: Point[] = [];
-//         // let methodsByCyclomaticCpx: Point[] = [];
+//         // let barChartCognitive: Point[] = [];
+//         // let barChartCyclomatic: Point[] = [];
 //         console.log('FIRST TS FOLDER STATS', tsFolderStats.numberOfFiles);
 //         console.log('SUBFOLDERS', folder.subFolders.length);
 //         for (const subFolder of folder.subFolders) {

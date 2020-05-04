@@ -4,12 +4,13 @@ export class Barchart {
 
     data?: Point[] = [];
 
-    addResult(complexity: number) {
+    addResult(complexity: number, quantity = 1): Barchart {
         if (this.abscissaAlreadyExists(complexity)) {
             this.increaseOrdinate(complexity);
         } else {
-            this.createBar(complexity);
+            this.newBar(complexity, quantity = 1);
         }
+        return this;
     }
 
 
@@ -18,14 +19,15 @@ export class Barchart {
     }
 
 
-    increaseOrdinate(abscissa: number): void {
+    increaseOrdinate(abscissa: number, quantity = 1): void {
         const index = this.data.findIndex(e => e.x === abscissa);
-        this.data[index].y = this.data[index].y + 1;
+        this.data[index].y = this.data[index].y + quantity;
     }
 
 
-    createBar(complexity: number): void {
-        this.data.push({x: complexity, y: 1});
+    newBar(complexity: number, quantity = 1): void {
+        this.data.push({x: complexity, y: quantity});
     }
+
 }
 

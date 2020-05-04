@@ -1,11 +1,13 @@
-import { Point } from './point.model';
+import { Barchart } from './barchart.model';
 
-export interface TsFileStats {
+export class TsFileStats {
 
-    methodsUnderCognitiveThreshold?: number;
-    methodsUnderCyclomaticThreshold?: number;
-    numberOfMethods?: number;
-    methodsByCognitiveCpx?: Point[];
-    methodsByCyclomaticCpx?: Point[];
+    barChartCognitive?: Barchart = new Barchart();
+    barChartCyclomatic?: Barchart = new Barchart();
+    methodsUnderCognitiveThreshold = 0;
+    methodsUnderCyclomaticThreshold = 0;
+    numberOfMethods = 0;
+    percentUnderCognitiveThreshold = 0;
+    percentUnderCyclomaticThreshold = 0;
 
 }

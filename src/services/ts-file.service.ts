@@ -3,10 +3,14 @@ import { TsFile } from '../models/ts-file.model';
 import { TsMethodService } from './ts-method.service';
 import { TsFileStats } from '../models/ts-file-stats.interface';
 import { Ast } from './ast.service';
-import { Point } from '../models/point.model';
+import { Tools } from './tools.service';
 
 export class TsFileService {
 
+    private static _stats: TsFileStats = undefined;
+
+    constructor() {
+    }
 
     static generate(path: string, tsFolder: TsFolder = new TsFolder()): TsFile {
         const tsFile: TsFile = new TsFile();
@@ -17,27 +21,35 @@ export class TsFileService {
         return tsFile;
     }
 
-
     static getStats(tsFile: TsFile): TsFileStats {
-        let methodsUnderCyclomaticThreshold = 0;
-        let methodsUnderCognitiveThreshold = 0;
-        let methodsByCognitiveCpx: Point[] = [];
-        let methodsByCyclomaticCpx: Point[] = [];
-        for (const method of tsFile.tsMethods) {
-            if (!method.getEvaluation().cyclomaticAboveThreshold) {
-                methodsUnderCyclomaticThreshold ++;
-            }
-            if (!method.getEvaluation().cognitiveAboveThreshold) {
-                methodsUnderCognitiveThreshold ++;
-            }
+        if (TsFileService._stats) {
+            return TsFileService._stats
+        } else {
+            TsFileService._stats = new TsFileStats();
+            TsFileService.calculateStats(tsFile);
+            TsFileService.addPercentages();
+            console.log('STATS FILE ', TsFileService._stats);
+            return TsFileService._stats;
+        }
+    }
 
+
+    static calculateStats(tsFile: TsFile): void {
+        TsFileService._stats.numberOfMethods = tsFile.tsMethods?.length ?? 0;
+        for (const method of tsFile.tsMethods) {
+            if (!method.getEvaluation().cognitiveAboveThreshold) {
+                TsFileService._stats.methodsUnderCognitiveThreshold ++;
+            }
+            if (!method.getEvaluation().cyclomaticAboveThreshold) {
+                TsFileService._stats.methodsUnderCyclomaticThreshold ++;
+            }
         }
-        const stats: TsFileStats = {
-            numberOfMethods: tsFile.tsMethods?.length ?? 0,
-            methodsUnderCognitiveThreshold: methodsUnderCognitiveThreshold,
-            methodsUnderCyclomaticThreshold: methodsUnderCyclomaticThreshold
-        }
-        return stats;
+    }
+
+
+    static addPercentages(): void {
+        TsFileService._stats.percentUnderCognitiveThreshold = Tools.percent(TsFileService._stats.methodsUnderCognitiveThreshold, TsFileService._stats.numberOfMethods);
+        TsFileService._stats.percentUnderCyclomaticThreshold = Tools.percent(TsFileService._stats.methodsUnderCyclomaticThreshold, TsFileService._stats.numberOfMethods);
     }
 
 }
