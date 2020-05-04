@@ -4,6 +4,7 @@ import { getExtension } from './file.service';
 import { TsFileService } from './ts-file.service';
 import { TsFolderStats } from '../models/ts-folder-stats.interface';
 import { Tools } from './tools.service';
+import { Point } from '../models/point.model';
 
 export class TsFolderService {
 
@@ -44,6 +45,8 @@ export class TsFolderService {
         let nbMethods = 0;
         let methodsUnderCognitiveThreshold = 0;
         let methodsUnderCyclomaticThreshold = 0;
+        let methodsByCognitiveCpx: Point[] = [];
+        let methodsByCyclomaticCpx: Point[] = [];
         for (const subFolder of tsFolder.subFolders) {
             for (const file of subFolder.tsFiles) {
                 nbMethods += file.tsMethods?.length ?? 0;

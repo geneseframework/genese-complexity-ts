@@ -1,9 +1,9 @@
-import { Point } from './point.model';
+import { Barchart } from './barchart.model';
 
 export class TsFolderStats {
 
-    methodsByCognitiveCpx?: Point[] = [];
-    methodsByCyclomaticCpx?: Point[] = [];
+    methodsByCognitiveCpx?: Barchart = new Barchart();
+    methodsByCyclomaticCpx?: Barchart = new Barchart();
     methodsUnderCognitiveThreshold = 0;
     methodsUnderCyclomaticThreshold = 0;
     numberOfFiles = 0;
