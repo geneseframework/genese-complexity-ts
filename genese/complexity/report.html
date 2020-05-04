@@ -193,7 +193,10 @@
         type: 'doughnut',
         data: {
             datasets: [{
-                data: [92.3, 100 - 92.3],
+                data: [
+                    92.3,
+                    Math.round((100 - 92.3) * 10) / 10
+                ],
                 backgroundColor: [
                     "rgba(54, 162, 235, 0.2)",
                     "rgba(255, 99, 132, 0.2)",
@@ -214,6 +217,14 @@
                     top: 0,
                     bottom: 0
                 }
+            },
+            legend: {
+                display: false
+            },
+            position: 'left',
+            title: {
+                display: true,
+                text: 'Cognitive complexity'
             }
         }
     });
