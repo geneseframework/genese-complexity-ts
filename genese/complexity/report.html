@@ -45,9 +45,11 @@
                 </div>
             </div>
         </div>
+
         <div class="charts">
-            <canvas id="myChart"></canvas>
+            <canvas id="doughnut-cognitive-cpx"></canvas>
         </div>
+
     </div>
     <table class="coverage-summary">
         <thead>
@@ -187,8 +189,14 @@
     </table>
 </div>
 <script src="../../node_modules/chart.js/dist/Chart.js"></script>
+
 <script>
-    var ctx = document.getElementById('myChart').getContext("2d");
+
+    // *************************************************************************************************
+    //                                 Doughnut cognitive complexity
+    // *************************************************************************************************
+
+    var ctx = document.getElementById('doughnut-cognitive-cpx').getContext("2d");
     var myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
