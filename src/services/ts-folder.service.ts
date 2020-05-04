@@ -8,6 +8,10 @@ import { Point } from '../models/point.model';
 
 export class TsFolderService {
 
+    private static _stats: TsFolderStats = undefined;
+
+    constructor() {
+    }
 
     static generate(path: string, extension?: string, folder: TsFolder = new TsFolder()): TsFolder {
         const tsFolder: TsFolder = new TsFolder();
@@ -41,6 +45,17 @@ export class TsFolderService {
 
 
     static getStats(tsFolder: TsFolder): TsFolderStats {
+        if (TsFolderService._stats) {
+            return TsFolderService._stats
+        } else {
+            TsFolderService._stats = new TsFolderStats();
+            return TsFolderService.calculateStats(tsFolder);
+        }
+    }
+
+
+    static calculateStats(tsFolder: TsFolder): TsFolderStats {
+        // console.log('TSFOLDER', tsFolder)
         let nbFiles = tsFolder?.tsFiles?.length ?? 0;
         let nbMethods = 0;
         let methodsUnderCognitiveThreshold = 0;
@@ -53,7 +68,7 @@ export class TsFolderService {
                 methodsUnderCognitiveThreshold += file.getStats().methodsUnderCognitiveThreshold;
                 methodsUnderCyclomaticThreshold += file.getStats().methodsUnderCyclomaticThreshold;
             }
-            nbFiles += TsFolderService.getStats(subFolder)?.numberOfFiles;
+            nbFiles += TsFolderService.calculateStats(subFolder)?.numberOfFiles;
         }
         const stats: TsFolderStats = {
             methodsUnderCognitiveThreshold: methodsUnderCognitiveThreshold,
