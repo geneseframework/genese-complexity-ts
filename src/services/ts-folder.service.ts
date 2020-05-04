@@ -49,36 +49,30 @@ export class TsFolderService {
             return TsFolderService._stats
         } else {
             TsFolderService._stats = new TsFolderStats();
-            return TsFolderService.calculateStats(tsFolder);
+            TsFolderService.calculateStats(tsFolder);
+            TsFolderService.addPercentages();
+            return TsFolderService._stats;
         }
     }
 
 
     static calculateStats(tsFolder: TsFolder): TsFolderStats {
-        // console.log('TSFOLDER', tsFolder)
-        let nbFiles = tsFolder?.tsFiles?.length ?? 0;
-        let nbMethods = 0;
-        let methodsUnderCognitiveThreshold = 0;
-        let methodsUnderCyclomaticThreshold = 0;
-        let methodsByCognitiveCpx: Point[] = [];
-        let methodsByCyclomaticCpx: Point[] = [];
+        TsFolderService._stats.numberOfFiles += tsFolder?.tsFiles?.length ?? 0;
         for (const subFolder of tsFolder.subFolders) {
             for (const file of subFolder.tsFiles) {
-                nbMethods += file.tsMethods?.length ?? 0;
-                methodsUnderCognitiveThreshold += file.getStats().methodsUnderCognitiveThreshold;
-                methodsUnderCyclomaticThreshold += file.getStats().methodsUnderCyclomaticThreshold;
+                TsFolderService._stats.numberOfMethods += file.tsMethods?.length ?? 0;
+                TsFolderService._stats.methodsUnderCognitiveThreshold += file.getStats().methodsUnderCognitiveThreshold;
+                TsFolderService._stats.methodsUnderCyclomaticThreshold += file.getStats().methodsUnderCyclomaticThreshold;
             }
-            nbFiles += TsFolderService.calculateStats(subFolder)?.numberOfFiles;
+            TsFolderService.calculateStats(subFolder);
         }
-        const stats: TsFolderStats = {
-            methodsUnderCognitiveThreshold: methodsUnderCognitiveThreshold,
-            methodsUnderCyclomaticThreshold: methodsUnderCyclomaticThreshold,
-            numberOfFiles: nbFiles,
-            numberOfMethods: nbMethods,
-            percentUnderCognitiveThreshold: Tools.percent(methodsUnderCognitiveThreshold, nbMethods),
-            percentUnderCyclomaticThreshold: Tools.percent(methodsUnderCyclomaticThreshold, nbMethods)
-        }
-        return stats;
+        return this._stats;
+    }
+
+
+    static addPercentages(): void {
+        TsFolderService._stats.percentUnderCognitiveThreshold = Tools.percent(TsFolderService._stats.methodsUnderCognitiveThreshold, TsFolderService._stats.numberOfMethods);
+        TsFolderService._stats.percentUnderCyclomaticThreshold = Tools.percent(TsFolderService._stats.methodsUnderCyclomaticThreshold, TsFolderService._stats.numberOfMethods);
     }
 
 
