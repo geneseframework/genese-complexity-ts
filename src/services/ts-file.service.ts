@@ -43,6 +43,8 @@ export class TsFileService {
             if (!method.getEvaluation().cyclomaticAboveThreshold) {
                 TsFileService._stats.methodsUnderCyclomaticThreshold ++;
             }
+            TsFileService._stats.barChartCognitive.addResult(method.getEvaluation().cognitiveValue);
+            TsFileService._stats.barChartCyclomatic.addResult(method.getEvaluation().cyclomaticValue);
         }
     }
 
