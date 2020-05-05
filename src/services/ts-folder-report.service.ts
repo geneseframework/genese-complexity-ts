@@ -34,7 +34,9 @@ export class TsFolderReportService {
 
 
     generateReport(): void {
-        this.evaluations = this.getEvaluations(this.tsFolder);
+        const parentFolder: TsFolder = new TsFolder();
+        parentFolder.subFolders.push(this.tsFolder);
+        this.evaluations = this.getEvaluations(parentFolder);
         const rowTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/row.handlebars`, 'utf-8'));
         Handlebars.registerPartial("analyse", rowTemplate);
         const reportTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/report.handlebars`, 'utf-8'));
