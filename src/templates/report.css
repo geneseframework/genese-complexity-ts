@@ -15,18 +15,26 @@
 
 .charts {
     flex: 3;
-    height: 500px;
-    /*width: 800px;*/
+    height: 300px;
 }
 
 .doughnut-cognitive {
-    width: 300px;
-    height: 300px;
+    width: 500px;
+    height: 500px;
     display: inline-block;
+}
+
+.canvas-doughnut {
+    /*background-color: red;*/
+}
+
+.canvas-bar {
+    /*background-color: orange;*/
 }
 
 .bar-cognitive {
     width: 400px;
     height: 300px;
     display: inline-block;
+    vertical-align: top;
 }
