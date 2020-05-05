@@ -8,7 +8,7 @@ export class Barchart {
         if (this.abscissaAlreadyExists(complexity)) {
             this.increaseOrdinate(complexity, quantity);
         } else {
-            this.newBar(complexity, quantity = 1);
+            this.newBar(complexity, quantity);
         }
         return this;
     }

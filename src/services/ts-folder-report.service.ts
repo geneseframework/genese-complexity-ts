@@ -41,7 +41,6 @@ export class TsFolderReportService {
         Handlebars.registerPartial("analyse", rowTemplate);
         const reportTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/report.handlebars`, 'utf-8'));
         this.template = Handlebars.compile(reportTemplate);
-        console.log('BARCHART ', this.tsFolder.getStats()?.barChartCognitive);
         this.writeReport();
     }
 

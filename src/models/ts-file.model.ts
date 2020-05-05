@@ -27,7 +27,6 @@ export class TsFile {
 
     getStats(): TsFileStats {
         if (!this.stats) {
-            console.log('TS FILE MODEL STATS', this.name)
             this.stats = this.tsFileService.getStats();
         }
         return this.stats;

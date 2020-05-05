@@ -42,12 +42,8 @@ export class TsFolderService {
             return TsFolderService._stats
         } else {
             TsFolderService._stats = new TsFolderStats();
-            // const parentFolder: TsFolder = new TsFolder();
-            // parentFolder.subFolders.push(tsFolder);
             TsFolderService.calculateStats(tsFolder);
             TsFolderService.addPercentages();
-            console.log('GET STATS ', tsFolder.path);
-            console.log('GET STATS ', TsFolderService._stats.barChartCognitive);
             return TsFolderService._stats;
         }
     }
@@ -55,14 +51,13 @@ export class TsFolderService {
 
     static calculateStats(tsFolder: TsFolder): void {
         TsFolderService._stats.numberOfFiles += tsFolder?.tsFiles?.length ?? 0;
-        console.log('CALCULATE STATS path folder ', tsFolder?.path)
-        console.log('CALCULATE STATS nbfiles ', tsFolder?.tsFiles?.length)
         for (const file of tsFolder.tsFiles) {
             TsFolderService.addFileStats(file);
         }
         for (const subFolder of tsFolder.subFolders) {
             TsFolderService.calculateStats(subFolder);
         }
+
     }
 
 
@@ -73,7 +68,6 @@ export class TsFolderService {
 
 
     static addFileStats(tsFile: TsFile) {
-        console.log('ADD FILE STATS', tsFile.name)
         if (!tsFile) {
             return TsFolderService._stats;
         }

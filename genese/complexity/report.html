@@ -22,25 +22,25 @@
                     <span class="quiet">Files</span>
                 </div>
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">24</span>
+                    <span class="strong">22</span>
                     <span class="quiet">Methods</span>
                 </div>
             </div>
 
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">41.7 %</span>
+                    <span class="strong">45.5 %</span>
                     <span class="quiet">Cyclomatic complexity</span>
-                    <span class='fraction'>10/24</span>
+                    <span class='fraction'>10/22</span>
                     <span class="quiet">(threshold : 3)</span>
                 </div>
             </div>
 
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">83.3 %</span>
+                    <span class="strong">90.9 %</span>
                     <span class="quiet">Cognitive complexity</span>
-                    <span class='fraction'>20/24</span>
+                    <span class='fraction'>20/22</span>
                     <span class="quiet">(threshold : 4)</span>
                 </div>
             </div>
@@ -180,18 +180,6 @@
                 <td class="column cognitiveColumn">4</td>
             </tr>
             <tr>
-                <td class="column fileColumn">third.mock.ts</td>
-                <td class="column methodColumn">forIfAndAndOrAndAndOrOr</td>
-                <td class="column cyclomaticColumn">7</td>
-                <td class="column cognitiveColumn">6</td>
-            </tr>
-            <tr>
-                <td class="column fileColumn">third.mock.ts</td>
-                <td class="column methodColumn">forForIfAndAndOrAndAndOrOr</td>
-                <td class="column cyclomaticColumn">8</td>
-                <td class="column cognitiveColumn">7</td>
-            </tr>
-            <tr>
                 <td class="column fileColumn">second.mock.ts</td>
                 <td class="column methodColumn">questionDotToken</td>
                 <td class="column cyclomaticColumn">2</td>
@@ -225,8 +213,8 @@
         data: {
             datasets: [{
                 data: [
-                    83.3,
-                    Math.round((100 - 83.3) * 10) / 10
+                    90.9,
+                    Math.round((100 - 90.9) * 10) / 10
                 ],
                 backgroundColor: [
                     "rgba(54, 162, 235, 0.2)",
@@ -270,23 +258,28 @@
                     3,
                     4,
                     0,
-                    6,
-                    7,
             ],
             datasets: [{
                 data: [
                         2,
-                        4,
+                        5,
+                        5,
+                        6,
                         3,
-                        4,
-                        3,
-                        1,
-                        1,
                         1,
                 ],
                 backgroundColor: [
                 ]
             }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        suggestedMin: 0
+                    }
+                }]
+            }
         }
     });
 </script>

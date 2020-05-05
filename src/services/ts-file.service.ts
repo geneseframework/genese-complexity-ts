@@ -24,17 +24,12 @@ export class TsFileService {
     }
 
     getStats(): TsFileStats {
-        console.log('TSFILE GET QTATS 1 ', this.tsFile.name);
-        console.log('TSFILE GET QTATS 1 ', this._stats);
         if (this._stats) {
             return this._stats
         } else {
-            console.log('TSFILE GET QTATS 2 ', this.tsFile.name);
             this._stats = new TsFileStats();
             this.calculateStats(this.tsFile);
             this.addPercentages();
-            console.log('STATS FILE ', this.tsFile.name);
-            console.log('STATS FILE ', this._stats.barChartCognitive);
             return this._stats;
         }
     }

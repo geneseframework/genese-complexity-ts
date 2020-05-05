@@ -14,7 +14,6 @@ import { EvaluationValues } from '../../interfaces/evaluation-values';
 
 export class SecondMock {
 
-    constructor() {}
 
     questionDotToken(time: any): EvaluationValues {
         time = time?.name;
