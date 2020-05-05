@@ -29,5 +29,11 @@ export class Barchart {
         this.data.push({x: complexity, y: quantity});
     }
 
+
+    sort(): Barchart {
+        this.data = this.data.sort((A, B) => A.x - B.x);
+        return this;
+    }
+
 }
 

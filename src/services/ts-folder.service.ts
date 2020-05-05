@@ -44,6 +44,7 @@ export class TsFolderService {
             TsFolderService._stats = new TsFolderStats();
             TsFolderService.calculateStats(tsFolder);
             TsFolderService.addPercentages();
+            TsFolderService.sortBarCharts();
             return TsFolderService._stats;
         }
     }
@@ -79,4 +80,9 @@ export class TsFolderService {
         TsFolderService._stats.barChartCyclomatic = BarchartService.concat(TsFolderService._stats.barChartCyclomatic, tsFileStats.barChartCyclomatic);
     }
 
+
+    static sortBarCharts() {
+        TsFolderService._stats.barChartCognitive = TsFolderService._stats.barChartCognitive.sort();
+        TsFolderService._stats.barChartCyclomatic = TsFolderService._stats.barChartCyclomatic.sort();
+    }
 }
