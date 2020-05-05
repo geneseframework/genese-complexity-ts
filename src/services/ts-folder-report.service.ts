@@ -39,12 +39,14 @@ export class TsFolderReportService {
         Handlebars.registerPartial("analyse", rowTemplate);
         const reportTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/report.handlebars`, 'utf-8'));
         this.template = Handlebars.compile(reportTemplate);
+        console.log('BARCHART ', this.tsFolder.getStats()?.barChartCognitive);
         this.writeReport();
     }
 
 
     private writeReport() {
         const ts = this.template({
+            barChartCognitive: this.tsFolder.getStats()?.barChartCognitive?.data,
             cyclomaticThreshold: Options.cyclomaticThreshold,
             cognitiveThreshold: Options.cognitiveThreshold,
             methodsUnderCognitiveThreshold: this.tsFolder.getStats()?.methodsUnderCognitiveThreshold,

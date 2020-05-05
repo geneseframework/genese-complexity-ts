@@ -47,7 +47,12 @@
         </div>
 
         <div class="charts">
-            <canvas id="doughnut-cognitive-cpx"></canvas>
+            <div class="doughnut-cognitive">
+                <canvas id="doughnut-cognitive-cpx"></canvas>
+            </div>
+            <div class="bar-cognitive">
+                <canvas id="bar-cognitive-cpx"></canvas>
+            </div>
         </div>
 
     </div>
@@ -74,7 +79,7 @@
     // *************************************************************************************************
 
     var ctx = document.getElementById('doughnut-cognitive-cpx').getContext("2d");
-    var myChart = new Chart(ctx, {
+    var doughnutCognitive = new Chart(ctx, {
         type: 'doughnut',
         data: {
             datasets: [{
@@ -111,6 +116,23 @@
                 display: true,
                 text: 'Cognitive complexity'
             }
+        }
+    });
+    var barCognitive = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [
+                {{#each barChartCognitive}}
+                    {{this.x}},
+                {{/each}}
+            ],
+            datasets: [{
+                data: [
+                    {{#each barChartCognitive}}
+                        {{this.y}},
+                    {{/each}}
+                ]
+            }]
         }
     });
 </script>

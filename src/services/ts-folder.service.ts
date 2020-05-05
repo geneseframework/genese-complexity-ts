@@ -44,7 +44,7 @@ export class TsFolderService {
             TsFolderService._stats = new TsFolderStats();
             TsFolderService.calculateStats(tsFolder);
             TsFolderService.addPercentages();
-            console.log('STATS', TsFolderService._stats);
+            // console.log('STATS', TsFolderService._stats);
             return TsFolderService._stats;
         }
     }
