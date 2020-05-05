@@ -141,8 +141,29 @@
             }]
         },
         options: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Cognitive complexity',
+                position: 'top'
+            },
             scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Cognitive complexity'
+                    },
+                    ticks: {
+                        suggestedMin: 0
+                    }
+                }],
                 yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Number of methods'
+                    },
                     ticks: {
                         suggestedMin: 0
                     }
