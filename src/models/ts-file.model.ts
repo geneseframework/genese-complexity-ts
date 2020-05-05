@@ -12,9 +12,11 @@ export class TsFile {
     name ?= '';
     sourceFile?: ts.SourceFile = undefined;
     stats?: TsFileStats = undefined;
+    tsFileService: TsFileService = undefined;
     tsFolder?: TsFolder = new TsFolder();
 
     constructor() {
+        this.tsFileService = new TsFileService(this);
     }
 
 
@@ -25,7 +27,8 @@ export class TsFile {
 
     getStats(): TsFileStats {
         if (!this.stats) {
-            this.stats = TsFileService.getStats(this);
+            console.log('TS FILE MODEL STATS', this.name)
+            this.stats = this.tsFileService.getStats();
         }
         return this.stats;
     }

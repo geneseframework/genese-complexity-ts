@@ -6,7 +6,7 @@ export class Barchart {
 
     addResult(complexity: number, quantity = 1): Barchart {
         if (this.abscissaAlreadyExists(complexity)) {
-            this.increaseOrdinate(complexity);
+            this.increaseOrdinate(complexity, quantity);
         } else {
             this.newBar(complexity, quantity = 1);
         }

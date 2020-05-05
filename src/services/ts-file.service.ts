@@ -7,9 +7,11 @@ import { Tools } from './tools.service';
 
 export class TsFileService {
 
-    private static _stats: TsFileStats = undefined;
+    private _stats: TsFileStats = undefined;
+    tsFile: TsFile = undefined;
 
-    constructor() {
+    constructor(tsFile: TsFile) {
+        this.tsFile = tsFile;
     }
 
     static generate(path: string, tsFolder: TsFolder = new TsFolder()): TsFile {
@@ -21,37 +23,41 @@ export class TsFileService {
         return tsFile;
     }
 
-    static getStats(tsFile: TsFile): TsFileStats {
-        if (TsFileService._stats) {
-            return TsFileService._stats
+    getStats(): TsFileStats {
+        console.log('TSFILE GET QTATS 1 ', this.tsFile.name);
+        console.log('TSFILE GET QTATS 1 ', this._stats);
+        if (this._stats) {
+            return this._stats
         } else {
-            TsFileService._stats = new TsFileStats();
-            TsFileService.calculateStats(tsFile);
-            TsFileService.addPercentages();
-            console.log('STATS FILE ', TsFileService._stats);
-            return TsFileService._stats;
+            console.log('TSFILE GET QTATS 2 ', this.tsFile.name);
+            this._stats = new TsFileStats();
+            this.calculateStats(this.tsFile);
+            this.addPercentages();
+            console.log('STATS FILE ', this.tsFile.name);
+            console.log('STATS FILE ', this._stats.barChartCognitive);
+            return this._stats;
         }
     }
 
 
-    static calculateStats(tsFile: TsFile): void {
-        TsFileService._stats.numberOfMethods = tsFile.tsMethods?.length ?? 0;
+    calculateStats(tsFile: TsFile): void {
+        this._stats.numberOfMethods = tsFile.tsMethods?.length ?? 0;
         for (const method of tsFile.tsMethods) {
             if (!method.getEvaluation().cognitiveAboveThreshold) {
-                TsFileService._stats.methodsUnderCognitiveThreshold ++;
+                this._stats.methodsUnderCognitiveThreshold ++;
             }
             if (!method.getEvaluation().cyclomaticAboveThreshold) {
-                TsFileService._stats.methodsUnderCyclomaticThreshold ++;
+                this._stats.methodsUnderCyclomaticThreshold ++;
             }
-            TsFileService._stats.barChartCognitive.addResult(method.getEvaluation().cognitiveValue);
-            TsFileService._stats.barChartCyclomatic.addResult(method.getEvaluation().cyclomaticValue);
+            this._stats.barChartCognitive.addResult(method.getEvaluation().cognitiveValue);
+            this._stats.barChartCyclomatic.addResult(method.getEvaluation().cyclomaticValue);
         }
     }
 
 
-    static addPercentages(): void {
-        TsFileService._stats.percentUnderCognitiveThreshold = Tools.percent(TsFileService._stats.methodsUnderCognitiveThreshold, TsFileService._stats.numberOfMethods);
-        TsFileService._stats.percentUnderCyclomaticThreshold = Tools.percent(TsFileService._stats.methodsUnderCyclomaticThreshold, TsFileService._stats.numberOfMethods);
+    addPercentages(): void {
+        this._stats.percentUnderCognitiveThreshold = Tools.percent(this._stats.methodsUnderCognitiveThreshold, this._stats.numberOfMethods);
+        this._stats.percentUnderCyclomaticThreshold = Tools.percent(this._stats.methodsUnderCyclomaticThreshold, this._stats.numberOfMethods);
     }
 
 }
