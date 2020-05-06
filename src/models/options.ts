@@ -1,10 +1,24 @@
+import { ComplexityType } from '../enums/complexity.type';
+import { Complexity } from '../interfaces/complexity.interface';
+
 const appRootPath = require('app-root-path');
 const appRoot = appRootPath.toString();
 
 export class Options {
 
-    static cognitiveThreshold = 4;
-    static cyclomaticThreshold = 3;
+    static cognitiveCpx: Complexity = {
+        errorThreshold: 3,
+        type: ComplexityType.COGNITIVE,
+        warningThreshold: 4
+    };
+    static cyclomaticCpx: Complexity = {
+        errorThreshold: 4,
+        type: ComplexityType.CYCLOMATIC,
+        warningThreshold: 6
+    };
+    static colorCorrect = 'rgba(3, 169, 244, 0.6)';
+    static colorWarning = 'rgba(255, 152, 0, 0.6)';
+    static colorError = 'rgba(216, 27, 96, 0.6)';
     static outDir = `${appRoot}/genese/complexity`;
 
 
@@ -16,6 +30,14 @@ export class Options {
     static setOptions(options: object): void {
         for (const key of Object.keys(options)) {
             Options.setOption(key, options[key]);
+        }
+    }
+
+
+    static getThresholds(cpxType: ComplexityType): number {
+        switch (cpxType) {
+            case ComplexityType.COGNITIVE:
+                return Options.cognitiveCpx.warningThreshold
         }
     }
 }

@@ -1,8 +1,11 @@
-import { Point } from './point.model';
+import { Bar } from './point.model';
+import { Options } from './options';
+import { ComplexityType } from '../enums/complexity.type';
 
 export class Barchart {
 
-    data?: Point[] = [];
+    data?: Bar[] = [];
+    cpxType?: ComplexityType;
 
     addResult(complexity: number, quantity = 1): Barchart {
         if (this.abscissaAlreadyExists(complexity)) {
@@ -33,6 +36,30 @@ export class Barchart {
     sort(): Barchart {
         this.data = this.data.sort((A, B) => A.x - B.x);
         return this;
+    }
+
+
+    colorize(thresholdWarning: number, thresholdError: number): Barchart {
+        this.data = this.data.map(bar => {
+            return {
+                color: this.getColor(bar),
+                x: bar.x,
+                y: bar.y
+            }
+        });
+        return this;
+    }
+
+
+    getColor(bar: Bar): string {
+        let color = Options.colorWarning;
+        const cpx = `${this.cpxType}Cpx`;
+        if (bar.x <= Options[cpx].warningThreshold) {
+            color = Options.colorCorrect;
+        } else if (bar.x > Options[cpx].errorThreshold) {
+            color = Options.colorError;
+        }
+        return color;
     }
 
 }

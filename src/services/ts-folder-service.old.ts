@@ -4,7 +4,7 @@
 // import { TsFileService } from './ts-file.service';
 // import { TsFolderStats } from '../models/ts-folder-stats.interface';
 // import { Tools } from './tools.service';
-// import { Point } from '../models/point.model';
+// import { Bar } from '../models/point.model';
 // import { TsFile } from '../models/ts-file.model';
 // import { TsFileStats } from '../models/ts-file-stats.interface';
 //
@@ -90,8 +90,8 @@
 //         // let nbMethods = 0;
 //         // let methodsUnderCognitiveThreshold = 0;
 //         // let methodsUnderCyclomaticThreshold = 0;
-//         // let barChartCognitive: Point[] = [];
-//         // let barChartCyclomatic: Point[] = [];
+//         // let barChartCognitive: Bar[] = [];
+//         // let barChartCyclomatic: Bar[] = [];
 //         console.log('FIRST TS FOLDER STATS', tsFolderStats.numberOfFiles);
 //         console.log('SUBFOLDERS', folder.subFolders.length);
 //         for (const subFolder of folder.subFolders) {

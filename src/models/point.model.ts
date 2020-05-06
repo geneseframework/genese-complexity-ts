@@ -1,4 +1,4 @@
-export interface Point {
+export interface Bar {
 
     color?: string;
     x: number;

@@ -1,13 +1,16 @@
 import { EvaluationValues } from '../interfaces/evaluation-values';
+import { EvaluationStatus } from '../enums/evaluation-status.enum';
 
 export class Evaluation implements EvaluationValues {
 
-    cognitiveAboveThreshold ?= false;
+    // cognitiveAboveThreshold ?= false;
     cognitiveValue ?= 0;
-    cyclomaticAboveThreshold ?= false;
+    // cyclomaticAboveThreshold ?= false;
     cyclomaticValue ?= 0;
     filename ?= '';
     methodName ?= '';
+    cognitiveStatus?: EvaluationStatus = EvaluationStatus.CORRECT;
+    cyclomaticStatus?: EvaluationStatus = EvaluationStatus.CORRECT;
 
     add(evaluation: Evaluation): Evaluation {
         const newEval = new Evaluation();
