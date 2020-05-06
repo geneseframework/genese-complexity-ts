@@ -18,18 +18,18 @@
         <div class="stats">
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">{{numberOfFiles}}</span>
+                    <span class="strong">{{stats.numberOfFiles}}</span>
                     <span class="quiet">Files</span>
                 </div>
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">{{numberOfMethods}}</span>
+                    <span class="strong">{{stats.numberOfMethods}}</span>
                     <span class="quiet">Methods</span>
                 </div>
             </div>
 
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">{{percentUnderCognitiveThreshold}} %</span>
+                    <span class="strong">{{stats.percentUnderCognitiveThreshold}} %</span>
                     <span class="quiet">Cognitive complexity</span>
                     <span class='fraction'>{{cognitiveCorrectOrWarning}}/{{numberOfMethods}}</span>
                     <span class="quiet">(threshold : {{cognitiveErrorThreshold}})</span>
@@ -38,7 +38,7 @@
 
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">{{percentUnderCyclomaticThreshold}} %</span>
+                    <span class="strong">{{stats.percentUnderCyclomaticThreshold}} %</span>
                     <span class="quiet">Cyclomatic complexity</span>
                     <span class='fraction'>{{cyclomaticCorrectOrWarning}}/{{numberOfMethods}}</span>
                     <span class="quiet">(threshold : {{cyclomaticErrorThreshold}})</span>
@@ -136,18 +136,16 @@
                     {{/each}}
                 ],
                 backgroundColor: [
-                    'rgba(216, 27, 96, 0.6)',
-                    'rgba(255, 152, 0, 0.6)',
-                    'rgba(3, 169, 244, 0.6)',
-                    'rgba(29, 233, 182, 0.6)',
-                    'rgba(156, 39, 176, 0.6)',
-                    'rgba(84, 110, 122, 0.6)'
+                    {{#each stats.barChartCognitive.data}}
+                        '{{this.color}}',
+                    {{/each}}
+                    // 'rgba(216, 27, 96, 0.6)',
+                    // 'rgba(255, 152, 0, 0.6)',
+                    // 'rgba(3, 169, 244, 0.6)',
+                    // 'rgba(29, 233, 182, 0.6)',
+                    // 'rgba(156, 39, 176, 0.6)',
+                    // 'rgba(84, 110, 122, 0.6)'
                 ],
-                // backgroundColor: [
-<!--                    {{#each barChartCognitiveColors}}-->
-<!--                        {{this.y}},-->
-<!--                    {{/each}}-->
-                // ]
             }]
         },
         options: {

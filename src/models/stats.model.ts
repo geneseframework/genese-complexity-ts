@@ -1,10 +1,11 @@
 import { Barchart } from './barchart.model';
 import { MethodsByStatus } from '../interfaces/methods-by-status.interface';
+import { ComplexityType } from '../enums/complexity-type.enum';
 
 export class Stats {
 
-    barChartCognitive?: Barchart = new Barchart();
-    barChartCyclomatic?: Barchart = new Barchart();
+    barChartCognitive?: Barchart = new Barchart(ComplexityType.COGNITIVE);
+    barChartCyclomatic?: Barchart = new Barchart(ComplexityType.CYCLOMATIC);
     methodsByStatus?: MethodsByStatus = new MethodsByStatus();
     numberOfMethods ?= 0;
     percentUnderCognitiveThreshold ?= 0;

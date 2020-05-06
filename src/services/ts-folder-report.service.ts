@@ -47,18 +47,12 @@ export class TsFolderReportService {
 
     private writeReport() {
         const stats = this.tsFolder.getStats();
+        console.log('STATSSS', stats.barChartCognitive)
         const template = this.template({
             stats: stats,
             barChartCognitive: stats.barChartCognitive?.data,
             cognitiveErrorThreshold: Options.cognitiveCpx.errorThreshold,
             cyclomaticErrorThreshold: Options.cyclomaticCpx.errorThreshold,
-            cognitiveCorrect: stats.cognitiveCorrect(),
-            cognitiveCorrectOrWarning: stats.cognitiveCorrectOrWarning(),
-            cyclomaticCorrectOrWarning: stats.cyclomaticCorrectOrWarning(),
-            numberOfFiles: stats.numberOfFiles,
-            numberOfMethods: stats.numberOfMethods,
-            percentUnderCognitiveThreshold: stats.percentUnderCognitiveThreshold,
-            percentUnderCyclomaticThreshold: stats.percentUnderCyclomaticThreshold,
             report: this.evaluations
         });
         fs.writeFileSync(`${Options.outDir}/report.html`, template, {encoding: 'utf-8'});

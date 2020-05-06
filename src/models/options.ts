@@ -16,9 +16,6 @@ export class Options {
         type: ComplexityType.CYCLOMATIC,
         warningThreshold: 4
     };
-    static colorCorrect = 'rgba(3, 169, 244, 0.6)';
-    static colorWarning = 'rgba(255, 152, 0, 0.6)';
-    static colorError = 'rgba(216, 27, 96, 0.6)';
     static outDir = `${appRoot}/genese/complexity`;
 
 

@@ -18,6 +18,9 @@ export class ThirdMock {
                 }
             }
         }
+        if (a > b) {
+            console.log(b);
+        }
         return {cyclomaticValue: 9, cognitiveValue: 5};
     }
 }
