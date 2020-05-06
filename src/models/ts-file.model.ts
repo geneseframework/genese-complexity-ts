@@ -12,9 +12,11 @@ export class TsFile {
     name ?= '';
     sourceFile?: ts.SourceFile = undefined;
     stats?: TsFileStats = undefined;
+    tsFileService: TsFileService = undefined;
     tsFolder?: TsFolder = new TsFolder();
 
     constructor() {
+        this.tsFileService = new TsFileService(this);
     }
 
 
@@ -25,7 +27,7 @@ export class TsFile {
 
     getStats(): TsFileStats {
         if (!this.stats) {
-            this.stats = TsFileService.getStats(this);
+            this.stats = this.tsFileService.getStats();
         }
         return this.stats;
     }
@@ -39,7 +41,7 @@ export class TsFile {
     private evaluate(): Evaluation {
         let evaluation: Evaluation = new Evaluation();
         for (const method of this.tsMethods) {
-            evaluation.add(method.getEvaluation());
+            evaluation = evaluation.add(method.getEvaluation());
         }
         this._evaluation = evaluation;
         return evaluation;

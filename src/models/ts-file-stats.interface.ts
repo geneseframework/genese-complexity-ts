@@ -1,5 +1,5 @@
-export interface TsFileStats {
-    methodsUnderCognitiveThreshold?: number;
-    methodsUnderCyclomaticThreshold?: number;
-    numberOfMethods?: number;
+import { Stats } from './stats.model';
+
+export class TsFileStats extends Stats {
+
 }

@@ -4,11 +4,24 @@ import { getExtension } from './file.service';
 import { TsFileService } from './ts-file.service';
 import { TsFolderStats } from '../models/ts-folder-stats.interface';
 import { Tools } from './tools.service';
+import { TsFile } from '../models/ts-file.model';
+import { BarchartService } from './barchart.service';
+import { ComplexityType } from '../enums/complexity-type.enum';
+import { TsFileStats } from '../models/ts-file-stats.interface';
 
 export class TsFolderService {
 
+    private static _stats: TsFolderStats = undefined;
+
+    constructor() {
+    }
+
 
     static generate(path: string, extension?: string, folder: TsFolder = new TsFolder()): TsFolder {
+        if (!path) {
+            console.log('ERROR: no path.')
+            return undefined;
+        }
         const tsFolder: TsFolder = new TsFolder();
         tsFolder.path = path;
         const filesOrDirs = fs.readdirSync(path);
@@ -30,48 +43,59 @@ export class TsFolderService {
     }
 
 
-    static getNumberOfFiles(tsFolder: TsFolder): number {
-        let nbFiles = tsFolder?.tsFiles?.length ?? 0;
-        for (const subFolder of tsFolder.subFolders) {
-            nbFiles += TsFolderService.getNumberOfFiles(subFolder);
-        }
-        return nbFiles;
-    }
-
-
     static getStats(tsFolder: TsFolder): TsFolderStats {
-        let nbFiles = tsFolder?.tsFiles?.length ?? 0;
-        let nbMethods = 0;
-        let methodsUnderCognitiveThreshold = 0;
-        let methodsUnderCyclomaticThreshold = 0;
-        for (const subFolder of tsFolder.subFolders) {
-            for (const file of subFolder.tsFiles) {
-                nbMethods += file.tsMethods?.length ?? 0;
-                methodsUnderCognitiveThreshold += file.getStats().methodsUnderCognitiveThreshold;
-                methodsUnderCyclomaticThreshold += file.getStats().methodsUnderCyclomaticThreshold;
-            }
-            nbFiles += TsFolderService.getStats(subFolder)?.numberOfFiles;
+        if (TsFolderService._stats) {
+            return TsFolderService._stats
+        } else {
+            TsFolderService._stats = new TsFolderStats();
+            TsFolderService.calculateStats(tsFolder);
+            TsFolderService.addPercentages();
+            TsFolderService.sortBarCharts();
+            return TsFolderService._stats;
         }
-        const stats: TsFolderStats = {
-            methodsUnderCognitiveThreshold: methodsUnderCognitiveThreshold,
-            methodsUnderCyclomaticThreshold: methodsUnderCyclomaticThreshold,
-            numberOfFiles: nbFiles,
-            numberOfMethods: nbMethods,
-            percentUnderCognitiveThreshold: Tools.percent(methodsUnderCognitiveThreshold, nbMethods),
-            percentUnderCyclomaticThreshold: Tools.percent(methodsUnderCyclomaticThreshold, nbMethods)
-        }
-        return stats;
     }
 
 
-    static getNumberOfMethods(tsFolder: TsFolder): number {
-        let nbMethods = 0;
-        for (const subFolder of tsFolder.subFolders) {
-            for (const file of subFolder.tsFiles) {
-                nbMethods += file.tsMethods?.length ?? 0;
-            }
-            TsFolderService.getNumberOfMethods(subFolder);
+    static calculateStats(tsFolder: TsFolder): void {
+        TsFolderService._stats.numberOfFiles += tsFolder?.tsFiles?.length ?? 0;
+        for (const file of tsFolder.tsFiles) {
+            TsFolderService.addFileStats(file);
         }
-        return nbMethods;
+        for (const subFolder of tsFolder.subFolders) {
+            TsFolderService.calculateStats(subFolder);
+        }
+
+    }
+
+
+    static addPercentages(): void {
+        TsFolderService._stats.percentUnderCognitiveThreshold = Tools.percent(TsFolderService._stats.numberOfMethods - TsFolderService._stats.methodsByStatus.cognitive.error, TsFolderService._stats.numberOfMethods);
+        TsFolderService._stats.percentUnderCyclomaticThreshold = Tools.percent(TsFolderService._stats.numberOfMethods - TsFolderService._stats.methodsByStatus.cyclomatic.error, TsFolderService._stats.numberOfMethods);
+    }
+
+
+    static addFileStats(tsFile: TsFile): void {
+        if (!tsFile) {
+            return;
+        }
+        let tsFileStats = tsFile.getStats();
+        TsFolderService._stats.numberOfMethods += tsFileStats.numberOfMethods;
+        TsFolderService.addMethodsByStatus(ComplexityType.COGNITIVE, tsFileStats);
+        TsFolderService.addMethodsByStatus(ComplexityType.CYCLOMATIC, tsFileStats);
+        TsFolderService._stats.barChartCognitive = BarchartService.concat(TsFolderService._stats.barChartCognitive, tsFileStats.barChartCognitive);
+        TsFolderService._stats.barChartCyclomatic = BarchartService.concat(TsFolderService._stats.barChartCyclomatic, tsFileStats.barChartCyclomatic);
+    }
+
+
+    static addMethodsByStatus(type: ComplexityType, tsFileStats: TsFileStats): void {
+        TsFolderService._stats.methodsByStatus[type].correct += tsFileStats.methodsByStatus[type].correct;
+        TsFolderService._stats.methodsByStatus[type].error += tsFileStats.methodsByStatus[type].error;
+        TsFolderService._stats.methodsByStatus[type].warning += tsFileStats.methodsByStatus[type].warning;
+    }
+
+
+    static sortBarCharts() {
+        TsFolderService._stats.barChartCognitive = TsFolderService._stats.barChartCognitive.sort();
+        TsFolderService._stats.barChartCyclomatic = TsFolderService._stats.barChartCyclomatic.sort();
     }
 }

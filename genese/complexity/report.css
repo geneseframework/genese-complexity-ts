@@ -1,3 +1,33 @@
 .mainContainer {
     padding: 20px;
 }
+
+.header {
+    height: 300px;
+    display: flex;
+    flex-direction: row;
+}
+
+.stats {
+    flex: 1;
+    /*width: 300px;*/
+}
+
+.charts {
+    flex: 3;
+    height: 300px;
+}
+
+.doughnut-cognitive {
+    width: 500px;
+    height: 500px;
+    display: inline-block;
+}
+
+
+.bar-cognitive {
+    width: 400px;
+    height: 300px;
+    display: inline-block;
+    vertical-align: top;
+}

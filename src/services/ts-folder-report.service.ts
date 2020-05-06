@@ -34,7 +34,9 @@ export class TsFolderReportService {
 
 
     generateReport(): void {
-        this.evaluations = this.getEvaluations(this.tsFolder);
+        const parentFolder: TsFolder = new TsFolder();
+        parentFolder.subFolders.push(this.tsFolder);
+        this.evaluations = this.getEvaluations(parentFolder);
         const rowTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/row.handlebars`, 'utf-8'));
         Handlebars.registerPartial("analyse", rowTemplate);
         const reportTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/report.handlebars`, 'utf-8'));
@@ -44,18 +46,15 @@ export class TsFolderReportService {
 
 
     private writeReport() {
-        const ts = this.template({
-            cyclomaticThreshold: Options.cyclomaticThreshold,
-            cognitiveThreshold: Options.cognitiveThreshold,
-            methodsUnderCognitiveThreshold: this.tsFolder.getStats()?.methodsUnderCognitiveThreshold,
-            methodsUnderCyclomaticThreshold: this.tsFolder.getStats()?.methodsUnderCyclomaticThreshold,
-            numberOfFiles: this.tsFolder.getStats()?.numberOfFiles,
-            numberOfMethods: this.tsFolder.getStats()?.numberOfMethods,
-            percentUnderCognitiveThreshold: this.tsFolder.getStats()?.percentUnderCognitiveThreshold,
-            percentUnderCyclomaticThreshold: this.tsFolder.getStats()?.percentUnderCyclomaticThreshold,
+        const stats = this.tsFolder.getStats();
+        const template = this.template({
+            stats: stats,
+            barChartCognitive: stats.barChartCognitive?.data,
+            cognitiveErrorThreshold: Options.cognitiveCpx.errorThreshold,
+            cyclomaticErrorThreshold: Options.cyclomaticCpx.errorThreshold,
             report: this.evaluations
         });
-        fs.writeFileSync(`${Options.outDir}/report.html`, ts, {encoding: 'utf-8'});
+        fs.writeFileSync(`${Options.outDir}/report.html`, template, {encoding: 'utf-8'});
         fs.copyFileSync(`${appRoot}/src/templates/report.css`, `${Options.outDir}/report.css`);
         fs.copyFileSync(`${appRoot}/src/templates/styles.css`, `${Options.outDir}/styles.css`);
         fs.copyFileSync(`${appRoot}/src/templates/prettify.css`, `${Options.outDir}/prettify.css`);

@@ -19,9 +19,11 @@ export class Ast {
         return Ast.parseChildNodes(tree);
     }
 
+
     static getBloc(tsBloc: TsBloc): TsBloc {
         return Ast.parseChildNodes(tsBloc, true);
     }
+
 
     static parseChildNodes(tree: TsBloc, isBloc?: true): TsBloc;
     static parseChildNodes(tree: TsTree, isBloc?: false): TsTree;

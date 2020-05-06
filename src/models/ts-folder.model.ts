@@ -5,7 +5,7 @@ import { TsFolderStats } from './ts-folder-stats.interface';
 
 export class TsFolder {
 
-    private _evaluation?: Evaluation = new Evaluation();
+    private _evaluation?: Evaluation = undefined;
     subFolders?: TsFolder[] = [];
     parent?: TsFolder = undefined;
     path ?= '';
@@ -30,12 +30,9 @@ export class TsFolder {
 
 
     private evaluate(): Evaluation {
-        if (!this.path) {
-            return null;
-        }
         let evaluation: Evaluation = new Evaluation();
         for (const file of this.tsFiles) {
-            evaluation.add(file.getEvaluation());
+            evaluation = evaluation.add(file.getEvaluation());
         }
         this._evaluation = evaluation;
         return evaluation;

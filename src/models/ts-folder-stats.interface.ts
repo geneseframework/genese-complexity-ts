@@ -1,8 +1,7 @@
-export interface TsFolderStats {
-    methodsUnderCognitiveThreshold?: number;
-    methodsUnderCyclomaticThreshold?: number;
-    numberOfFiles?: number;
-    numberOfMethods?: number;
-    percentUnderCognitiveThreshold?: string;
-    percentUnderCyclomaticThreshold?: string;
+import { Stats } from './stats.model';
+
+export class TsFolderStats extends Stats {
+
+    numberOfFiles = 0;
+
 }
