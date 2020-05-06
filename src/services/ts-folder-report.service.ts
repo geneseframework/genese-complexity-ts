@@ -46,16 +46,19 @@ export class TsFolderReportService {
 
 
     private writeReport() {
+        const stats = this.tsFolder.getStats();
         const template = this.template({
-            barChartCognitive: this.tsFolder.getStats()?.barChartCognitive?.data,
+            stats: stats,
+            barChartCognitive: stats.barChartCognitive?.data,
             cognitiveErrorThreshold: Options.cognitiveCpx.errorThreshold,
             cyclomaticErrorThreshold: Options.cyclomaticCpx.errorThreshold,
-            methodsUnderCognitiveThreshold: this.tsFolder.getStats()?.methodsUnderCognitiveErrorThreshold(),
-            methodsUnderCyclomaticThreshold: this.tsFolder.getStats()?.methodsUnderCyclomaticErrorThreshold(),
-            numberOfFiles: this.tsFolder.getStats()?.numberOfFiles,
-            numberOfMethods: this.tsFolder.getStats()?.numberOfMethods,
-            percentUnderCognitiveThreshold: this.tsFolder.getStats()?.percentUnderCognitiveThreshold,
-            percentUnderCyclomaticThreshold: this.tsFolder.getStats()?.percentUnderCyclomaticThreshold,
+            cognitiveCorrect: stats.cognitiveCorrect(),
+            cognitiveCorrectOrWarning: stats.cognitiveCorrectOrWarning(),
+            cyclomaticCorrectOrWarning: stats.cyclomaticCorrectOrWarning(),
+            numberOfFiles: stats.numberOfFiles,
+            numberOfMethods: stats.numberOfMethods,
+            percentUnderCognitiveThreshold: stats.percentUnderCognitiveThreshold,
+            percentUnderCyclomaticThreshold: stats.percentUnderCyclomaticThreshold,
             report: this.evaluations
         });
         fs.writeFileSync(`${Options.outDir}/report.html`, template, {encoding: 'utf-8'});

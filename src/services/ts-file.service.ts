@@ -6,7 +6,7 @@ import { Ast } from './ast.service';
 import { Tools } from './tools.service';
 import { TsMethod } from '../models/ts-method.model';
 import { EvaluationStatus } from '../enums/evaluation-status.enum';
-import { ComplexityType } from '../enums/complexity.type';
+import { ComplexityType } from '../enums/complexity-type.enum';
 import { Evaluation } from '../models/evaluation.model';
 
 export class TsFileService {

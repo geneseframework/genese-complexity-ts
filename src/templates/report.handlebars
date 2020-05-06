@@ -31,7 +31,7 @@
                 <div class='fl pad1y space-right2'>
                     <span class="strong">{{percentUnderCognitiveThreshold}} %</span>
                     <span class="quiet">Cognitive complexity</span>
-                    <span class='fraction'>{{methodsUnderCognitiveThreshold}}/{{numberOfMethods}}</span>
+                    <span class='fraction'>{{cognitiveCorrectOrWarning}}/{{numberOfMethods}}</span>
                     <span class="quiet">(threshold : {{cognitiveErrorThreshold}})</span>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                 <div class='fl pad1y space-right2'>
                     <span class="strong">{{percentUnderCyclomaticThreshold}} %</span>
                     <span class="quiet">Cyclomatic complexity</span>
-                    <span class='fraction'>{{methodsUnderCyclomaticThreshold}}/{{numberOfMethods}}</span>
+                    <span class='fraction'>{{cyclomaticCorrectOrWarning}}/{{numberOfMethods}}</span>
                     <span class="quiet">(threshold : {{cyclomaticErrorThreshold}})</span>
                 </div>
             </div>
@@ -84,12 +84,14 @@
         data: {
             datasets: [{
                 data: [
-                    {{percentUnderCognitiveThreshold}},
-                    Math.round((100 - {{percentUnderCognitiveThreshold}}) * 10) / 10
+                    {{stats.methodsByStatus.cognitive.correct}},
+                    {{stats.methodsByStatus.cognitive.warning}},
+                    {{stats.methodsByStatus.cognitive.error}},
                 ],
                 backgroundColor: [
-                    "rgba(54, 162, 235, 0.2)",
-                    "rgba(255, 99, 132, 0.2)",
+                    'rgba(3, 169, 244, 0.6)',
+                    'rgba(255, 152, 0, 0.6)',
+                    'rgba(216, 27, 96, 0.6)',
                 ]
             }],
             labels: [
@@ -135,8 +137,8 @@
                 ],
                 backgroundColor: [
                     'rgba(216, 27, 96, 0.6)',
-                    'rgba(3, 169, 244, 0.6)',
                     'rgba(255, 152, 0, 0.6)',
+                    'rgba(3, 169, 244, 0.6)',
                     'rgba(29, 233, 182, 0.6)',
                     'rgba(156, 39, 176, 0.6)',
                     'rgba(84, 110, 122, 0.6)'

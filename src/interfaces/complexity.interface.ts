@@ -1,4 +1,4 @@
-import { ComplexityType } from '../enums/complexity.type';
+import { ComplexityType } from '../enums/complexity-type.enum';
 
 export interface Complexity {
 

@@ -1,4 +1,4 @@
-import { ComplexityType } from '../enums/complexity.type';
+import { ComplexityType } from '../enums/complexity-type.enum';
 import { Complexity } from '../interfaces/complexity.interface';
 
 const appRootPath = require('app-root-path');

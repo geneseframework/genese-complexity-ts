@@ -6,7 +6,7 @@ import { TsFolderStats } from '../models/ts-folder-stats.interface';
 import { Tools } from './tools.service';
 import { TsFile } from '../models/ts-file.model';
 import { BarchartService } from './barchart.service';
-import { ComplexityType } from '../enums/complexity.type';
+import { ComplexityType } from '../enums/complexity-type.enum';
 import { TsFileStats } from '../models/ts-file-stats.interface';
 
 export class TsFolderService {

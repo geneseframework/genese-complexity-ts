@@ -1,6 +1,6 @@
 import { Bar } from './point.model';
 import { Options } from './options';
-import { ComplexityType } from '../enums/complexity.type';
+import { ComplexityType } from '../enums/complexity-type.enum';
 
 export class Barchart {
 

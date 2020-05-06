@@ -11,12 +11,42 @@ export class Stats {
     percentUnderCyclomaticThreshold ?= 0;
 
 
-    methodsUnderCognitiveErrorThreshold(): number {
+    cognitiveCorrect(): number {
+        return this.methodsByStatus.cognitive.correct;
+    }
+
+
+    cognitiveCorrectOrWarning(): number {
         return this.methodsByStatus.cognitive.correct + this.methodsByStatus.cognitive.warning;
     }
 
 
-    methodsUnderCyclomaticErrorThreshold(): number {
+    cognitiveWarning(): number {
+        return this.methodsByStatus.cognitive.warning;
+    }
+
+
+    cognitiveError(): number {
+        return this.methodsByStatus.cognitive.error;
+    }
+
+
+    cyclomaticCorrect(): number {
+        return this.methodsByStatus.cyclomatic.correct;
+    }
+
+
+    cyclomaticCorrectOrWarning(): number {
         return this.methodsByStatus.cyclomatic.correct + this.methodsByStatus.cyclomatic.warning;
+    }
+
+
+    cyclomaticWarning(): number {
+        return this.methodsByStatus.cyclomatic.warning;
+    }
+
+
+    cyclomaticError(): number {
+        return this.methodsByStatus.cyclomatic.error;
     }
 }

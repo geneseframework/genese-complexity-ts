@@ -6,7 +6,7 @@ import { Evaluation } from './evaluation.model';
 import { TsBloc } from './ts-bloc.model';
 import { Options } from './options';
 import { EvaluationStatus } from '../enums/evaluation-status.enum';
-import { ComplexityType } from '../enums/complexity.type';
+import { ComplexityType } from '../enums/complexity-type.enum';
 
 export class TsMethod {
 
