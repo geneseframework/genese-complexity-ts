@@ -44,21 +44,8 @@ export class Barchart {
     }
 
 
-    // colorize(thresholdWarning: number, thresholdError: number): Barchart {
-    //     this.data = this.data.map(bar => {
-    //         return {
-    //             color: this.getColor(bar),
-    //             x: bar.x,
-    //             y: bar.y
-    //         }
-    //     });
-    //     return this;
-    // }
-
-
     getColor(complexity: number): ChartColor {
         let color = ChartColor.WARNING;
-        // console.log('CPX TYPE', this.cpxType);
         const cpx = `${this.cpxType}Cpx`;
         if (complexity <= Options[cpx].warningThreshold) {
             color = ChartColor.CORRECT;

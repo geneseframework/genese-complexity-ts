@@ -47,7 +47,6 @@ export class TsFolderReportService {
 
     private writeReport() {
         const stats = this.tsFolder.getStats();
-        console.log('STATSSS', stats.barChartCognitive)
         const template = this.template({
             stats: stats,
             barChartCognitive: stats.barChartCognitive?.data,

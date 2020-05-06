@@ -41,9 +41,7 @@ export class TsFile {
     private evaluate(): Evaluation {
         let evaluation: Evaluation = new Evaluation();
         for (const method of this.tsMethods) {
-            console.log('NAME METHOD', method.name);
             evaluation = evaluation.add(method.getEvaluation());
-            console.log('NAME METHOD evaluation', evaluation);
         }
         this._evaluation = evaluation;
         return evaluation;
