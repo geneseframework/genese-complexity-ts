@@ -7,14 +7,14 @@ const appRoot = appRootPath.toString();
 export class Options {
 
     static cognitiveCpx: Complexity = {
-        errorThreshold: 3,
+        errorThreshold: 4,
         type: ComplexityType.COGNITIVE,
-        warningThreshold: 4
+        warningThreshold: 3
     };
     static cyclomaticCpx: Complexity = {
-        errorThreshold: 4,
+        errorThreshold: 5,
         type: ComplexityType.CYCLOMATIC,
-        warningThreshold: 6
+        warningThreshold: 4
     };
     static colorCorrect = 'rgba(3, 169, 244, 0.6)';
     static colorWarning = 'rgba(255, 152, 0, 0.6)';

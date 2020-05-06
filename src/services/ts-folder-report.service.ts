@@ -46,19 +46,19 @@ export class TsFolderReportService {
 
 
     private writeReport() {
-        const ts = this.template({
+        const template = this.template({
             barChartCognitive: this.tsFolder.getStats()?.barChartCognitive?.data,
-            cyclomaticThreshold: Options.cyclomaticThreshold,
-            cognitiveThreshold: Options.cognitiveThreshold,
-            methodsUnderCognitiveThreshold: this.tsFolder.getStats()?.methodsUnderCognitiveThreshold,
-            methodsUnderCyclomaticThreshold: this.tsFolder.getStats()?.methodsUnderCyclomaticThreshold,
+            cognitiveErrorThreshold: Options.cognitiveCpx.errorThreshold,
+            cyclomaticErrorThreshold: Options.cyclomaticCpx.errorThreshold,
+            methodsUnderCognitiveThreshold: this.tsFolder.getStats()?.methodsUnderCognitiveErrorThreshold(),
+            methodsUnderCyclomaticThreshold: this.tsFolder.getStats()?.methodsUnderCyclomaticErrorThreshold(),
             numberOfFiles: this.tsFolder.getStats()?.numberOfFiles,
             numberOfMethods: this.tsFolder.getStats()?.numberOfMethods,
             percentUnderCognitiveThreshold: this.tsFolder.getStats()?.percentUnderCognitiveThreshold,
             percentUnderCyclomaticThreshold: this.tsFolder.getStats()?.percentUnderCyclomaticThreshold,
             report: this.evaluations
         });
-        fs.writeFileSync(`${Options.outDir}/report.html`, ts, {encoding: 'utf-8'});
+        fs.writeFileSync(`${Options.outDir}/report.html`, template, {encoding: 'utf-8'});
         fs.copyFileSync(`${appRoot}/src/templates/report.css`, `${Options.outDir}/report.css`);
         fs.copyFileSync(`${appRoot}/src/templates/styles.css`, `${Options.outDir}/styles.css`);
         fs.copyFileSync(`${appRoot}/src/templates/prettify.css`, `${Options.outDir}/prettify.css`);

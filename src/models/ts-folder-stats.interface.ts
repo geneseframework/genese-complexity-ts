@@ -1,14 +1,7 @@
-import { Barchart } from './barchart.model';
+import { Stats } from './stats.model';
 
-export class TsFolderStats {
+export class TsFolderStats extends Stats {
 
-    barChartCognitive?: Barchart = new Barchart();
-    barChartCyclomatic?: Barchart = new Barchart();
-    methodsUnderCognitiveThreshold = 0;
-    methodsUnderCyclomaticThreshold = 0;
     numberOfFiles = 0;
-    numberOfMethods = 0;
-    percentUnderCognitiveThreshold = 0;
-    percentUnderCyclomaticThreshold = 0;
 
 }

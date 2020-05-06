@@ -3,9 +3,7 @@ import { EvaluationStatus } from '../enums/evaluation-status.enum';
 
 export class Evaluation implements EvaluationValues {
 
-    // cognitiveAboveThreshold ?= false;
     cognitiveValue ?= 0;
-    // cyclomaticAboveThreshold ?= false;
     cyclomaticValue ?= 0;
     filename ?= '';
     methodName ?= '';
