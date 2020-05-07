@@ -38,16 +38,11 @@ export class TsFolderReportService {
         const parentFolder: TsFolder = new TsFolder();
         parentFolder.subFolders.push(this.tsFolder);
         this.evaluations = this.getEvaluations(parentFolder);
-        const cognitiveBarchartTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/cognitive-barchart.handlebars`, 'utf-8'));
-        Handlebars.registerPartial("cognitiveBarchartScript", cognitiveBarchartTemplate);
-        const cognitiveDoughnutTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/cognitive-doughnut.handlebars`, 'utf-8'));
-        Handlebars.registerPartial("cognitiveDoughnutScript", cognitiveDoughnutTemplate);
-        const cyclomaticBarchartTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/cyclomatic-barchart.handlebars`, 'utf-8'));
-        Handlebars.registerPartial("cyclomaticBarchartScript", cyclomaticBarchartTemplate);
-        const cyclomaticDoughnutTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/cyclomatic-doughnut.handlebars`, 'utf-8'));
-        Handlebars.registerPartial("cyclomaticDoughnutScript", cyclomaticDoughnutTemplate);
-        const rowTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/row.handlebars`, 'utf-8'));
-        Handlebars.registerPartial("analyse", rowTemplate);
+        this.registerPartial("cognitiveBarchartScript", 'cognitive-barchart');
+        this.registerPartial("cyclomaticBarchartScript", 'cyclomatic-barchart');
+        this.registerPartial("cognitiveDoughnutScript", 'cognitive-doughnut');
+        this.registerPartial("cyclomaticDoughnutScript", 'cyclomatic-doughnut');
+        this.registerPartial("analyse", 'row');
         const reportTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/report.handlebars`, 'utf-8'));
         this.template = Handlebars.compile(reportTemplate);
         this.writeReport();
@@ -65,5 +60,11 @@ export class TsFolderReportService {
         fs.copyFileSync(`${appRoot}/src/templates/report.css`, `${Options.outDir}/report.css`);
         fs.copyFileSync(`${appRoot}/src/templates/styles.css`, `${Options.outDir}/styles.css`);
         fs.copyFileSync(`${appRoot}/src/templates/prettify.css`, `${Options.outDir}/prettify.css`);
+    }
+
+
+    private registerPartial(partialName: string, filename: string): void {
+        const partial = eol.auto(fs.readFileSync(`${appRoot}/src/templates/${filename}.handlebars`, 'utf-8'));
+        Handlebars.registerPartial(partialName, partial);
     }
 }
