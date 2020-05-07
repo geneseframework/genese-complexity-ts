@@ -1,8 +1,8 @@
-import { EvaluationValues } from '../interfaces/evaluation-values';
+import { EvaluationValuesInterface } from '../interfaces/evaluation-values.interface';
 
 export class AstMock {
 
-    ifAndAndOrAndAndOrOr(a, b, c, d, e, f): EvaluationValues {
+    ifAndAndOrAndAndOrOr(a, b, c, d, e, f): EvaluationValuesInterface {
         if (b && c || d && f || a) {
             console.log(a);
         }

@@ -1,7 +1,7 @@
-import { EvaluationValues } from '../interfaces/evaluation-values';
+import { EvaluationValuesInterface } from '../interfaces/evaluation-values.interface';
 import { EvaluationStatus } from '../enums/evaluation-status.enum';
 
-export class Evaluation implements EvaluationValues {
+export class Evaluation implements EvaluationValuesInterface {
 
     cognitiveValue ?= 0;
     cyclomaticValue ?= 0;

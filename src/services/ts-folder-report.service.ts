@@ -4,6 +4,7 @@ import * as Handlebars from "handlebars";
 import { Evaluation } from '../models/evaluation.model';
 import { TsFolder } from '../models/ts-folder.model';
 import { Options } from '../models/options';
+import { ChartColor } from '../enums/colors.enum';
 
 const appRoot = require('app-root-path').toString();
 
@@ -37,6 +38,14 @@ export class TsFolderReportService {
         const parentFolder: TsFolder = new TsFolder();
         parentFolder.subFolders.push(this.tsFolder);
         this.evaluations = this.getEvaluations(parentFolder);
+        const cognitiveBarchartTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/cognitive-barchart.handlebars`, 'utf-8'));
+        Handlebars.registerPartial("cognitiveBarchartScript", cognitiveBarchartTemplate);
+        const cognitiveDoughnutTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/cognitive-doughnut.handlebars`, 'utf-8'));
+        Handlebars.registerPartial("cognitiveDoughnutScript", cognitiveDoughnutTemplate);
+        const cyclomaticBarchartTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/cyclomatic-barchart.handlebars`, 'utf-8'));
+        Handlebars.registerPartial("cyclomaticBarchartScript", cyclomaticBarchartTemplate);
+        const cyclomaticDoughnutTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/cyclomatic-doughnut.handlebars`, 'utf-8'));
+        Handlebars.registerPartial("cyclomaticDoughnutScript", cyclomaticDoughnutTemplate);
         const rowTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/row.handlebars`, 'utf-8'));
         Handlebars.registerPartial("analyse", rowTemplate);
         const reportTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/report.handlebars`, 'utf-8'));
@@ -46,13 +55,11 @@ export class TsFolderReportService {
 
 
     private writeReport() {
-        const stats = this.tsFolder.getStats();
         const template = this.template({
-            stats: stats,
-            barChartCognitive: stats.barChartCognitive?.data,
-            cognitiveErrorThreshold: Options.cognitiveCpx.errorThreshold,
-            cyclomaticErrorThreshold: Options.cyclomaticCpx.errorThreshold,
-            report: this.evaluations
+            colors: Options.colors,
+            report: this.evaluations,
+            stats: this.tsFolder.getStats(),
+            thresholds: Options.getThresholds()
         });
         fs.writeFileSync(`${Options.outDir}/report.html`, template, {encoding: 'utf-8'});
         fs.copyFileSync(`${appRoot}/src/templates/report.css`, `${Options.outDir}/report.css`);

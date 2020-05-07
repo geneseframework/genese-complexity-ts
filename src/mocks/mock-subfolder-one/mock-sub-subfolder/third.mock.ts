@@ -1,8 +1,8 @@
-import { EvaluationValues } from '../../../interfaces/evaluation-values';
+import { EvaluationValuesInterface } from '../../../interfaces/evaluation-values.interface';
 
 export class ThirdMock {
 
-    forIfAndAndOrAndAndOrOr(a, b, c, d, e, f): EvaluationValues {
+    forIfAndAndOrAndAndOrOr(a, b, c, d, e, f): EvaluationValuesInterface {
         for (let i = 0; i < 10; i++) {
             if (b && c || d && f || a) {
                 console.log(a);
@@ -12,7 +12,7 @@ export class ThirdMock {
     }
 
 
-    forForIfAndAndOrAndAndOrOr(a, b, c, d, e, f): EvaluationValues {
+    forForIfAndAndOrAndAndOrOr(a, b, c, d, e, f): EvaluationValuesInterface {
         for (let i = 0; i < 10; i++) {
             for (let j = 0; j < 10; j++) {
                 if (b && c || d && f || a) {

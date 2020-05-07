@@ -1,19 +1,13 @@
-export class MethodsByStatus {
+import { Statuses } from './statuses.interface';
 
-    cognitive?: {
-        correct: number,
-        error: number,
-        warning: number,
-    } = {
+export class ComplexityByStatus {
+
+    cognitive?: Statuses = {
         correct: 0,
         error: 0,
         warning: 0,
     }
-    cyclomatic?: {
-        correct: number,
-        error: number,
-        warning: number,
-    } = {
+    cyclomatic?: Statuses = {
         correct: 0,
         error: 0,
         warning: 0,

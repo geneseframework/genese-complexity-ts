@@ -1,4 +1,4 @@
-import { EvaluationValues } from '../../interfaces/evaluation-values';
+import { EvaluationValuesInterface } from '../../interfaces/evaluation-values.interface';
 
 class FirstMock {
 
@@ -7,7 +7,7 @@ class FirstMock {
 
 
 
-    ifElse(data): EvaluationValues {
+    ifElse(data): EvaluationValuesInterface {
         if (data === 'a') {
             data = 'b';
         } else {
@@ -17,7 +17,7 @@ class FirstMock {
     }
 
 
-    ifAnd(a, b): EvaluationValues {
+    ifAnd(a, b): EvaluationValuesInterface {
         if (a && b) {
             console.log(a);
         }
@@ -25,7 +25,7 @@ class FirstMock {
     }
 
 
-    ifOr(a, b): EvaluationValues {
+    ifOr(a, b): EvaluationValuesInterface {
         if (a || b) {
             console.log(a);
         }
@@ -33,7 +33,7 @@ class FirstMock {
     }
 
 
-    ifAndAnd(a, b, c): EvaluationValues {
+    ifAndAnd(a, b, c): EvaluationValuesInterface {
         if (a && b && c) {
             console.log(a);
         }
@@ -41,7 +41,7 @@ class FirstMock {
     }
 
 
-    ifAndOr(a, b, c): EvaluationValues {
+    ifAndOr(a, b, c): EvaluationValuesInterface {
         if (a && b || c) {
             console.log(a);
         }
@@ -49,7 +49,7 @@ class FirstMock {
     }
 
 
-    ifAndAndOrAnd(a, b, c, d, e, f): EvaluationValues {
+    ifAndAndOrAnd(a, b, c, d, e, f): EvaluationValuesInterface {
         if (a && b && c || d && e && f) {
             console.log(a);
         }
@@ -57,7 +57,7 @@ class FirstMock {
     }
 
 
-    ifAndAndOrAndAndOrOr(a, b, c, d, e, f): EvaluationValues {
+    ifAndAndOrAndAndOrOr(a, b, c, d, e, f): EvaluationValuesInterface {
         if (a && b && c || d && e && f || a || b) {
             console.log(a);
         }
@@ -65,7 +65,7 @@ class FirstMock {
     }
 
 
-    ifIfIf(data: number): EvaluationValues {
+    ifIfIf(data: number): EvaluationValuesInterface {
         if (data > 2) {
             if (data > 3) {
                 if (data > 4) {
@@ -78,7 +78,7 @@ class FirstMock {
 
 
 
-    ifIfIfElse(data: number): EvaluationValues {
+    ifIfIfElse(data: number): EvaluationValuesInterface {
         if (data > 2) {
             if (data > 3) {
                 if (data > 4) {
@@ -93,7 +93,7 @@ class FirstMock {
 
 
 
-    switches(numberOfWords: number): EvaluationValues {
+    switches(numberOfWords: number): EvaluationValuesInterface {
         switch (numberOfWords) {
             case 1:
                 console.log("one");

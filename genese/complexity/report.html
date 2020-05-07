@@ -15,6 +15,13 @@
 <div class="mainContainer">
     <h1>Genese complexity report</h1>
     <div class="header">
+
+        <!--        -------------------------------------------------------------------------------------->
+        <!--        -----------------------------------   Global statistics   ---------------------------->
+        <!--        -------------------------------------------------------------------------------------->
+
+        <!--        -----------------------------------   Files and methods   ---------------------------->
+
         <div class="stats">
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
@@ -27,31 +34,90 @@
                 </div>
             </div>
 
+            <!--        -----------------------------------   Cognitive complexity   ---------------------------->
+
+            <div class="clearfix cognitive-subtitle">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">Cognitive complexity</span>
+                </div>
+            </div>
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">83.3 %</span>
-                    <span class="quiet">Cognitive complexity</span>
-                    <span class='fraction'>/</span>
+                    <span class="strong">70.8 %</span>
+                    <span class="quiet"> Correct</span>
+                    <span class='fraction'>17/24</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">12.5 %</span>
+                    <span class="quiet"> Warning</span>
+                    <span class='fraction'>3/24</span>
+                    <span class="quiet">(threshold : 3)</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">16.7 %</span>
+                    <span class="quiet"> Error</span>
+                    <span class='fraction'>4/24</span>
                     <span class="quiet">(threshold : 4)</span>
                 </div>
             </div>
 
+            <!--        -----------------------------------   Cyclomatic complexity   ---------------------------->
+
+            <div class="clearfix cyclomatic-subtitle">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">Cyclomatic complexity</span>
+                </div>
+            </div>
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">79.2 %</span>
-                    <span class="quiet">Cyclomatic complexity</span>
-                    <span class='fraction'>/</span>
+                    <span class="strong">66.7 %</span>
+                    <span class="quiet"> Correct</span>
+                    <span class='fraction'>16/24</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">12.5 %</span>
+                    <span class="quiet"> Warning</span>
+                    <span class='fraction'>3/24</span>
+                    <span class="quiet">(threshold : 4)</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">20.8 %</span>
+                    <span class="quiet"> Error</span>
+                    <span class='fraction'>5/24</span>
                     <span class="quiet">(threshold : 5)</span>
                 </div>
             </div>
+
         </div>
 
+        <!--        -------------------------------------------------------------------------------------->
+        <!--        -----------------------------------------   Charts   ---------------------------->
+        <!--        -------------------------------------------------------------------------------------->
+
         <div class="charts">
-            <div class="doughnut-cognitive">
-                <canvas id="doughnut-cognitive-cpx"></canvas>
+            <div class="cognitive-charts">
+                <div class="doughnut">
+                    <canvas id="doughnut-cognitive-cpx" height="220"></canvas>
+                </div>
+                <div class="bar">
+                    <canvas id="bar-cognitive-cpx" height="250" width="800"></canvas>
+                </div>
             </div>
-            <div class="bar-cognitive">
-                <canvas id="bar-cognitive-cpx" height="200"></canvas>
+            <div class="cyclomatic-charts">
+                <div class="doughnut">
+                    <canvas id="doughnut-cyclomatic-cpx" height="220"></canvas>
+                </div>
+                <div class="bar">
+                    <canvas id="bar-cyclomatic-cpx" height="250" width="800"></canvas>
+                </div>
             </div>
         </div>
 
@@ -214,11 +280,6 @@
 <script src="../../node_modules/chart.js/dist/Chart.js"></script>
 
 <script>
-
-    // *************************************************************************************************
-    //                                 Doughnut cognitive complexity
-    // *************************************************************************************************
-
     var ctxDougnutCognitive = document.getElementById('doughnut-cognitive-cpx').getContext("2d");
     var doughnutCognitive = new Chart(ctxDougnutCognitive, {
         type: 'doughnut',
@@ -230,14 +291,15 @@
                     4,
                 ],
                 backgroundColor: [
-                    'rgba(3, 169, 244, 0.6)',
-                    'rgba(255, 152, 0, 0.6)',
-                    'rgba(216, 27, 96, 0.6)',
+                        'rgba(3, 169, 244, 0.6)',
+                        'rgba(255, 152, 0, 0.6)',
+                        'rgba(216, 27, 96, 0.6)',
                 ]
             }],
             labels: [
-                'complexity < ',
-                'complexity > ',
+                'complexity <=  ',
+                'complexity >  ',
+                'complexity >  ',
             ]
         },
         options: {
@@ -261,6 +323,8 @@
             }
         }
     });
+</script>
+<script>
     var ctxBarCognitive = document.getElementById('bar-cognitive-cpx').getContext("2d");
     var barCognitive = new Chart(ctxBarCognitive, {
         type: 'bar',
@@ -295,12 +359,6 @@
                         'rgba(216, 27, 96, 0.6)',
                         'rgba(216, 27, 96, 0.6)',
                         'rgba(216, 27, 96, 0.6)',
-                    // 'rgba(216, 27, 96, 0.6)',
-                    // 'rgba(255, 152, 0, 0.6)',
-                    // 'rgba(3, 169, 244, 0.6)',
-                    // 'rgba(29, 233, 182, 0.6)',
-                    // 'rgba(156, 39, 176, 0.6)',
-                    // 'rgba(84, 110, 122, 0.6)'
                 ],
             }]
         },
@@ -317,7 +375,122 @@
                 xAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'Cognitive complexity'
+                        labelString: 'Complexity'
+                    },
+                    ticks: {
+                        suggestedMin: 0
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Number of methods'
+                    },
+                    ticks: {
+                        suggestedMin: 0
+                    }
+                }]
+            }
+        }
+    });
+</script>
+<script>
+    var ctxDougnutCyclomatic = document.getElementById('doughnut-cyclomatic-cpx').getContext("2d");
+    var doughnutCyclomatic = new Chart(ctxDougnutCyclomatic, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [
+                    16,
+                    3,
+                    5,
+                ],
+                backgroundColor: [
+                        'rgba(3, 169, 244, 0.6)',
+                        'rgba(255, 152, 0, 0.6)',
+                        'rgba(216, 27, 96, 0.6)',
+                ]
+            }],
+            labels: [
+                'complexity <=  ',
+                'complexity >  ',
+                'complexity >  ',
+            ]
+        },
+        options: {
+            layout: {
+                padding: {
+                    maintainAspectRatio: false,
+                    responsive: false,
+                    left: 50,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            },
+            legend: {
+                display: false
+            },
+            position: 'left',
+            title: {
+                display: true,
+                text: 'Cyclomatic complexity'
+            }
+        }
+    });
+</script>
+<script>
+    var ctxBarCyclomatic = document.getElementById('bar-cyclomatic-cpx').getContext("2d");
+    var barCyclomatic = new Chart(ctxBarCyclomatic, {
+        type: 'bar',
+        data: {
+            labels: [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    9,
+            ],
+            datasets: [{
+                data: [
+                        1,
+                        4,
+                        5,
+                        6,
+                        3,
+                        1,
+                        2,
+                        2,
+                ],
+                backgroundColor: [
+                        'rgba(3, 169, 244, 0.6)',
+                        'rgba(3, 169, 244, 0.6)',
+                        'rgba(3, 169, 244, 0.6)',
+                        'rgba(3, 169, 244, 0.6)',
+                        'rgba(255, 152, 0, 0.6)',
+                        'rgba(216, 27, 96, 0.6)',
+                        'rgba(216, 27, 96, 0.6)',
+                        'rgba(216, 27, 96, 0.6)',
+                ],
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Cyclomatic complexity',
+                position: 'top'
+            },
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Complexity'
                     },
                     ticks: {
                         suggestedMin: 0

@@ -1,5 +1,7 @@
 import { ComplexityType } from '../enums/complexity-type.enum';
 import { Complexity } from '../interfaces/complexity.interface';
+import { ChartColor } from '../enums/colors.enum';
+import { ComplexityByStatus } from '../interfaces/methods-by-status.interface';
 
 const appRootPath = require('app-root-path');
 const appRoot = appRootPath.toString();
@@ -11,6 +13,7 @@ export class Options {
         type: ComplexityType.COGNITIVE,
         warningThreshold: 3
     };
+    static colors: ChartColor[] = [ChartColor.CORRECT, ChartColor.WARNING, ChartColor.ERROR];
     static cyclomaticCpx: Complexity = {
         errorThreshold: 5,
         type: ComplexityType.CYCLOMATIC,
@@ -31,10 +34,16 @@ export class Options {
     }
 
 
-    static getThresholds(cpxType: ComplexityType): number {
-        switch (cpxType) {
-            case ComplexityType.COGNITIVE:
-                return Options.cognitiveCpx.warningThreshold
+    static getThresholds(): ComplexityByStatus {
+        return {
+            cognitive: {
+                warning: Options.cognitiveCpx.warningThreshold,
+                error: Options.cognitiveCpx.errorThreshold,
+            },
+            cyclomatic: {
+                warning: Options.cyclomaticCpx.warningThreshold,
+                error: Options.cyclomaticCpx.errorThreshold,
+            }
         }
     }
 }

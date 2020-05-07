@@ -3,14 +3,21 @@
 }
 
 .header {
-    height: 300px;
+    height: 700px;
     display: flex;
     flex-direction: row;
 }
 
 .stats {
     flex: 1;
-    /*width: 300px;*/
+}
+
+.cognitive-subtitle {
+    padding-top: 60px;
+}
+
+.cyclomatic-subtitle {
+    padding-top: 170px;
 }
 
 .charts {
@@ -18,16 +25,22 @@
     height: 300px;
 }
 
-.doughnut-cognitive {
-    width: 500px;
-    height: 500px;
+.doughnut {
     display: inline-block;
 }
 
 
-.bar-cognitive {
-    width: 400px;
-    height: 300px;
+.bar {
+    width: 800px;
+    height: 200px;
     display: inline-block;
     vertical-align: top;
+}
+
+.cognitive-charts {
+    padding-top: 50px;
+}
+
+.cyclomatic-charts {
+    padding-top: 100px;
 }
