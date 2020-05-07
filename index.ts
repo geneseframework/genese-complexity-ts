@@ -3,8 +3,9 @@ import { Process } from './src/process';
 const appRootPath = require('app-root-path');
 const appRoot = appRootPath.toString();
 
-function calculate() {
+function initProcess() {
     const appRoot = appRootPath.toString();                   // Root of the app
+    console.log(appRoot)
 	const process = new Process(`${appRoot}/src/mocks/`);
 	const options = {
 	    outDir: `${appRoot}/genese/complexity`,
@@ -20,4 +21,4 @@ function calculate() {
 	process.start(options);
 }
 
-calculate();
+initProcess();

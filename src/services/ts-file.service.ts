@@ -33,7 +33,7 @@ export class TsFileService {
         } else {
             this._stats = new TsFileStats();
             this.calculateStats(this.tsFile);
-            this.addPercentages();
+            // this.addPercentages();
             return this._stats;
         }
     }
@@ -60,13 +60,13 @@ export class TsFileService {
         const status = type === ComplexityType.COGNITIVE ? evaluation.cognitiveStatus : evaluation.cyclomaticStatus;
         switch (status) {
             case EvaluationStatus.CORRECT:
-                this._stats.methodsByStatus[type].correct ++;
+                this._stats.numberOfMethodsByStatus[type].correct ++;
                 break;
             case EvaluationStatus.ERROR:
-                this._stats.methodsByStatus[type].error ++;
+                this._stats.numberOfMethodsByStatus[type].error ++;
                 break;
             case EvaluationStatus.WARNING:
-                this._stats.methodsByStatus[type].warning ++;
+                this._stats.numberOfMethodsByStatus[type].warning ++;
                 break;
             default:
                 break;
@@ -74,9 +74,9 @@ export class TsFileService {
     }
 
 
-    addPercentages(): void {
-        this._stats.percentUnderCognitiveThreshold = Tools.percent(this._stats.numberOfMethods - this._stats.methodsByStatus.cognitive.error, this._stats.numberOfMethods);
-        this._stats.percentUnderCyclomaticThreshold = Tools.percent(this._stats.numberOfMethods - this._stats.methodsByStatus.cyclomatic.error, this._stats.numberOfMethods);
-    }
+    // addPercentages(): void {
+    //     this._stats.percentUnderCognitiveThreshold = Tools.percent(this._stats.numberOfMethods - this._stats.numberOfMethodsByStatus.cognitive.error, this._stats.numberOfMethods);
+    //     this._stats.percentUnderCyclomaticThreshold = Tools.percent(this._stats.numberOfMethods - this._stats.numberOfMethodsByStatus.cyclomatic.error, this._stats.numberOfMethods);
+    // }
 
 }

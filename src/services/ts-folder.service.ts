@@ -49,7 +49,7 @@ export class TsFolderService {
         } else {
             TsFolderService._stats = new TsFolderStats();
             TsFolderService.calculateStats(tsFolder);
-            TsFolderService.addPercentages();
+            TsFolderService._stats.addPercentages();
             TsFolderService.sortBarCharts();
             return TsFolderService._stats;
         }
@@ -68,10 +68,10 @@ export class TsFolderService {
     }
 
 
-    static addPercentages(): void {
-        TsFolderService._stats.percentUnderCognitiveThreshold = Tools.percent(TsFolderService._stats.numberOfMethods - TsFolderService._stats.methodsByStatus.cognitive.error, TsFolderService._stats.numberOfMethods);
-        TsFolderService._stats.percentUnderCyclomaticThreshold = Tools.percent(TsFolderService._stats.numberOfMethods - TsFolderService._stats.methodsByStatus.cyclomatic.error, TsFolderService._stats.numberOfMethods);
-    }
+    // static addPercentages(): void {
+    //     TsFolderService._stats.percentUnderCognitiveThreshold = Tools.percent(TsFolderService._stats.numberOfMethods - TsFolderService._stats.numberOfMethodsByStatus.cognitive.error, TsFolderService._stats.numberOfMethods);
+    //     TsFolderService._stats.percentUnderCyclomaticThreshold = Tools.percent(TsFolderService._stats.numberOfMethods - TsFolderService._stats.numberOfMethodsByStatus.cyclomatic.error, TsFolderService._stats.numberOfMethods);
+    // }
 
 
     static addFileStats(tsFile: TsFile): void {
@@ -88,9 +88,9 @@ export class TsFolderService {
 
 
     static addMethodsByStatus(type: ComplexityType, tsFileStats: TsFileStats): void {
-        TsFolderService._stats.methodsByStatus[type].correct += tsFileStats.methodsByStatus[type].correct;
-        TsFolderService._stats.methodsByStatus[type].error += tsFileStats.methodsByStatus[type].error;
-        TsFolderService._stats.methodsByStatus[type].warning += tsFileStats.methodsByStatus[type].warning;
+        TsFolderService._stats.numberOfMethodsByStatus[type].correct += tsFileStats.numberOfMethodsByStatus[type].correct;
+        TsFolderService._stats.numberOfMethodsByStatus[type].error += tsFileStats.numberOfMethodsByStatus[type].error;
+        TsFolderService._stats.numberOfMethodsByStatus[type].warning += tsFileStats.numberOfMethodsByStatus[type].warning;
     }
 
 

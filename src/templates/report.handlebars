@@ -15,6 +15,13 @@
 <div class="mainContainer">
     <h1>Genese complexity report</h1>
     <div class="header">
+
+        <!--        -------------------------------------------------------------------------------------->
+        <!--        -----------------------------------   Global statistics   ---------------------------->
+        <!--        -------------------------------------------------------------------------------------->
+
+        <!--        -----------------------------------   Files and methods   ---------------------------->
+
         <div class="stats">
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
@@ -27,24 +34,71 @@
                 </div>
             </div>
 
-            <div class="clearfix">
+            <!--        -----------------------------------   Cognitive complexity   ---------------------------->
+
+            <div class="clearfix subtitle">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">{{stats.percentUnderCognitiveThreshold}} %</span>
-                    <span class="quiet">Cognitive complexity</span>
-                    <span class='fraction'>{{cognitiveCorrectOrWarning}}/{{numberOfMethods}}</span>
+                    <span class="strong">Cognitive complexity</span>
                     <span class="quiet">(threshold : {{cognitiveErrorThreshold}})</span>
                 </div>
             </div>
-
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">{{stats.percentUnderCyclomaticThreshold}} %</span>
-                    <span class="quiet">Cyclomatic complexity</span>
-                    <span class='fraction'>{{cyclomaticCorrectOrWarning}}/{{numberOfMethods}}</span>
+                    <span class="strong">{{stats.percentsByStatus.cognitive.correct}} %</span>
+                    <span class="quiet"> Correct</span>
+                    <span class='fraction'>{{stats.numberOfMethodsByStatus.cognitive.correct}}/{{stats.numberOfMethods}}</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">{{stats.percentsByStatus.cognitive.warning}} %</span>
+                    <span class="quiet"> Warning</span>
+                    <span class='fraction'>{{stats.numberOfMethodsByStatus.cognitive.warning}}/{{stats.numberOfMethods}}</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">{{stats.percentsByStatus.cognitive.error}} %</span>
+                    <span class="quiet"> Error</span>
+                    <span class='fraction'>{{stats.numberOfMethodsByStatus.cognitive.error}}/{{stats.numberOfMethods}}</span>
+                </div>
+            </div>
+
+            <!--        -----------------------------------   Cyclomatic complexity   ---------------------------->
+
+            <div class="clearfix subtitle">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">Cyclomatic complexity</span>
                     <span class="quiet">(threshold : {{cyclomaticErrorThreshold}})</span>
                 </div>
             </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">{{stats.percentsByStatus.cyclomatic.correct}} %</span>
+                    <span class="quiet"> Correct</span>
+                    <span class='fraction'>{{stats.numberOfMethodsByStatus.cyclomatic.correct}}/{{stats.numberOfMethods}}</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">{{stats.percentsByStatus.cyclomatic.warning}} %</span>
+                    <span class="quiet"> Warning</span>
+                    <span class='fraction'>{{stats.numberOfMethodsByStatus.cyclomatic.warning}}/{{stats.numberOfMethods}}</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">{{stats.percentsByStatus.cyclomatic.error}} %</span>
+                    <span class="quiet"> Error</span>
+                    <span class='fraction'>{{stats.numberOfMethodsByStatus.cyclomatic.error}}/{{stats.numberOfMethods}}</span>
+                </div>
+            </div>
+
         </div>
+
+        <!--        -------------------------------------------------------------------------------------->
+        <!--        -----------------------------------------   Charts   ---------------------------->
+        <!--        -------------------------------------------------------------------------------------->
 
         <div class="charts">
             <div class="doughnut-cognitive">
@@ -72,55 +126,7 @@
 </div>
 <script src="../../node_modules/chart.js/dist/Chart.js"></script>
 
-<script>
-
-    // *************************************************************************************************
-    //                                 Doughnut cognitive complexity
-    // *************************************************************************************************
-
-    var ctxDougnutCognitive = document.getElementById('doughnut-cognitive-cpx').getContext("2d");
-    var doughnutCognitive = new Chart(ctxDougnutCognitive, {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [
-                    {{stats.methodsByStatus.cognitive.correct}},
-                    {{stats.methodsByStatus.cognitive.warning}},
-                    {{stats.methodsByStatus.cognitive.error}},
-                ],
-                backgroundColor: [
-                    'rgba(3, 169, 244, 0.6)',
-                    'rgba(255, 152, 0, 0.6)',
-                    'rgba(216, 27, 96, 0.6)',
-                ]
-            }],
-            labels: [
-                'complexity < {{cognitiveThreshold}}',
-                'complexity > {{cognitiveThreshold}}',
-            ]
-        },
-        options: {
-            layout: {
-                padding: {
-                    maintainAspectRatio: false,
-                    responsive: false,
-                    left: 50,
-                    right: 0,
-                    top: 0,
-                    bottom: 0
-                }
-            },
-            legend: {
-                display: false
-            },
-            position: 'left',
-            title: {
-                display: true,
-                text: 'Cognitive complexity'
-            }
-        }
-    });
-</script>
+{{>cognitiveDoughnutScript}}
 {{>cognitiveBarchartScript}}
 </body>
 </html>

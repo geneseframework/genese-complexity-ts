@@ -1,0 +1,44 @@
+<script>
+    var ctxDougnutCognitive = document.getElementById('doughnut-cognitive-cpx').getContext("2d");
+    var doughnutCognitive = new Chart(ctxDougnutCognitive, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [
+                    {{stats.numberOfMethodsByStatus.cognitive.correct}},
+                    {{stats.numberOfMethodsByStatus.cognitive.warning}},
+                    {{stats.numberOfMethodsByStatus.cognitive.error}},
+                ],
+                backgroundColor: [
+                    'rgba(3, 169, 244, 0.6)',
+                    'rgba(255, 152, 0, 0.6)',
+                    'rgba(216, 27, 96, 0.6)',
+                ]
+            }],
+            labels: [
+                'complexity < {{cognitiveThreshold}}',
+                'complexity > {{cognitiveThreshold}}',
+            ]
+        },
+        options: {
+            layout: {
+                padding: {
+                    maintainAspectRatio: false,
+                    responsive: false,
+                    left: 50,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            },
+            legend: {
+                display: false
+            },
+            position: 'left',
+            title: {
+                display: true,
+                text: 'Cognitive complexity'
+            }
+        }
+    });
+</script>

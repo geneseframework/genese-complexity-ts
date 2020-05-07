@@ -39,6 +39,8 @@ export class TsFolderReportService {
         this.evaluations = this.getEvaluations(parentFolder);
         const cognitiveBarchartTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/cognitive-barchart.handlebars`, 'utf-8'));
         Handlebars.registerPartial("cognitiveBarchartScript", cognitiveBarchartTemplate);
+        const cognitiveDoughnutTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/cognitive-doughnut.handlebars`, 'utf-8'));
+        Handlebars.registerPartial("cognitiveDoughnutScript", cognitiveDoughnutTemplate);
         const rowTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/row.handlebars`, 'utf-8'));
         Handlebars.registerPartial("analyse", rowTemplate);
         const reportTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/report.handlebars`, 'utf-8'));

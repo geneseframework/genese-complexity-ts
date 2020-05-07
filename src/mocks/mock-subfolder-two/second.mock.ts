@@ -10,18 +10,18 @@
  * an infringement punishable by criminal or civil law and, more generally, a breach of Naval Group SA’s rights.
  */
 
-import { EvaluationValues } from '../../interfaces/evaluation-values';
+import { EvaluationValuesInterface } from '../../interfaces/evaluation-values.interface';
 
 export class SecondMock {
 
 
-    questionDotToken(time: any): EvaluationValues {
+    questionDotToken(time: any): EvaluationValuesInterface {
         time = time?.name;
         return {cyclomaticValue: 1, cognitiveValue: 0};
     }
 
 
-    forForFor(max: number): EvaluationValues {
+    forForFor(max: number): EvaluationValuesInterface {
         let total = 0;
         for (let i = 1; i < max; ++i) {
             for (let j = 2; j < i; ++j) {
@@ -35,7 +35,7 @@ export class SecondMock {
     }
 
 
-    tryCatch(): EvaluationValues {
+    tryCatch(): EvaluationValuesInterface {
         try {
             const a = 1;
         } catch (e) {

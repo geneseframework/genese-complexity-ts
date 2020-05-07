@@ -1,19 +1,13 @@
+import { Statuses } from './statuses.interface';
+
 export class MethodsByStatus {
 
-    cognitive?: {
-        correct: number,
-        error: number,
-        warning: number,
-    } = {
+    cognitive?: Statuses = {
         correct: 0,
         error: 0,
         warning: 0,
     }
-    cyclomatic?: {
-        correct: number,
-        error: number,
-        warning: number,
-    } = {
+    cyclomatic?: Statuses = {
         correct: 0,
         error: 0,
         warning: 0,

@@ -3,14 +3,17 @@
 }
 
 .header {
-    height: 300px;
+    height: 450px;
     display: flex;
     flex-direction: row;
 }
 
 .stats {
     flex: 1;
-    /*width: 300px;*/
+}
+
+.subtitle {
+    padding-top: 20px;
 }
 
 .charts {

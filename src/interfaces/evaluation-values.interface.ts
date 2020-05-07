@@ -1,4 +1,4 @@
-export interface EvaluationValues {
+export interface EvaluationValuesInterface {
 
     cognitiveValue?: number;
     cyclomaticValue?: number;

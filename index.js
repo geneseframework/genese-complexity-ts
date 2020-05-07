@@ -3,8 +3,9 @@ exports.__esModule = true;
 var process_1 = require("./src/process");
 var appRootPath = require('app-root-path');
 var appRoot = appRootPath.toString();
-function calculate() {
+function initProcess() {
     var appRoot = appRootPath.toString(); // Root of the app
+    console.log(appRoot);
     var process = new process_1.Process(appRoot + "/src/mocks/");
     var options = {
         outDir: appRoot + "/genese/complexity",
@@ -19,4 +20,4 @@ function calculate() {
     };
     process.start(options);
 }
-calculate();
+initProcess();
