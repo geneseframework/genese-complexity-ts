@@ -22,14 +22,14 @@
 }
 
 .doughnut-cognitive {
-    width: 500px;
+    /*width: 500px;*/
     display: inline-block;
 }
 
 
 .bar-cognitive {
-    width: 400px;
-    height: 300px;
+    width: 800px;
+    height: 200px;
     display: inline-block;
     vertical-align: top;
 }
