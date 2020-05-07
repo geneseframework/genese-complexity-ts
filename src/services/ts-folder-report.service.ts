@@ -4,6 +4,7 @@ import * as Handlebars from "handlebars";
 import { Evaluation } from '../models/evaluation.model';
 import { TsFolder } from '../models/ts-folder.model';
 import { Options } from '../models/options';
+import { ChartColor } from '../enums/colors.enum';
 
 const appRoot = require('app-root-path').toString();
 
@@ -50,12 +51,9 @@ export class TsFolderReportService {
 
 
     private writeReport() {
-        const stats = this.tsFolder.getStats();
         const template = this.template({
-            stats: stats,
-            barChartCognitive: stats.barChartCognitive?.data,
-            cognitiveErrorThreshold: Options.cognitiveCpx.errorThreshold,
-            cyclomaticErrorThreshold: Options.cyclomaticCpx.errorThreshold,
+            colors: Options.colors,
+            stats: this.tsFolder.getStats(),
             report: this.evaluations
         });
         fs.writeFileSync(`${Options.outDir}/report.html`, template, {encoding: 'utf-8'});

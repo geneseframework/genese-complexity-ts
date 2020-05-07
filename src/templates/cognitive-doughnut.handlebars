@@ -10,14 +10,15 @@
                     {{stats.numberOfMethodsByStatus.cognitive.error}},
                 ],
                 backgroundColor: [
-                    'rgba(3, 169, 244, 0.6)',
-                    'rgba(255, 152, 0, 0.6)',
-                    'rgba(216, 27, 96, 0.6)',
+                    {{#each colors}}
+                        '{{this}}',
+                    {{/each}}
                 ]
             }],
             labels: [
-                'complexity < {{cognitiveThreshold}}',
-                'complexity > {{cognitiveThreshold}}',
+                'complexity <= {{options.cognitiveCpx.correctThreshold}} ',
+                'complexity > {{options.cognitiveCpx.warningThreshold}} ',
+                'complexity > {{options.cognitiveCpx.errorThreshold}} ',
             ]
         },
         options: {

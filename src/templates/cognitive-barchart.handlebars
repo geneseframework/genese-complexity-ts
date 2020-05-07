@@ -4,13 +4,13 @@
         type: 'bar',
         data: {
             labels: [
-                {{#each barChartCognitive}}
+                {{#each stats.barChartCognitive.data}}
                     {{this.x}},
                 {{/each}}
             ],
             datasets: [{
                 data: [
-                    {{#each barChartCognitive}}
+                    {{#each stats.barChartCognitive.data}}
                         {{this.y}},
                     {{/each}}
                 ],

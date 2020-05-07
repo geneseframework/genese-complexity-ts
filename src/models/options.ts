@@ -1,5 +1,6 @@
 import { ComplexityType } from '../enums/complexity-type.enum';
 import { Complexity } from '../interfaces/complexity.interface';
+import { ChartColor } from '../enums/colors.enum';
 
 const appRootPath = require('app-root-path');
 const appRoot = appRootPath.toString();
@@ -11,6 +12,7 @@ export class Options {
         type: ComplexityType.COGNITIVE,
         warningThreshold: 3
     };
+    static colors: ChartColor[] = [ChartColor.CORRECT, ChartColor.WARNING, ChartColor.ERROR];
     static cyclomaticCpx: Complexity = {
         errorThreshold: 5,
         type: ComplexityType.CYCLOMATIC,
