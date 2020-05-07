@@ -35,7 +35,6 @@ export class TsFileService extends StatsService{
         for (const method of tsFile.tsMethods) {
             this.incrementStats(method);
         }
-        this.plugChartHoles();
     }
 
 
@@ -63,11 +62,6 @@ export class TsFileService extends StatsService{
             default:
                 break;
         }
-    }
-
-
-    plugChartHoles(): void {
-
     }
 
 }

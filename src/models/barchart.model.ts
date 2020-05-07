@@ -55,5 +55,19 @@ export class Barchart {
         return color;
     }
 
+
+    plugChartHoles(): Barchart {
+        this.sort();
+        const cpxMax: number = this.data[this.data.length - 1]?.x;
+        for (let cpx = 0; cpx < cpxMax; cpx++) {
+            if (!this.data.find(e => e.x === cpx)) {
+                this.addResult(cpx, 0);
+            }
+        }
+        this.sort();
+        console.log('CHART', this.data);
+        return this;
+    }
+
 }
 

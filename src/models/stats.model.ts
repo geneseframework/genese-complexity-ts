@@ -28,42 +28,9 @@ export class Stats {
     }
 
 
-    cognitiveCorrect(): number {
-        return this.numberOfMethodsByStatus.cognitive.correct;
-    }
-
-
-    cognitiveCorrectOrWarning(): number {
-        return this.numberOfMethodsByStatus.cognitive.correct + this.numberOfMethodsByStatus.cognitive.warning;
-    }
-
-
-    cognitiveWarning(): number {
-        return this.numberOfMethodsByStatus.cognitive.warning;
-    }
-
-
-    cognitiveError(): number {
-        return this.numberOfMethodsByStatus.cognitive.error;
-    }
-
-
-    cyclomaticCorrect(): number {
-        return this.numberOfMethodsByStatus.cyclomatic.correct;
-    }
-
-
-    cyclomaticCorrectOrWarning(): number {
-        return this.numberOfMethodsByStatus.cyclomatic.correct + this.numberOfMethodsByStatus.cyclomatic.warning;
-    }
-
-
-    cyclomaticWarning(): number {
-        return this.numberOfMethodsByStatus.cyclomatic.warning;
-    }
-
-
-    cyclomaticError(): number {
-        return this.numberOfMethodsByStatus.cyclomatic.error;
+    plugChartHoles(): Stats {
+        this.barChartCognitive = this.barChartCognitive.plugChartHoles();
+        this.barChartCyclomatic = this.barChartCyclomatic.plugChartHoles();
+        return this;
     }
 }

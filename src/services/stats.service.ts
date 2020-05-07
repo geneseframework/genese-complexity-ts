@@ -30,6 +30,12 @@ export abstract class StatsService {
     }
 
 
+    plugChartHoles(): void {
+        this._stats.barChartCognitive = this._stats.barChartCognitive.plugChartHoles();
+        this._stats.barChartCyclomatic = this._stats.barChartCyclomatic.plugChartHoles();
+    }
+
+
     isFolder(fileOrFolder: TsFile | TsFolder): boolean {
         return !!fileOrFolder?.['tsFolderService'];
     }

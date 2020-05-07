@@ -26,7 +26,7 @@ export class TsFolder {
 
     getStats(): TsFolderStats {
         if (!this.stats) {
-            this.stats = this.tsFolderService.getStats(this);
+            this.stats = this.tsFolderService.getStats(this).plugChartHoles();
         }
         return this.stats;
     }
