@@ -8,13 +8,15 @@ import { TsMethod } from '../models/ts-method.model';
 import { EvaluationStatus } from '../enums/evaluation-status.enum';
 import { ComplexityType } from '../enums/complexity-type.enum';
 import { Evaluation } from '../models/evaluation.model';
+import { StatsService } from './stats.service';
 
-export class TsFileService {
+export class TsFileService extends StatsService{
 
-    private _stats: TsFileStats = undefined;
+    protected _stats: TsFileStats = undefined;
     tsFile: TsFile = undefined;
 
     constructor(tsFile: TsFile) {
+        super();
         this.tsFile = tsFile;
     }
 
@@ -27,23 +29,13 @@ export class TsFileService {
         return tsFile;
     }
 
-    getStats(): TsFileStats {
-        if (this._stats) {
-            return this._stats
-        } else {
-            this._stats = new TsFileStats();
-            this.calculateStats(this.tsFile);
-            // this.addPercentages();
-            return this._stats;
-        }
-    }
-
 
     calculateStats(tsFile: TsFile): void {
         this._stats.numberOfMethods = tsFile.tsMethods?.length ?? 0;
         for (const method of tsFile.tsMethods) {
             this.incrementStats(method);
         }
+        this.plugChartHoles();
     }
 
 
@@ -57,7 +49,7 @@ export class TsFileService {
 
 
     incrementMethodsByStatus(evaluation: Evaluation, type: ComplexityType): void {
-        const status = type === ComplexityType.COGNITIVE ? evaluation.cognitiveStatus : evaluation.cyclomaticStatus;
+        const status = (type === ComplexityType.COGNITIVE) ? evaluation.cognitiveStatus : evaluation.cyclomaticStatus;
         switch (status) {
             case EvaluationStatus.CORRECT:
                 this._stats.numberOfMethodsByStatus[type].correct ++;
@@ -74,9 +66,8 @@ export class TsFileService {
     }
 
 
-    // addPercentages(): void {
-    //     this._stats.percentUnderCognitiveThreshold = Tools.percent(this._stats.numberOfMethods - this._stats.numberOfMethodsByStatus.cognitive.error, this._stats.numberOfMethods);
-    //     this._stats.percentUnderCyclomaticThreshold = Tools.percent(this._stats.numberOfMethods - this._stats.numberOfMethodsByStatus.cyclomatic.error, this._stats.numberOfMethods);
-    // }
+    plugChartHoles(): void {
+
+    }
 
 }
