@@ -65,7 +65,6 @@ export class Barchart {
             }
         }
         this.sort();
-        console.log('CHART', this.data);
         return this;
     }
 

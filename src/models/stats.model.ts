@@ -2,6 +2,7 @@ import { Barchart } from './barchart.model';
 import { ComplexityByStatus } from '../interfaces/methods-by-status.interface';
 import { ComplexityType } from '../enums/complexity-type.enum';
 import { Tools } from '../services/tools.service';
+import { Bar } from './point.model';
 
 export class Stats {
 
@@ -10,6 +11,8 @@ export class Stats {
     numberOfMethodsByStatus?: ComplexityByStatus = new ComplexityByStatus();
     numberOfMethods ?= 0;
     percentsByStatus?: ComplexityByStatus = {};
+    totalCognitiveComplexity ?= 0;
+    totalCyclomaticComplexity ?= 0;
 
 
     addPercentages(): void {
@@ -32,5 +35,16 @@ export class Stats {
         this.barChartCognitive = this.barChartCognitive.plugChartHoles();
         this.barChartCyclomatic = this.barChartCyclomatic.plugChartHoles();
         return this;
+    }
+
+
+    cumulateComplexities(): void {
+        this.totalCognitiveComplexity = this.cumulateComplexitiesByChart(this.barChartCognitive.data);
+        this.totalCyclomaticComplexity = this.cumulateComplexitiesByChart(this.barChartCyclomatic.data);
+    }
+
+
+    cumulateComplexitiesByChart(data: Bar[]): number {
+        return data.map(e => e.x * e.y).reduce((total, current)  =>  total + current);
     }
 }

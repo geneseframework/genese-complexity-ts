@@ -18,6 +18,7 @@ export abstract class StatsService {
             this._stats = this.isFolder(fileOrFolder) ? new TsFolderStats() : new TsFileStats();
             this.calculateStats(fileOrFolder);
             this._stats.addPercentages();
+            this._stats.cumulateComplexities();
             this.sortBarCharts();
             return this._stats;
         }
@@ -27,12 +28,6 @@ export abstract class StatsService {
     sortBarCharts() {
         this._stats.barChartCognitive = this._stats.barChartCognitive.sort();
         this._stats.barChartCyclomatic = this._stats.barChartCyclomatic.sort();
-    }
-
-
-    plugChartHoles(): void {
-        this._stats.barChartCognitive = this._stats.barChartCognitive.plugChartHoles();
-        this._stats.barChartCyclomatic = this._stats.barChartCyclomatic.plugChartHoles();
     }
 
 

@@ -54,7 +54,6 @@ export class TsFolderService extends StatsService {
         for (const subFolder of tsFolder.subFolders) {
             this.calculateStats(subFolder);
         }
-
     }
 
 
