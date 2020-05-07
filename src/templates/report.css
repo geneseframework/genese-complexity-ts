@@ -3,7 +3,7 @@
 }
 
 .header {
-    height: 450px;
+    height: 700px;
     display: flex;
     flex-direction: row;
 }
@@ -12,8 +12,12 @@
     flex: 1;
 }
 
-.subtitle {
-    padding-top: 20px;
+.cognitive-subtitle {
+    padding-top: 60px;
+}
+
+.cyclomatic-subtitle {
+    padding-top: 170px;
 }
 
 .charts {
@@ -21,15 +25,22 @@
     height: 300px;
 }
 
-.doughnut-cognitive {
-    /*width: 500px;*/
+.doughnut {
     display: inline-block;
 }
 
 
-.bar-cognitive {
+.bar {
     width: 800px;
     height: 200px;
     display: inline-block;
     vertical-align: top;
+}
+
+.cognitive-charts {
+    padding-top: 50px;
+}
+
+.cyclomatic-charts {
+    padding-top: 100px;
 }

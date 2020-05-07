@@ -42,6 +42,10 @@ export class TsFolderReportService {
         Handlebars.registerPartial("cognitiveBarchartScript", cognitiveBarchartTemplate);
         const cognitiveDoughnutTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/cognitive-doughnut.handlebars`, 'utf-8'));
         Handlebars.registerPartial("cognitiveDoughnutScript", cognitiveDoughnutTemplate);
+        const cyclomaticBarchartTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/cyclomatic-barchart.handlebars`, 'utf-8'));
+        Handlebars.registerPartial("cyclomaticBarchartScript", cyclomaticBarchartTemplate);
+        const cyclomaticDoughnutTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/cyclomatic-doughnut.handlebars`, 'utf-8'));
+        Handlebars.registerPartial("cyclomaticDoughnutScript", cyclomaticDoughnutTemplate);
         const rowTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/row.handlebars`, 'utf-8'));
         Handlebars.registerPartial("analyse", rowTemplate);
         const reportTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/report.handlebars`, 'utf-8'));
@@ -53,8 +57,9 @@ export class TsFolderReportService {
     private writeReport() {
         const template = this.template({
             colors: Options.colors,
+            report: this.evaluations,
             stats: this.tsFolder.getStats(),
-            report: this.evaluations
+            thresholds: Options.getThresholds()
         });
         fs.writeFileSync(`${Options.outDir}/report.html`, template, {encoding: 'utf-8'});
         fs.copyFileSync(`${appRoot}/src/templates/report.css`, `${Options.outDir}/report.css`);

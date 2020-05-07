@@ -1,21 +1,21 @@
 <script>
-    var ctxBarCognitive = document.getElementById('bar-cognitive-cpx').getContext("2d");
-    var barCognitive = new Chart(ctxBarCognitive, {
+    var ctxBarCyclomatic = document.getElementById('bar-cyclomatic-cpx').getContext("2d");
+    var barCyclomatic = new Chart(ctxBarCyclomatic, {
         type: 'bar',
         data: {
             labels: [
-                {{#each stats.barChartCognitive.data}}
+                {{#each stats.barChartCyclomatic.data}}
                     {{this.x}},
                 {{/each}}
             ],
             datasets: [{
                 data: [
-                    {{#each stats.barChartCognitive.data}}
+                    {{#each stats.barChartCyclomatic.data}}
                         {{this.y}},
                     {{/each}}
                 ],
                 backgroundColor: [
-                    {{#each stats.barChartCognitive.data}}
+                    {{#each stats.barChartCyclomatic.data}}
                         '{{this.color}}',
                     {{/each}}
                 ],
@@ -27,7 +27,7 @@
             },
             title: {
                 display: true,
-                text: 'Cognitive complexity',
+                text: 'Cyclomatic complexity',
                 position: 'top'
             },
             scales: {

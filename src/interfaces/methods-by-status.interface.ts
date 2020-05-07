@@ -1,6 +1,6 @@
 import { Statuses } from './statuses.interface';
 
-export class MethodsByStatus {
+export class ComplexityByStatus {
 
     cognitive?: Statuses = {
         correct: 0,
