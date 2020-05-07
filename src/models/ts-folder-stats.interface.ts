@@ -2,6 +2,6 @@ import { Stats } from './stats.model';
 
 export class TsFolderStats extends Stats {
 
-    numberOfFiles = 0;
+    numberOfFiles ?= 0;
 
 }

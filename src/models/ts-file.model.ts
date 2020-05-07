@@ -27,7 +27,7 @@ export class TsFile {
 
     getStats(): TsFileStats {
         if (!this.stats) {
-            this.stats = this.tsFileService.getStats();
+            this.stats = this.tsFileService.getStats(this);
         }
         return this.stats;
     }

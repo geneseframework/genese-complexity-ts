@@ -2,6 +2,7 @@ import { Barchart } from './barchart.model';
 import { ComplexityByStatus } from '../interfaces/methods-by-status.interface';
 import { ComplexityType } from '../enums/complexity-type.enum';
 import { Tools } from '../services/tools.service';
+import { Bar } from './point.model';
 
 export class Stats {
 
@@ -10,6 +11,8 @@ export class Stats {
     numberOfMethodsByStatus?: ComplexityByStatus = new ComplexityByStatus();
     numberOfMethods ?= 0;
     percentsByStatus?: ComplexityByStatus = {};
+    totalCognitiveComplexity ?= 0;
+    totalCyclomaticComplexity ?= 0;
 
 
     addPercentages(): void {
@@ -28,42 +31,20 @@ export class Stats {
     }
 
 
-    cognitiveCorrect(): number {
-        return this.numberOfMethodsByStatus.cognitive.correct;
+    plugChartHoles(): Stats {
+        this.barChartCognitive = this.barChartCognitive.plugChartHoles();
+        this.barChartCyclomatic = this.barChartCyclomatic.plugChartHoles();
+        return this;
     }
 
 
-    cognitiveCorrectOrWarning(): number {
-        return this.numberOfMethodsByStatus.cognitive.correct + this.numberOfMethodsByStatus.cognitive.warning;
+    cumulateComplexities(): void {
+        this.totalCognitiveComplexity = this.cumulateComplexitiesByChart(this.barChartCognitive.data);
+        this.totalCyclomaticComplexity = this.cumulateComplexitiesByChart(this.barChartCyclomatic.data);
     }
 
 
-    cognitiveWarning(): number {
-        return this.numberOfMethodsByStatus.cognitive.warning;
-    }
-
-
-    cognitiveError(): number {
-        return this.numberOfMethodsByStatus.cognitive.error;
-    }
-
-
-    cyclomaticCorrect(): number {
-        return this.numberOfMethodsByStatus.cyclomatic.correct;
-    }
-
-
-    cyclomaticCorrectOrWarning(): number {
-        return this.numberOfMethodsByStatus.cyclomatic.correct + this.numberOfMethodsByStatus.cyclomatic.warning;
-    }
-
-
-    cyclomaticWarning(): number {
-        return this.numberOfMethodsByStatus.cyclomatic.warning;
-    }
-
-
-    cyclomaticError(): number {
-        return this.numberOfMethodsByStatus.cyclomatic.error;
+    cumulateComplexitiesByChart(data: Bar[]): number {
+        return data.map(e => e.x * e.y).reduce((total, current)  =>  total + current);
     }
 }
