@@ -1,0 +1,55 @@
+<script>
+    var ctxBarCognitive = document.getElementById('bar-cognitive-cpx').getContext("2d");
+    var barCognitive = new Chart(ctxBarCognitive, {
+        type: 'bar',
+        data: {
+            labels: [
+                {{#each barChartCognitive}}
+                    {{this.x}},
+                {{/each}}
+            ],
+            datasets: [{
+                data: [
+                    {{#each barChartCognitive}}
+                        {{this.y}},
+                    {{/each}}
+                ],
+                backgroundColor: [
+                    {{#each stats.barChartCognitive.data}}
+                        '{{this.color}}',
+                    {{/each}}
+                ],
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Cognitive complexity',
+                position: 'top'
+            },
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Cognitive complexity'
+                    },
+                    ticks: {
+                        suggestedMin: 0
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Number of methods'
+                    },
+                    ticks: {
+                        suggestedMin: 0
+                    }
+                }]
+            }
+        }
+    });
+</script>
