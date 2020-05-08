@@ -1,7 +1,6 @@
 import * as fs from 'fs-extra';
 import * as ts from 'typescript';
 import { ComplexityService as CS } from '../services/complexity.service';
-import { TsTree } from '../models/ts-tree.model';
 import { TsBloc } from '../models/ts-bloc.model';
 import { getFilename } from './file.service';
 
@@ -13,37 +12,24 @@ export class Ast {
     }
 
 
-    static getTree(node: ts.Node): TsTree {
-        const tree = new TsTree();
-        tree.node = node;
-        return Ast.parseChildNodes(tree);
-    }
-
-
     static getBloc(tsBloc: TsBloc): TsBloc {
-        return Ast.parseChildNodes(tsBloc, true);
+        return Ast.parseChildNodes(tsBloc);
     }
 
 
-    static parseChildNodes(tree: TsBloc, isBloc?: true): TsBloc;
-    static parseChildNodes(tree: TsTree, isBloc?: false): TsTree;
-    static parseChildNodes(tree: any, isBloc?: boolean): TsTree | TsBloc;
-    static parseChildNodes(tree: any, isBloc = false): TsTree | TsBloc {
-        tree.syntaxKindName = Ast.getType(tree.node);
-        const depth: number = isBloc ? tree.depth : undefined;
-        ts.forEachChild(tree.node, (childNode: ts.Node) => {
-            const newTree = isBloc ? new TsBloc() : new TsTree() as TsBloc;
-            childNode.parent = tree.node;
-            newTree.node = childNode;
-            if (isBloc) {
-                newTree.depth = CS.increaseDepth(childNode, depth);
-                newTree.tsMethod = tree.tsMethod;
-                newTree.parent = tree;
-            }
-            const childTree = this.parseChildNodes(newTree, isBloc);
-            tree.children.push(childTree);
+    static parseChildNodes(tsBloc: TsBloc): TsBloc {
+        const depth: number = tsBloc.depth;
+        ts.forEachChild(tsBloc.node, (childNode: ts.Node) => {
+            const newBloc = new TsBloc();
+            childNode.parent = tsBloc.node;
+            newBloc.node = childNode;
+            newBloc.depth = CS.increaseDepth(childNode, depth);
+            newBloc.tsMethod = tsBloc.tsMethod;
+            newBloc.parent = tsBloc;
+            newBloc.kind = Ast.getType(childNode);
+            tsBloc.children.push(this.parseChildNodes(newBloc));
         });
-        return tree;
+        return tsBloc;
     }
 
 

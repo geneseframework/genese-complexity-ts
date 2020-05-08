@@ -25,4 +25,15 @@ export class BinariesMock {
         }
         return {cyclomaticValue: 9, cognitiveValue: 5};
     }
+
+
+    ternary(a): EvaluationValuesInterface {
+        const result = a > 10 ? 5 : 3;
+        return {cyclomaticValue: 2, cognitiveValue: 0};
+    }
+
+    ternaries(a): EvaluationValuesInterface {
+        const result = a > 10 ? 5 : ((a <5) ? 3 : 2);
+        return {cyclomaticValue: 2, cognitiveValue: 0};
+    }
 }

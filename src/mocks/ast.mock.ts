@@ -2,13 +2,18 @@ import { EvaluationValuesInterface } from '../interfaces/evaluation-values.inter
 
 export class AstMock {
 
-    recursion(a) {
-        if (a > 10) {
-            this.other(a);
-        }
+    caller(a) {
+        this.methodWithCallback(a, () => {
+            console.log(a);
+            if (a < 2) {
+                console.log(3)
+            }
+        })
     }
 
-    other(a) {
-
+    methodWithCallback(a, cb): EvaluationValuesInterface {
+        cb(a + 3);
+        return {cyclomaticValue: 2, cognitiveValue: 0};
     }
+
 }

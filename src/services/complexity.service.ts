@@ -42,26 +42,28 @@ export class ComplexityService {
 
 
     static increaseDepth(node: ts.Node, depth: number): number {
-        let newDepth: number;
-        if (node?.kind === ts.SyntaxKind.Block) {
+        let newDepth = depth;
+        // if (node?.parent?.kind === ts.SyntaxKind.ConditionalExpression) {
+        //     newDepth = depth + 1;
+        // } else if (node?.kind) {
             switch (node?.parent.kind) {
+                case ts.SyntaxKind.ArrowFunction:
                 case ts.SyntaxKind.CatchClause:
+                case ts.SyntaxKind.ConditionalExpression:
                 case ts.SyntaxKind.DoStatement:
                 case ts.SyntaxKind.ForStatement:
                 case ts.SyntaxKind.ForInStatement:
                 case ts.SyntaxKind.ForOfStatement:
+                case ts.SyntaxKind.FunctionExpression:
                 case ts.SyntaxKind.IfStatement:
                 case ts.SyntaxKind.SwitchStatement:
                 case ts.SyntaxKind.WhileStatement:
                     newDepth = depth + 1;
                     break;
                 default:
-                    newDepth = depth;
                     break;
             }
-        } else {
-            newDepth = 0;
-        }
+        // }
         return newDepth;
     }
 
@@ -72,15 +74,17 @@ export class ComplexityService {
             return 0;
         }
         switch (tsBloc.node.kind) {
-            case ts.SyntaxKind.QuestionDotToken:
+            case ts.SyntaxKind.ArrowFunction:
             case ts.SyntaxKind.CatchClause:
             case ts.SyntaxKind.ConditionalExpression:
             case ts.SyntaxKind.DoStatement:
             case ts.SyntaxKind.ForStatement:
             case ts.SyntaxKind.ForInStatement:
             case ts.SyntaxKind.ForOfStatement:
+            case ts.SyntaxKind.FunctionExpression:
             case ts.SyntaxKind.IfStatement:
             case ts.SyntaxKind.MethodDeclaration:
+            case ts.SyntaxKind.QuestionDotToken:
             case ts.SyntaxKind.SwitchStatement:
             case ts.SyntaxKind.WhileStatement:
                 complexity = tsBloc.depth + 1;

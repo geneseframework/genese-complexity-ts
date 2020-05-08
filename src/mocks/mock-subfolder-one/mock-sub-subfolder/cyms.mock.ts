@@ -24,7 +24,8 @@ export class CymsMock {
         if (!Array.isArray(path)) {
             path = path.toString().match(/[^.[\]]+/g) || [];
         }
-        path.slice(0, -1).reduce((acc: Object, curr: any, index: number) => this.reducer(acc, curr, index, +path), object)[path[path.length - 1]] = value; // Finally assign the value to the last key
+        path.slice(0, -1)
+            .reduce((acc: Object, curr: any, index: number) => this.reducer(acc, curr, index, +path), object)[path[path.length - 1]] = value; // Finally assign the value to the last key
         return object; // Return the top-level object to allow chaining
     }
 

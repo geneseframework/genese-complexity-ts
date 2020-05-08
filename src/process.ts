@@ -37,13 +37,13 @@ export class Process {
 
 
     getDebugReport() {
-        const tsFolder = new TsFolder();
         const tsFile: TsFile = TsFileService.generate(`${appRoot}/src/mocks/ast.mock.ts`);
-        tsFolder.tsFiles.push(tsFile);
-        const evaluation = tsFolder.getEvaluation();
-        // const evaluation = tsFile.getEvaluation();
-        // console.log('DEBUG EVALUATION', evaluation);
-        // console.log('DEBUG STATS', tsFolder.getStats());
+        for (const method of tsFile.tsMethods) {
+            console.log('MTHD NAME', method.name)
+            const bloc = method.getTsBloc();
+            console.log('BLOCCC', bloc.printAllChildren())
+                console.log('EVL', method.getEvaluation())
+        }
     }
 
 
