@@ -2,10 +2,13 @@ import { EvaluationValuesInterface } from '../interfaces/evaluation-values.inter
 
 export class AstMock {
 
-    ifAndAndOrAndAndOrOr(a, b, c, d, e, f): EvaluationValuesInterface {
-        if (b && c || d && f || a) {
-            console.log(a);
+    recursion(a) {
+        if (a > 10) {
+            this.other(a);
         }
-        return {cyclomaticValue: 9, cognitiveValue: 5};
+    }
+
+    other(a) {
+
     }
 }

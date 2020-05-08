@@ -12,26 +12,21 @@
 
 import { EvaluationValuesInterface } from '../../interfaces/evaluation-values.interface';
 
-export class SecondMock {
+export class SwitchesMock {
 
 
-    questionDotToken(time: any): EvaluationValuesInterface {
-        time = time?.name;
-        return {cyclomaticValue: 1, cognitiveValue: 0};
-    }
-
-
-    forForFor(max: number): EvaluationValuesInterface {
-        let total = 0;
-        for (let i = 1; i < max; ++i) {
-            for (let j = 2; j < i; ++j) {
-                for (let k = 2; k < 10; ++k) {
-                    console.log(`k = ${k}`);
-                }
-            }
-            total += i;
+    switches(numberOfWords: number): EvaluationValuesInterface {
+        switch (numberOfWords) {
+            case 1:
+                console.log("one");
+                break;
+            case 2:
+                console.log("a couple");
+                break;
+            default:
+                console.log("lots");
         }
-        return {cyclomaticValue: 4, cognitiveValue: 6};
+        return {cyclomaticValue: 3, cognitiveValue: 1};
     }
 
 
@@ -42,6 +37,20 @@ export class SecondMock {
             console.log(e);
         }
         return {cyclomaticValue: 2, cognitiveValue: 1};
+    }
+
+
+    recursion(a): EvaluationValuesInterface {
+        if (a > 10) {
+            this.recursion(a);
+        }
+        return {cyclomaticValue: 2, cognitiveValue: 2};
+    }
+
+
+    questionDotToken(time: any): EvaluationValuesInterface {
+        time = time?.name;
+        return {cyclomaticValue: 1, cognitiveValue: 0};
     }
 
 }

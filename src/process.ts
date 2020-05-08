@@ -42,8 +42,8 @@ export class Process {
         tsFolder.tsFiles.push(tsFile);
         const evaluation = tsFolder.getEvaluation();
         // const evaluation = tsFile.getEvaluation();
-        console.log('DEBUG EVALUATION', evaluation);
-        console.log('DEBUG STATS', tsFolder.getStats());
+        // console.log('DEBUG EVALUATION', evaluation);
+        // console.log('DEBUG STATS', tsFolder.getStats());
     }
 
 
