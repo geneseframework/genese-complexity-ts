@@ -1,10 +1,13 @@
+import * as ts from 'typescript';
 import { TsMethod } from './ts-method.model';
-import { TsTree } from './ts-tree.model';
 
-export class TsBloc extends TsTree {
+export class TsBloc {
 
+    children?: TsBloc[] = [];
     depth ?= 0;
     parent?: TsBloc;
-    children?: TsBloc[] = [];
     tsMethod?: TsMethod = undefined;
+
+    syntaxKindName?: string;
+    node?: ts.Node;
 }

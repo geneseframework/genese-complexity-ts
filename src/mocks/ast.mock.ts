@@ -2,13 +2,8 @@ import { EvaluationValuesInterface } from '../interfaces/evaluation-values.inter
 
 export class AstMock {
 
-    recursion(a) {
-        if (a > 10) {
-            this.other(a);
-        }
-    }
 
-    other(a) {
-
+    reducer(acc: Object, curr: any, index: number, path: number) {
+        return Object(acc[curr]) === acc[curr] ? acc[curr] : (acc[curr] = isNaN(+path[index + 1]) ? {} : []);
     }
 }
