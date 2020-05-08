@@ -1,6 +1,6 @@
 import { EvaluationValuesInterface } from '../../../interfaces/evaluation-values.interface';
 
-export class ThirdMock {
+export class BinariesMock {
 
     forIfAndAndOrAndAndOrOr(a, b, c, d, e, f): EvaluationValuesInterface {
         for (let i = 0; i < 10; i++) {

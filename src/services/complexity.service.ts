@@ -88,10 +88,20 @@ export class ComplexityService {
             case ts.SyntaxKind.BinaryExpression:
                 complexity = ComplexityService.addBinaryCognitiveComplexity(tsBloc);
                 break;
+            case ts.SyntaxKind.PropertyAccessExpression:
+                if (ComplexityService.isRecursion(tsBloc, tsBloc.node)) {
+                    complexity++;
+                }
+                break;
             default:
                 complexity = 0;
         }
         return complexity;
+    }
+
+
+    static isRecursion(tsBloc: TsBloc, node: ts.Node): boolean {
+        return node?.['name']?.['escapedText'] === tsBloc?.tsMethod?.name;
     }
 
 

@@ -1,6 +1,6 @@
 import { EvaluationValuesInterface } from '../../interfaces/evaluation-values.interface';
 
-class FirstMock {
+class IfForMock {
 
     constructor() {
     }
@@ -92,18 +92,17 @@ class FirstMock {
     }
 
 
-
-    switches(numberOfWords: number): EvaluationValuesInterface {
-        switch (numberOfWords) {
-            case 1:
-                console.log("one");
-                break;
-            case 2:
-                console.log("a couple");
-                break;
-            default:
-                console.log("lots");
+    forForFor(max: number): EvaluationValuesInterface {
+        let total = 0;
+        for (let i = 1; i < max; ++i) {
+            for (let j = 2; j < i; ++j) {
+                for (let k = 2; k < 10; ++k) {
+                    console.log(`k = ${k}`);
+                }
+            }
+            total += i;
         }
-        return {cyclomaticValue: 3, cognitiveValue: 1};
+        return {cyclomaticValue: 4, cognitiveValue: 6};
     }
+
 }
