@@ -17,18 +17,19 @@ export class Ast {
     }
 
 
-    static parseChildNodes(tree: TsBloc): TsBloc {
-        const depth: number = tree.depth;
-        ts.forEachChild(tree.node, (childNode: ts.Node) => {
+    static parseChildNodes(tsBloc: TsBloc): TsBloc {
+        const depth: number = tsBloc.depth;
+        ts.forEachChild(tsBloc.node, (childNode: ts.Node) => {
             const newBloc = new TsBloc();
-            childNode.parent = tree.node;
+            childNode.parent = tsBloc.node;
             newBloc.node = childNode;
             newBloc.depth = CS.increaseDepth(childNode, depth);
-            newBloc.tsMethod = tree.tsMethod;
-            newBloc.parent = tree;
-            tree.children.push(this.parseChildNodes(newBloc));
+            newBloc.tsMethod = tsBloc.tsMethod;
+            newBloc.parent = tsBloc;
+            newBloc.kind = Ast.getType(childNode);
+            tsBloc.children.push(this.parseChildNodes(newBloc));
         });
-        return tree;
+        return tsBloc;
     }
 
 

@@ -36,6 +36,7 @@ export class TsMethod {
             tsBloc.node = this.node;
             tsBloc.depth = 0;
             tsBloc.tsMethod = this;
+            tsBloc.kind = Ast.getType(this.node);
             this._tsBloc = Ast.getBloc(tsBloc);
             return this._tsBloc;
         }

@@ -35,7 +35,7 @@
             </div>
             <div class="clearfix padly">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">68</span>
+                    <span class="strong">84</span>
                     <span class="quiet">points of cognitive complexity</span>
                 </div>
             </div>
@@ -55,24 +55,24 @@
             </div>
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">76 %</span>
+                    <span class="strong">64 %</span>
                     <span class="quiet"> Correct</span>
-                    <span class='fraction'>19/25</span>
+                    <span class='fraction'>16/25</span>
                 </div>
             </div>
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">12 %</span>
+                    <span class="strong">8 %</span>
                     <span class="quiet"> Warning</span>
-                    <span class='fraction'>3/25</span>
+                    <span class='fraction'>2/25</span>
                     <span class="quiet">(threshold : 3)</span>
                 </div>
             </div>
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">12 %</span>
+                    <span class="strong">28 %</span>
                     <span class="quiet"> Error</span>
-                    <span class='fraction'>3/25</span>
+                    <span class='fraction'>7/25</span>
                     <span class="quiet">(threshold : 4)</span>
                 </div>
             </div>
@@ -145,9 +145,9 @@
         </thead>
             <tr>
                 <td class="column fileColumn">ast.mock.ts</td>
-                <td class="column methodColumn">reducer</td>
+                <td class="column methodColumn">ternaries</td>
                 <td class="column cyclomaticColumn">3</td>
-                <td class="column cognitiveColumn">2</td>
+                <td class="column cognitiveColumn">3</td>
             </tr>
             <tr>
                 <td class="column fileColumn">if-for.mock.ts</td>
@@ -195,31 +195,31 @@
                 <td class="column fileColumn">if-for.mock.ts</td>
                 <td class="column methodColumn">ifIfIf</td>
                 <td class="column cyclomaticColumn">4</td>
-                <td class="column cognitiveColumn">3</td>
+                <td class="column cognitiveColumn">6</td>
             </tr>
             <tr>
                 <td class="column fileColumn">if-for.mock.ts</td>
                 <td class="column methodColumn">ifIfIfElse</td>
                 <td class="column cyclomaticColumn">4</td>
-                <td class="column cognitiveColumn">3</td>
+                <td class="column cognitiveColumn">6</td>
             </tr>
             <tr>
                 <td class="column fileColumn">if-for.mock.ts</td>
                 <td class="column methodColumn">forForFor</td>
                 <td class="column cyclomaticColumn">4</td>
-                <td class="column cognitiveColumn">3</td>
+                <td class="column cognitiveColumn">6</td>
             </tr>
             <tr>
                 <td class="column fileColumn">binaries.mock.ts</td>
                 <td class="column methodColumn">forIfAndAndOrAndAndOrOr</td>
                 <td class="column cyclomaticColumn">7</td>
-                <td class="column cognitiveColumn">6</td>
+                <td class="column cognitiveColumn">7</td>
             </tr>
             <tr>
                 <td class="column fileColumn">binaries.mock.ts</td>
                 <td class="column methodColumn">forForIfAndAndOrAndAndOrOr</td>
                 <td class="column cyclomaticColumn">9</td>
-                <td class="column cognitiveColumn">8</td>
+                <td class="column cognitiveColumn">11</td>
             </tr>
             <tr>
                 <td class="column fileColumn">cyms.mock.ts</td>
@@ -231,13 +231,13 @@
                 <td class="column fileColumn">cyms.mock.ts</td>
                 <td class="column methodColumn">reducer</td>
                 <td class="column cyclomaticColumn">3</td>
-                <td class="column cognitiveColumn">2</td>
+                <td class="column cognitiveColumn">3</td>
             </tr>
             <tr>
                 <td class="column fileColumn">cyms.mock.ts</td>
                 <td class="column methodColumn">setCountByStatusText</td>
                 <td class="column cyclomaticColumn">5</td>
-                <td class="column cognitiveColumn">4</td>
+                <td class="column cognitiveColumn">5</td>
             </tr>
             <tr>
                 <td class="column fileColumn">cyms.mock.ts</td>
@@ -304,9 +304,9 @@
         data: {
             datasets: [{
                 data: [
-                    19,
-                    3,
-                    3,
+                    16,
+                    2,
+                    7,
                 ],
                 backgroundColor: [
                         'rgba(3, 169, 244, 0.6)',
@@ -357,16 +357,22 @@
                     6,
                     7,
                     8,
+                    9,
+                    10,
+                    11,
             ],
             datasets: [{
                 data: [
                         1,
                         5,
-                        7,
-                        6,
+                        5,
+                        5,
+                        2,
+                        2,
                         3,
                         1,
-                        1,
+                        0,
+                        0,
                         0,
                         1,
                 ],
@@ -376,6 +382,9 @@
                         'rgba(3, 169, 244, 0.6)',
                         'rgba(3, 169, 244, 0.6)',
                         'rgba(255, 152, 0, 0.6)',
+                        'rgba(216, 27, 96, 0.6)',
+                        'rgba(216, 27, 96, 0.6)',
+                        'rgba(216, 27, 96, 0.6)',
                         'rgba(216, 27, 96, 0.6)',
                         'rgba(216, 27, 96, 0.6)',
                         'rgba(216, 27, 96, 0.6)',
