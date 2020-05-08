@@ -1,5 +1,3 @@
-import { EvaluationValuesInterface } from '../interfaces/evaluation-values.interface';
-
 export class AstMock {
 
 

@@ -4,7 +4,6 @@ import * as Handlebars from "handlebars";
 import { Evaluation } from '../models/evaluation.model';
 import { TsFolder } from '../models/ts-folder.model';
 import { Options } from '../models/options';
-import { ChartColor } from '../enums/colors.enum';
 
 const appRoot = require('app-root-path').toString();
 

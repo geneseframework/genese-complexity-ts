@@ -2,7 +2,6 @@ import { TsFile } from './ts-file.model';
 import { Evaluation } from './evaluation.model';
 import { TsFolderService } from '../services/ts-folder.service';
 import { TsFolderStats } from './ts-folder-stats.interface';
-import { TsFileService } from '../services/ts-file.service';
 
 export class TsFolder {
 

@@ -3,7 +3,6 @@ import { TsFile } from '../models/ts-file.model';
 import { TsMethodService } from './ts-method.service';
 import { TsFileStats } from '../models/ts-file-stats.interface';
 import { Ast } from './ast.service';
-import { Tools } from './tools.service';
 import { TsMethod } from '../models/ts-method.model';
 import { EvaluationStatus } from '../enums/evaluation-status.enum';
 import { ComplexityType } from '../enums/complexity-type.enum';
