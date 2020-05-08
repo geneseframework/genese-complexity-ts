@@ -25,23 +25,23 @@
         <div class="stats">
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">5</span>
+                    <span class="strong">6</span>
                     <span class="quiet">Files</span>
                 </div>
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">25</span>
+                    <span class="strong">31</span>
                     <span class="quiet">Methods</span>
                 </div>
             </div>
             <div class="clearfix padly">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">84</span>
+                    <span class="strong">95</span>
                     <span class="quiet">points of cognitive complexity</span>
                 </div>
             </div>
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">100</span>
+                    <span class="strong">113</span>
                     <span class="quiet">points of cyclomatic complexity</span>
                 </div>
             </div>
@@ -55,24 +55,24 @@
             </div>
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">64 %</span>
+                    <span class="strong">67.7 %</span>
                     <span class="quiet"> Correct</span>
-                    <span class='fraction'>16/25</span>
+                    <span class='fraction'>21/31</span>
                 </div>
             </div>
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">8 %</span>
+                    <span class="strong">9.7 %</span>
                     <span class="quiet"> Warning</span>
-                    <span class='fraction'>2/25</span>
+                    <span class='fraction'>3/31</span>
                     <span class="quiet">(threshold : 3)</span>
                 </div>
             </div>
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">28 %</span>
+                    <span class="strong">22.6 %</span>
                     <span class="quiet"> Error</span>
-                    <span class='fraction'>7/25</span>
+                    <span class='fraction'>7/31</span>
                     <span class="quiet">(threshold : 4)</span>
                 </div>
             </div>
@@ -86,24 +86,24 @@
             </div>
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">72 %</span>
+                    <span class="strong">77.4 %</span>
                     <span class="quiet"> Correct</span>
-                    <span class='fraction'>18/25</span>
+                    <span class='fraction'>24/31</span>
                 </div>
             </div>
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">12 %</span>
+                    <span class="strong">9.7 %</span>
                     <span class="quiet"> Warning</span>
-                    <span class='fraction'>3/25</span>
+                    <span class='fraction'>3/31</span>
                     <span class="quiet">(threshold : 4)</span>
                 </div>
             </div>
             <div class="clearfix">
                 <div class='fl pad1y space-right2'>
-                    <span class="strong">16 %</span>
+                    <span class="strong">12.9 %</span>
                     <span class="quiet"> Error</span>
-                    <span class='fraction'>4/25</span>
+                    <span class='fraction'>4/31</span>
                     <span class="quiet">(threshold : 5)</span>
                 </div>
             </div>
@@ -145,9 +145,15 @@
         </thead>
             <tr>
                 <td class="column fileColumn">ast.mock.ts</td>
-                <td class="column methodColumn">ternaries</td>
+                <td class="column methodColumn">caller</td>
                 <td class="column cyclomaticColumn">3</td>
                 <td class="column cognitiveColumn">3</td>
+            </tr>
+            <tr>
+                <td class="column fileColumn">ast.mock.ts</td>
+                <td class="column methodColumn">methodWithCallback</td>
+                <td class="column cyclomaticColumn">1</td>
+                <td class="column cognitiveColumn">0</td>
             </tr>
             <tr>
                 <td class="column fileColumn">if-for.mock.ts</td>
@@ -222,10 +228,22 @@
                 <td class="column cognitiveColumn">11</td>
             </tr>
             <tr>
+                <td class="column fileColumn">binaries.mock.ts</td>
+                <td class="column methodColumn">ternary</td>
+                <td class="column cyclomaticColumn">2</td>
+                <td class="column cognitiveColumn">1</td>
+            </tr>
+            <tr>
+                <td class="column fileColumn">binaries.mock.ts</td>
+                <td class="column methodColumn">ternaries</td>
+                <td class="column cyclomaticColumn">3</td>
+                <td class="column cognitiveColumn">3</td>
+            </tr>
+            <tr>
                 <td class="column fileColumn">cyms.mock.ts</td>
                 <td class="column methodColumn">set</td>
                 <td class="column cyclomaticColumn">5</td>
-                <td class="column cognitiveColumn">3</td>
+                <td class="column cognitiveColumn">4</td>
             </tr>
             <tr>
                 <td class="column fileColumn">cyms.mock.ts</td>
@@ -270,6 +288,24 @@
                 <td class="column cognitiveColumn">4</td>
             </tr>
             <tr>
+                <td class="column fileColumn">callbacks.mock.ts</td>
+                <td class="column methodColumn">caller</td>
+                <td class="column cyclomaticColumn">3</td>
+                <td class="column cognitiveColumn">3</td>
+            </tr>
+            <tr>
+                <td class="column fileColumn">callbacks.mock.ts</td>
+                <td class="column methodColumn">callerFunction</td>
+                <td class="column cyclomaticColumn">3</td>
+                <td class="column cognitiveColumn">3</td>
+            </tr>
+            <tr>
+                <td class="column fileColumn">callbacks.mock.ts</td>
+                <td class="column methodColumn">methodWithCallback</td>
+                <td class="column cyclomaticColumn">1</td>
+                <td class="column cognitiveColumn">0</td>
+            </tr>
+            <tr>
                 <td class="column fileColumn">switches.mock.ts</td>
                 <td class="column methodColumn">switches</td>
                 <td class="column cyclomaticColumn">3</td>
@@ -304,8 +340,8 @@
         data: {
             datasets: [{
                 data: [
-                    16,
-                    2,
+                    21,
+                    3,
                     7,
                 ],
                 backgroundColor: [
@@ -363,11 +399,11 @@
             ],
             datasets: [{
                 data: [
-                        1,
+                        3,
+                        6,
                         5,
-                        5,
-                        5,
-                        2,
+                        7,
+                        3,
                         2,
                         3,
                         1,
@@ -431,7 +467,7 @@
         data: {
             datasets: [{
                 data: [
-                    18,
+                    24,
                     3,
                     4,
                 ],
@@ -489,9 +525,9 @@
             datasets: [{
                 data: [
                         0,
-                        1,
-                        5,
+                        3,
                         6,
+                        9,
                         6,
                         3,
                         0,

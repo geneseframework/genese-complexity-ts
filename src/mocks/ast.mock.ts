@@ -2,17 +2,18 @@ import { EvaluationValuesInterface } from '../interfaces/evaluation-values.inter
 
 export class AstMock {
 
-    // ternary(a): EvaluationValuesInterface {
-    //     const result = a > 10 ? 5 : 3;
-    //     return {cyclomaticValue: 2, cognitiveValue: 0};
-    // }
+    caller(a) {
+        this.methodWithCallback(a, () => {
+            console.log(a);
+            if (a < 2) {
+                console.log(3)
+            }
+        })
+    }
 
-    ternaries(a): EvaluationValuesInterface {
-        const result = a > 10 ? 5 : ((a <5) ? 3 : 2);
+    methodWithCallback(a, cb): EvaluationValuesInterface {
+        cb(a + 3);
         return {cyclomaticValue: 2, cognitiveValue: 0};
     }
 
-    // reducer(acc: Object, curr: any, index: number, path: number) {
-    //     return Object(acc[curr]) === acc[curr] ? acc[curr] : (acc[curr] = isNaN(+path[index + 1]) ? {} : []);
-    // }
 }
