@@ -35,7 +35,6 @@ export class TsFolder implements Evaluate {
 
 
     evaluate(): void {
-        console.log('EVL FOLDER', this.path)
         for (const file of this.tsFiles) {
             this.cognitiveValue += file.cognitiveValue;
             this.cyclomaticValue += file.cyclomaticValue;

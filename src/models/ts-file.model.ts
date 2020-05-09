@@ -4,10 +4,13 @@ import { TsFolder } from './ts-folder.model';
 import { TsFileService } from '../services/ts-file.service';
 import { Stats } from './stats.model';
 import { Evaluate } from '../interfaces/evaluate.interface';
+import { ComplexitiesByStatus } from '../interfaces/complexities-by-status.interface';
+import { ComplexitiesByStatusService } from '../services/complexities-by-status.service';
 
 export class TsFile implements Evaluate {
 
     cognitiveValue ?= 0;
+    complexitiesByStatus?: ComplexitiesByStatus = undefined;
     cyclomaticValue ?= 0;
     name ?= '';
     sourceFile?: ts.SourceFile = undefined;
@@ -22,9 +25,11 @@ export class TsFile implements Evaluate {
 
 
     evaluate(): void {
+        const cpss = new ComplexitiesByStatusService();
         for (const method of this.tsMethods) {
             this.cognitiveValue += method.cognitiveValue;
             this.cyclomaticValue += method.cyclomaticValue;
+            this.complexitiesByStatus = cpss.incrementStatusWithMethod(this.complexitiesByStatus, method);
         }
     }
 

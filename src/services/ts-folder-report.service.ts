@@ -23,7 +23,6 @@ export class TsFolderReportService {
 
     getFoldersArray(tsFolder: TsFolder): RowFolderReport[] {
         let report: RowFolderReport[] = [];
-        // console.log('FOLDER', tsFolder)
         for (const subFolder of tsFolder.subFolders) {
             const subFolderReport: RowFolderReport = {
                 path: subFolder.path,
@@ -31,11 +30,9 @@ export class TsFolderReportService {
                 numberOfMethods: subFolder.numberOfMethods,
                 complexitiesByStatus: subFolder.complexitiesByStatus
             };
-            // console.log('SUBFOLDER', subFolder)
             report.push(subFolderReport);
             report = report.concat(this.getFoldersArray(subFolder));
         }
-        console.log('REPORT', report)
         return report;
     }
 
