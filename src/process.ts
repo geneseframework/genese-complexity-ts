@@ -38,8 +38,9 @@ export class Process {
 
     getDebugReport() {
         const tsFile: TsFile = TsFileService.generateTree(`${appRoot}/src/mocks/ast.mock.ts`);
+        // console.log('FILEEE', tsFile)
         for (const method of tsFile.tsMethods) {
-            console.log('MTHD NAME', method.name)
+            // console.log('MTHD NAME', method.name)
             const tree = method.tsTree;
             // tree.printAllChildren();
             console.log('EVL', method)

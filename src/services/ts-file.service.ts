@@ -24,6 +24,7 @@ export class TsFileService extends StatsService{
         tsFile.tsFolder = tsFolder;
         tsFile.setName();
         tsFile.tsMethods = TsMethodService.generateTree(tsFile);
+        tsFile.evaluate();
         return tsFile;
     }
 
@@ -37,7 +38,6 @@ export class TsFileService extends StatsService{
 
 
     incrementStats(method: TsMethod): void {
-        // const evaluation = method.getEvaluation();
         this.incrementMethodsByStatus(method, ComplexityType.COGNITIVE);
         this.incrementMethodsByStatus(method, ComplexityType.CYCLOMATIC);
         this._stats.barChartCognitive.addResult(method.cognitiveValue);

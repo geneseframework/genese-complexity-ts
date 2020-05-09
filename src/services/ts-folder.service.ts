@@ -41,6 +41,7 @@ export class TsFolderService extends StatsService {
                 }
             }
         });
+        tsFolder.evaluate();
         return tsFolder;
     }
 

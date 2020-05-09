@@ -2,9 +2,9 @@ import { ComplexitiesByStatus } from '../interfaces/complexities-by-status.inter
 
 export class RowFolderReport {
 
-    complexitiesByStatus: ComplexitiesByStatus;
-    folderName ?= '';
+    complexitiesByStatus?: ComplexitiesByStatus;
     numberOfFiles ?= 0;
     numberOfMethods ?= 0;
+    path ?= '';
 
 }
