@@ -19,12 +19,12 @@ export class TsTree {
         this.printChildren(this, ' ');
     }
 
-    printChildren(tsBloc: TsTree, indent: string) {
-        for (const childBloc of tsBloc.children) {
-            const color = childBloc.increasesCognitiveComplexity ? 'red' : 'white';
-            console.log(indent, chalk[color](childBloc.kind), 'depth', childBloc.depth, 'parent', tsBloc.kind);
+    printChildren(tsTree: TsTree, indent: string) {
+        for (const childTree of tsTree.children) {
+            const color = childTree.increasesCognitiveComplexity ? 'red' : 'white';
+            console.log(indent, chalk[color](childTree.kind), 'depth', childTree.depth, 'parent', tsTree.kind);
             const newIndent = indent + '  ';
-            this.printChildren(childBloc, newIndent);
+            this.printChildren(childTree, newIndent);
         }
     }
 

@@ -14,33 +14,22 @@ export class TsTreeService {
         tsTree.tsMethod = tsMethod;
         tsTree.kind = Ast.getType(tsMethod.node);
         tsTree = TsTreeService.addTreeToChildren(tsTree)
-        // tsTree = Ast.getBloc(tsTree);
         return tsTree;
     }
-
-
-    // static getChildren(tsTree: TsTree): TsTree[] {
-    //     return TsTreeService.addTreeToChildren(tsTree);
-    // }
-
-
-    // static getBloc(tsTree: TsTree): TsTree {
-    //     return TsTreeService.addTreeToChildren(tsTree);
-    // }
 
 
     static addTreeToChildren(tsTree: TsTree): TsTree {
         const depth: number = tsTree.depth;
         ts.forEachChild(tsTree.node, (childNode: ts.Node) => {
-            const newBloc = new TsTree();
+            const newTree = new TsTree();
             childNode.parent = tsTree.node;
-            newBloc.node = childNode;
-            newBloc.depth = CS.increaseDepth(childNode, depth);
-            newBloc.tsMethod = tsTree.tsMethod;
-            newBloc.parent = tsTree;
-            newBloc.kind = Ast.getType(childNode);
-            newBloc.increasesCognitiveComplexity = CS.increasesCognitiveComplexity(newBloc);
-            tsTree.children.push(TsTreeService.addTreeToChildren(newBloc));
+            newTree.node = childNode;
+            newTree.depth = CS.increaseDepth(childNode, depth);
+            newTree.tsMethod = tsTree.tsMethod;
+            newTree.parent = tsTree;
+            newTree.kind = Ast.getType(childNode);
+            newTree.increasesCognitiveComplexity = CS.increasesCognitiveComplexity(newTree);
+            tsTree.children.push(TsTreeService.addTreeToChildren(newTree));
         });
         return tsTree;
     }
