@@ -21,11 +21,11 @@ export class Process {
 
     start(options: any): void {
         console.log('START CALCULATION');
-        // this.getDebugReport();
-        this.setOptions(options)
-            .createOutDir()
-            .setTsFolder()
-            .generateReport();
+        this.getDebugReport();
+        // this.setOptions(options)
+        //     .createOutDir()
+        //     .setTsFolder()
+        //     .generateReport();
         console.log('REPORT GENERATED SUCCESSFULLY');
     }
 
@@ -41,8 +41,8 @@ export class Process {
         for (const method of tsFile.tsMethods) {
             console.log('MTHD NAME', method.name)
             const bloc = method.getTsBloc();
-            console.log('BLOCCC', bloc.printAllChildren())
-                console.log('EVL', method.getEvaluation())
+            bloc.printAllChildren();
+            console.log('EVL', method.getEvaluation())
         }
     }
 

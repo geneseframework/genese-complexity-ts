@@ -11,9 +11,10 @@ import { ComplexityType } from '../enums/complexity-type.enum';
 export class TsMethod {
 
     private _evaluation?: Evaluation = undefined;
+    private _tsBloc?: TsBloc = undefined;
+
     name = '';
     node: ts.Node = undefined;
-    private _tsBloc?: TsBloc = undefined;
     tsFile?: TsFile = new TsFile();
 
     constructor(node: ts.Node) {
