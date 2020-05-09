@@ -19,12 +19,12 @@ export class TsFileService extends StatsService{
         this.tsFile = tsFile;
     }
 
-    static generate(path: string, tsFolder: TsFolder = new TsFolder()): TsFile {
+    static generateTree(path: string, tsFolder: TsFolder = new TsFolder()): TsFile {
         const tsFile: TsFile = new TsFile();
         tsFile.sourceFile = Ast.getSourceFile(path);
         tsFile.tsFolder = tsFolder;
         tsFile.setName();
-        tsFile.tsMethods = TsMethodService.generateMethods(tsFile);
+        tsFile.tsMethods = TsMethodService.generateTree(tsFile);
         return tsFile;
     }
 

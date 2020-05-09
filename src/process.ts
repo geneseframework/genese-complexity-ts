@@ -24,7 +24,7 @@ export class Process {
         // this.getDebugReport();
         this.setOptions(options)
             .createOutDir()
-            .setTsFolder()
+            .generateTree()
             .generateReport();
         console.log('REPORT GENERATED SUCCESSFULLY');
     }
@@ -37,18 +37,18 @@ export class Process {
 
 
     getDebugReport() {
-        const tsFile: TsFile = TsFileService.generate(`${appRoot}/src/mocks/ast.mock.ts`);
+        const tsFile: TsFile = TsFileService.generateTree(`${appRoot}/src/mocks/ast.mock.ts`);
         for (const method of tsFile.tsMethods) {
             console.log('MTHD NAME', method.name)
-            const bloc = method.getTsBloc();
-            bloc.printAllChildren();
+            const tree = method.tsTree;
+            tree.printAllChildren();
             console.log('EVL', method.getEvaluation())
         }
     }
 
 
-    setTsFolder(): Process {
-        this.tsFolder = TsFolderService.generate(this.path, 'ts');
+    generateTree(): Process {
+        this.tsFolder = TsFolderService.generateTree(this.path, 'ts');
         return this;
     }
 

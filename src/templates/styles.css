@@ -116,6 +116,8 @@ table.coverage td span.cline-any {
 .array-report {
     border-collapse: collapse;
     width: 100%;
+    margin-top: 20px;
+    margin-bottom: 50px;
 }
 .array-report tr { border-bottom: 1px solid #bbb; }
 .keyline-all { border: 1px solid #ddd; }

@@ -1,7 +1,5 @@
 import * as fs from 'fs-extra';
 import * as ts from 'typescript';
-import { ComplexityService as CS } from '../services/complexity.service';
-import { TsBloc } from '../models/ts-bloc.model';
 import { getFilename } from './file.service';
 
 export class Ast {
@@ -9,28 +7,6 @@ export class Ast {
 
     static getSourceFile(path: string): ts.SourceFile {
         return ts.createSourceFile(getFilename(path), fs.readFileSync(path, 'utf-8'), ts.ScriptTarget.Latest);
-    }
-
-
-    static getBloc(tsBloc: TsBloc): TsBloc {
-        return Ast.parseChildNodes(tsBloc);
-    }
-
-
-    static parseChildNodes(tsBloc: TsBloc): TsBloc {
-        const depth: number = tsBloc.depth;
-        ts.forEachChild(tsBloc.node, (childNode: ts.Node) => {
-            const newBloc = new TsBloc();
-            childNode.parent = tsBloc.node;
-            newBloc.node = childNode;
-            newBloc.depth = CS.increaseDepth(childNode, depth);
-            newBloc.tsMethod = tsBloc.tsMethod;
-            newBloc.parent = tsBloc;
-            newBloc.kind = Ast.getType(childNode);
-            newBloc.increasesCognitiveComplexity = CS.increasesCognitiveComplexity(newBloc);
-            tsBloc.children.push(this.parseChildNodes(newBloc));
-        });
-        return tsBloc;
     }
 
 

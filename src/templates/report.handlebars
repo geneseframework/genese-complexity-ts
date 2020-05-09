@@ -161,8 +161,8 @@
             <th class="column cognitiveColumn">Error</th>
         </tr>
         </thead>
-        {{#each report}}
-            {{>analyse analyse=.}}
+        {{#each foldersArray}}
+            {{>rowFolder rowFolder=.}}
         {{/each}}
     </table>
 
@@ -177,8 +177,8 @@
             <th class="column cognitiveColumn">Cognitive complexity</th>
         </tr>
         </thead>
-        {{#each report}}
-            {{>analyse analyse=.}}
+        {{#each filesArray}}
+            {{>rowFile rowFile=.}}
         {{/each}}
     </table>
 

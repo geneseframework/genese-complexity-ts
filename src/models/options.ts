@@ -1,7 +1,7 @@
 import { ComplexityType } from '../enums/complexity-type.enum';
 import { Complexity } from '../interfaces/complexity.interface';
 import { ChartColor } from '../enums/colors.enum';
-import { ComplexityByStatus } from '../interfaces/methods-by-status.interface';
+import { ComplexitiesByStatus } from '../interfaces/complexities-by-status.interface';
 
 const appRootPath = require('app-root-path');
 const appRoot = appRootPath.toString();
@@ -34,7 +34,7 @@ export class Options {
     }
 
 
-    static getThresholds(): ComplexityByStatus {
+    static getThresholds(): ComplexitiesByStatus {
         return {
             cognitive: {
                 warning: Options.cognitiveCpx.warningThreshold,

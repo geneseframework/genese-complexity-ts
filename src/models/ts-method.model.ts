@@ -3,7 +3,7 @@ import { TsFile } from './ts-file.model';
 import { Ast } from '../services/ast.service';
 import { ComplexityService as CS } from '../services/complexity.service';
 import { Evaluation } from './evaluation.model';
-import { TsBloc } from './ts-bloc.model';
+import { TsTree } from './ts-tree.model';
 import { Options } from './options';
 import { EvaluationStatus } from '../enums/evaluation-status.enum';
 import { ComplexityType } from '../enums/complexity-type.enum';
@@ -11,16 +11,15 @@ import { ComplexityType } from '../enums/complexity-type.enum';
 export class TsMethod {
 
     private _evaluation?: Evaluation = undefined;
-    private _tsBloc?: TsBloc = undefined;
 
     name = '';
     node: ts.Node = undefined;
     tsFile?: TsFile = new TsFile();
+    tsTree?: TsTree = undefined;
 
     constructor(node: ts.Node) {
         this.node = node;
         this.name = Ast.getMethodName(node);
-        this._tsBloc = this.getTsBloc();
     }
 
 
@@ -29,24 +28,9 @@ export class TsMethod {
     }
 
 
-    getTsBloc(): TsBloc {
-        if (this._tsBloc) {
-            return this._tsBloc;
-        } else {
-            const tsBloc: TsBloc = new TsBloc();
-            tsBloc.node = this.node;
-            tsBloc.depth = 0;
-            tsBloc.tsMethod = this;
-            tsBloc.kind = Ast.getType(this.node);
-            this._tsBloc = Ast.getBloc(tsBloc);
-            return this._tsBloc;
-        }
-    }
-
-
     private evaluate(): Evaluation {
         this._evaluation = new Evaluation();
-        this._evaluation.cognitiveValue = CS.calculateCognitiveComplexity(this._tsBloc);
+        this._evaluation.cognitiveValue = CS.calculateCognitiveComplexity(this.tsTree);
         this._evaluation.cognitiveStatus = this.getComplexityStatus(ComplexityType.COGNITIVE);
         this._evaluation.cyclomaticValue = CS.calculateCyclomaticComplexity(this.node);
         this._evaluation.cyclomaticStatus = this.getComplexityStatus(ComplexityType.CYCLOMATIC);

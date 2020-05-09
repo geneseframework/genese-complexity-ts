@@ -1,13 +1,13 @@
 import * as ts from 'typescript';
 import * as utils from 'tsutils';
-import { TsBloc } from '../models/ts-bloc.model';
+import { TsTree } from '../models/ts-tree.model';
 import { Ast } from './ast.service';
 
 export class ComplexityService {
 
 
 
-    static calculateCognitiveComplexity(tsBloc: TsBloc): number {
+    static calculateCognitiveComplexity(tsBloc: TsTree): number {
         let complexity = 0;
         if (tsBloc) {
             for (const bloc of tsBloc?.children) {
@@ -68,7 +68,7 @@ export class ComplexityService {
     }
 
 
-    static addCognitiveComplexity(tsBloc: TsBloc): number {
+    static addCognitiveComplexity(tsBloc: TsTree): number {
         let complexity = 0;
         if (!tsBloc?.node || tsBloc?.depth === undefined) {
             return 0;
@@ -106,7 +106,7 @@ export class ComplexityService {
     }
 
 
-    static conditionalExpressionIsTrivial(tsBloc: TsBloc): boolean {
+    static conditionalExpressionIsTrivial(tsBloc: TsTree): boolean {
         return (ComplexityService.isLiteral(tsBloc?.node?.['whenTrue']) && ComplexityService.isLiteral(tsBloc?.node?.['whenFalse']));
     }
 
@@ -119,12 +119,12 @@ export class ComplexityService {
     }
 
 
-    static isRecursion(tsBloc: TsBloc, node: ts.Node): boolean {
+    static isRecursion(tsBloc: TsTree, node: ts.Node): boolean {
         return node?.['name']?.['escapedText'] === tsBloc?.tsMethod?.name;
     }
 
 
-    static addBinaryCognitiveCpx(tsBloc: TsBloc): number {
+    static addBinaryCognitiveCpx(tsBloc: TsTree): number {
         if (!tsBloc?.node || !tsBloc.parent.node) {
             return 0;
         }
@@ -168,7 +168,7 @@ export class ComplexityService {
     }
 
 
-    static increasesCognitiveComplexity(tsBloc: TsBloc): boolean {
+    static increasesCognitiveComplexity(tsBloc: TsTree): boolean {
 
         switch (tsBloc?.node?.kind) {
             case ts.SyntaxKind.ArrowFunction:
