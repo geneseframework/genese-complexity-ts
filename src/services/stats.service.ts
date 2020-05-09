@@ -1,21 +1,18 @@
 import { TsFolder } from '../models/ts-folder.model';
-import { TsFolderStats } from '../models/ts-folder-stats.interface';
 import { TsFile } from '../models/ts-file.model';
-import { TsFileStats } from '../models/ts-file-stats.interface';
+import { Stats } from '../models/stats.model';
 
 export abstract class StatsService {
 
-    protected abstract _stats: TsFolderStats | TsFileStats = undefined;
+    protected abstract _stats: Stats = undefined;
     protected abstract calculateStats(fileOrFolder: TsFile | TsFolder): void;
 
 
-    getStats(fileOrFolder: TsFile): TsFileStats;
-    getStats(fileOrFolder: TsFolder): TsFolderStats;
-    getStats(fileOrFolder: any): TsFolderStats | TsFileStats {
+    getStats(fileOrFolder: any): Stats {
         if (this._stats) {
             return this._stats
         } else {
-            this._stats = this.isFolder(fileOrFolder) ? new TsFolderStats() : new TsFileStats();
+            this._stats = new Stats();
             this.calculateStats(fileOrFolder);
             this._stats.addPercentages();
             this._stats.cumulateComplexities();

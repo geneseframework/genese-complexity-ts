@@ -1,17 +1,17 @@
 import { TsFolder } from '../models/ts-folder.model';
 import { TsFile } from '../models/ts-file.model';
 import { TsMethodService } from './ts-method.service';
-import { TsFileStats } from '../models/ts-file-stats.interface';
 import { Ast } from './ast.service';
 import { TsMethod } from '../models/ts-method.model';
 import { EvaluationStatus } from '../enums/evaluation-status.enum';
 import { ComplexityType } from '../enums/complexity-type.enum';
 import { Evaluation } from '../models/evaluation.model';
 import { StatsService } from './stats.service';
+import { Stats } from '../models/stats.model';
 
 export class TsFileService extends StatsService{
 
-    protected _stats: TsFileStats = undefined;
+    protected _stats: Stats = undefined;
     tsFile: TsFile = undefined;
 
     constructor(tsFile: TsFile) {

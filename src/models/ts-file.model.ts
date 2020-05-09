@@ -2,8 +2,8 @@ import * as ts from 'typescript';
 import { TsMethod } from './ts-method.model';
 import { TsFolder } from './ts-folder.model';
 import { Evaluation } from './evaluation.model';
-import { TsFileStats } from './ts-file-stats.interface';
 import { TsFileService } from '../services/ts-file.service';
+import { Stats } from './stats.model';
 
 export class TsFile {
 
@@ -11,7 +11,7 @@ export class TsFile {
     tsMethods?: TsMethod[] = [];
     name ?= '';
     sourceFile?: ts.SourceFile = undefined;
-    stats?: TsFileStats = undefined;
+    stats?: Stats = undefined;
     tsFileService: TsFileService = undefined;
     tsFolder?: TsFolder = new TsFolder();
 
@@ -25,7 +25,7 @@ export class TsFile {
     }
 
 
-    getStats(): TsFileStats {
+    getStats(): Stats {
         if (!this.stats) {
             this.stats = this.tsFileService.getStats(this);
         }

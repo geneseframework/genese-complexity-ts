@@ -1,7 +1,7 @@
 import { TsFile } from './ts-file.model';
 import { Evaluation } from './evaluation.model';
 import { TsFolderService } from '../services/ts-folder.service';
-import { TsFolderStats } from './ts-folder-stats.interface';
+import { Stats } from './stats.model';
 
 export class TsFolder {
 
@@ -9,7 +9,7 @@ export class TsFolder {
     numberOfFiles ?= 0;
     parent?: TsFolder = undefined;
     path ?= '';
-    stats: TsFolderStats = undefined;
+    stats: Stats = undefined;
     subFolders?: TsFolder[] = [];
     tsFiles?: TsFile[] = [];
     tsFolderService?: TsFolderService = undefined;
@@ -24,7 +24,7 @@ export class TsFolder {
     }
 
 
-    getStats(): TsFolderStats {
+    getStats(): Stats {
         if (!this.stats) {
             this.stats = this.tsFolderService.getStats(this).plugChartHoles();
         }

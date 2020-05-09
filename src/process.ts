@@ -21,11 +21,11 @@ export class Process {
 
     start(options: any): void {
         console.log('START CALCULATION');
-        // this.getDebugReport();
-        this.setOptions(options)
-            .createOutDir()
-            .generateTree()
-            .generateReport();
+        this.getDebugReport();
+        // this.setOptions(options)
+        //     .createOutDir()
+        //     .generateTree()
+        //     .generateReport();
         console.log('REPORT GENERATED SUCCESSFULLY');
     }
 
@@ -41,7 +41,7 @@ export class Process {
         for (const method of tsFile.tsMethods) {
             console.log('MTHD NAME', method.name)
             const tree = method.tsTree;
-            tree.printAllChildren();
+            // tree.printAllChildren();
             console.log('EVL', method.getEvaluation())
         }
     }
