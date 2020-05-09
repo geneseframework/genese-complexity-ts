@@ -2,17 +2,20 @@ import * as ts from 'typescript';
 import { TsFile } from './ts-file.model';
 import { Ast } from '../services/ast.service';
 import { ComplexityService as CS } from '../services/complexity.service';
-import { Evaluation } from './evaluation.model';
 import { TsTree } from './ts-tree.model';
 import { Options } from './options';
-import { EvaluationStatus } from '../enums/evaluation-status.enum';
+import { MethodStatus } from '../enums/evaluation-status.enum';
 import { ComplexityType } from '../enums/complexity-type.enum';
+import { Evaluate } from '../interfaces/evaluate.interface';
 
-export class TsMethod {
+export class TsMethod implements Evaluate {
 
-    private _evaluation?: Evaluation = undefined;
-
-    name = '';
+    cognitiveStatus: MethodStatus = MethodStatus.CORRECT;
+    cognitiveValue ?= 0;
+    cyclomaticStatus: MethodStatus = MethodStatus.CORRECT;
+    cyclomaticValue ?= 0;
+    filename ?= '';
+    name ?= '';
     node: ts.Node = undefined;
     tsFile?: TsFile = new TsFile();
     tsTree?: TsTree = undefined;
@@ -23,35 +26,27 @@ export class TsMethod {
     }
 
 
-    getEvaluation(): Evaluation {
-        return this._evaluation ?? this.evaluate();
+    evaluate(): void {
+        this.cognitiveValue = CS.calculateCognitiveComplexity(this.tsTree);
+        this.cognitiveStatus = this.getComplexityStatus(ComplexityType.COGNITIVE);
+        this.cyclomaticValue = CS.calculateCyclomaticComplexity(this.node);
+        this.cyclomaticStatus = this.getComplexityStatus(ComplexityType.CYCLOMATIC);
+        this.filename = this.tsFile?.sourceFile?.fileName ?? '';
     }
 
 
-    private evaluate(): Evaluation {
-        this._evaluation = new Evaluation();
-        this._evaluation.cognitiveValue = CS.calculateCognitiveComplexity(this.tsTree);
-        this._evaluation.cognitiveStatus = this.getComplexityStatus(ComplexityType.COGNITIVE);
-        this._evaluation.cyclomaticValue = CS.calculateCyclomaticComplexity(this.node);
-        this._evaluation.cyclomaticStatus = this.getComplexityStatus(ComplexityType.CYCLOMATIC);
-        this._evaluation.methodName = this.name;
-        this._evaluation.filename = this.tsFile?.sourceFile?.fileName ?? '';
-        return this._evaluation;
-    }
-
-
-    getComplexityStatus(cpxType: ComplexityType): EvaluationStatus {
-        let status = EvaluationStatus.WARNING;
+    getComplexityStatus(cpxType: ComplexityType): MethodStatus {
+        let status = MethodStatus.WARNING;
         if (
-            (cpxType === ComplexityType.COGNITIVE && this._evaluation.cognitiveValue <= Options.cognitiveCpx.warningThreshold)
+            (cpxType === ComplexityType.COGNITIVE && this.cognitiveValue <= Options.cognitiveCpx.warningThreshold)
             ||
-            (cpxType === ComplexityType.CYCLOMATIC && this._evaluation.cyclomaticValue <= Options.cyclomaticCpx.warningThreshold)) {
-            status = EvaluationStatus.CORRECT;
+            (cpxType === ComplexityType.CYCLOMATIC && this.cyclomaticValue <= Options.cyclomaticCpx.warningThreshold)) {
+            status = MethodStatus.CORRECT;
         } else if (
-            (cpxType === ComplexityType.COGNITIVE && this._evaluation.cognitiveValue > Options.cognitiveCpx.errorThreshold)
+            (cpxType === ComplexityType.COGNITIVE && this.cognitiveValue > Options.cognitiveCpx.errorThreshold)
             ||
-            (cpxType === ComplexityType.CYCLOMATIC && this._evaluation.cyclomaticValue > Options.cyclomaticCpx.errorThreshold)) {
-            status = EvaluationStatus.ERROR;
+            (cpxType === ComplexityType.CYCLOMATIC && this.cyclomaticValue > Options.cyclomaticCpx.errorThreshold)) {
+            status = MethodStatus.ERROR;
         }
         return status;
     }

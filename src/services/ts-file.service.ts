@@ -3,9 +3,8 @@ import { TsFile } from '../models/ts-file.model';
 import { TsMethodService } from './ts-method.service';
 import { Ast } from './ast.service';
 import { TsMethod } from '../models/ts-method.model';
-import { EvaluationStatus } from '../enums/evaluation-status.enum';
+import { MethodStatus } from '../enums/evaluation-status.enum';
 import { ComplexityType } from '../enums/complexity-type.enum';
-import { Evaluation } from '../models/evaluation.model';
 import { StatsService } from './stats.service';
 import { Stats } from '../models/stats.model';
 
@@ -38,24 +37,24 @@ export class TsFileService extends StatsService{
 
 
     incrementStats(method: TsMethod): void {
-        const evaluation = method.getEvaluation();
-        this.incrementMethodsByStatus(evaluation, ComplexityType.COGNITIVE);
-        this.incrementMethodsByStatus(evaluation, ComplexityType.CYCLOMATIC);
-        this._stats.barChartCognitive.addResult(method.getEvaluation().cognitiveValue);
-        this._stats.barChartCyclomatic.addResult(method.getEvaluation().cyclomaticValue);
+        // const evaluation = method.getEvaluation();
+        this.incrementMethodsByStatus(method, ComplexityType.COGNITIVE);
+        this.incrementMethodsByStatus(method, ComplexityType.CYCLOMATIC);
+        this._stats.barChartCognitive.addResult(method.cognitiveValue);
+        this._stats.barChartCyclomatic.addResult(method.cyclomaticValue);
     }
 
 
-    incrementMethodsByStatus(evaluation: Evaluation, type: ComplexityType): void {
-        const status = (type === ComplexityType.COGNITIVE) ? evaluation.cognitiveStatus : evaluation.cyclomaticStatus;
+    incrementMethodsByStatus(tsMethod: TsMethod, type: ComplexityType): void {
+        const status = (type === ComplexityType.COGNITIVE) ? tsMethod.cognitiveStatus : tsMethod.cyclomaticStatus;
         switch (status) {
-            case EvaluationStatus.CORRECT:
+            case MethodStatus.CORRECT:
                 this._stats.numberOfMethodsByStatus[type].correct ++;
                 break;
-            case EvaluationStatus.ERROR:
+            case MethodStatus.ERROR:
                 this._stats.numberOfMethodsByStatus[type].error ++;
                 break;
-            case EvaluationStatus.WARNING:
+            case MethodStatus.WARNING:
                 this._stats.numberOfMethodsByStatus[type].warning ++;
                 break;
             default:

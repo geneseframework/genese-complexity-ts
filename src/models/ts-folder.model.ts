@@ -1,11 +1,12 @@
 import { TsFile } from './ts-file.model';
-import { Evaluation } from './evaluation.model';
 import { TsFolderService } from '../services/ts-folder.service';
 import { Stats } from './stats.model';
+import { Evaluate } from '../interfaces/evaluate.interface';
 
-export class TsFolder {
+export class TsFolder implements Evaluate {
 
-    private _evaluation?: Evaluation = undefined;
+    cognitiveValue ?= 0;
+    cyclomaticValue ?= 0;
     numberOfFiles ?= 0;
     parent?: TsFolder = undefined;
     path ?= '';
@@ -19,11 +20,6 @@ export class TsFolder {
     }
 
 
-    getEvaluation(): Evaluation {
-        return this._evaluation ?? this.evaluate();
-    }
-
-
     getStats(): Stats {
         if (!this.stats) {
             this.stats = this.tsFolderService.getStats(this).plugChartHoles();
@@ -32,13 +28,11 @@ export class TsFolder {
     }
 
 
-    private evaluate(): Evaluation {
-        let evaluation: Evaluation = new Evaluation();
+    evaluate(): void {
         for (const file of this.tsFiles) {
-            evaluation = evaluation.add(file.getEvaluation());
+            this.cognitiveValue += file.cognitiveValue;
+            this.cyclomaticValue += file.cyclomaticValue;
         }
-        this._evaluation = evaluation;
-        return evaluation;
     }
 
 }

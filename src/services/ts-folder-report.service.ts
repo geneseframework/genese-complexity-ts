@@ -1,16 +1,16 @@
 import * as fs from 'fs-extra';
 import * as eol from "eol";
 import * as Handlebars from "handlebars";
-import { Evaluation } from '../models/evaluation.model';
 import { TsFolder } from '../models/ts-folder.model';
 import { Options } from '../models/options';
-import { RowFolderReport } from '../models/row-folder.model';
+import { RowFolderReport } from '../models/row-folder-report.model';
+import { RowFileReport } from '../models/row-file-report.model';
 
 const appRoot = require('app-root-path').toString();
 
 export class TsFolderReportService {
 
-    private filesArray: Evaluation[] = [];
+    private filesArray: RowFileReport[] = [];
     private foldersArray: RowFolderReport[] = [];
     template: HandlebarsTemplateDelegate;
     tsFolder: TsFolder = undefined;
@@ -24,29 +24,30 @@ export class TsFolderReportService {
     getFoldersArray(tsFolder: TsFolder): RowFolderReport[] {
         let evaluations: RowFolderReport[] = [];
         for (const subFolder of tsFolder.subFolders) {
-            // tsFolder.
             for (const tsFile of subFolder.tsFiles) {
                 for (const tsMethod of tsFile.tsMethods) {
-                    // evaluations.push(tsMethod.getEvaluation());
                 }
             }
-            // evaluations = evaluations.concat(this.getFilesArray(subFolder));
         }
         return evaluations;
     }
 
 
-    getFilesArray(tsFolder: TsFolder): Evaluation[] {
-        let evaluations: Evaluation[] = [];
+    getFilesArray(tsFolder: TsFolder): RowFileReport[] {
+        const report: RowFileReport[] = [];
         for (const subFolder of tsFolder.subFolders) {
             for (const tsFile of subFolder.tsFiles) {
                 for (const tsMethod of tsFile.tsMethods) {
-                    evaluations.push(tsMethod.getEvaluation());
+                    report.push({
+                        cognitiveValue: tsMethod.cognitiveValue,
+                        cyclomaticValue: tsMethod.cyclomaticValue,
+                        filename: tsFile.name,
+                        methodName: tsMethod.name
+                    })
                 }
             }
-            evaluations = evaluations.concat(this.getFilesArray(subFolder));
         }
-        return evaluations;
+        return report;
     }
 
 

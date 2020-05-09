@@ -13,6 +13,7 @@ export class TsMethodService {
                 const newMethod: TsMethod = new TsMethod(node);
                 newMethod.tsFile = tsFile;
                 newMethod.tsTree = TsTreeService.generateTree(newMethod);
+                newMethod.evaluate();
                 methods.push(newMethod);
             }
             ts.forEachChild(node, cb);

@@ -1,27 +1,31 @@
 import * as ts from 'typescript';
 import { TsMethod } from './ts-method.model';
 import { TsFolder } from './ts-folder.model';
-import { Evaluation } from './evaluation.model';
 import { TsFileService } from '../services/ts-file.service';
 import { Stats } from './stats.model';
+import { Evaluate } from '../interfaces/evaluate.interface';
 
-export class TsFile {
+export class TsFile implements Evaluate {
 
-    private _evaluation?: Evaluation = undefined;
-    tsMethods?: TsMethod[] = [];
+    cognitiveValue ?= 0;
+    cyclomaticValue ?= 0;
     name ?= '';
     sourceFile?: ts.SourceFile = undefined;
     stats?: Stats = undefined;
     tsFileService: TsFileService = undefined;
     tsFolder?: TsFolder = new TsFolder();
+    tsMethods?: TsMethod[] = [];
 
     constructor() {
         this.tsFileService = new TsFileService(this);
     }
 
 
-    getEvaluation(): Evaluation {
-        return this._evaluation ?? this.evaluate();
+    evaluate(): void {
+        for (const method of this.tsMethods) {
+            this.cognitiveValue += method.cognitiveValue;
+            this.cyclomaticValue += method.cyclomaticValue;
+        }
     }
 
 
@@ -35,15 +39,5 @@ export class TsFile {
 
     setName(): void {
         this.name = this.sourceFile.fileName;
-    }
-
-
-    private evaluate(): Evaluation {
-        let evaluation: Evaluation = new Evaluation();
-        for (const method of this.tsMethods) {
-            evaluation = evaluation.add(method.getEvaluation());
-        }
-        this._evaluation = evaluation;
-        return evaluation;
     }
 }
