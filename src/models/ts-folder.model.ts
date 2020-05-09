@@ -6,6 +6,7 @@ import { TsFolderStats } from './ts-folder-stats.interface';
 export class TsFolder {
 
     private _evaluation?: Evaluation = undefined;
+    numberOfFiles ?= 0;
     parent?: TsFolder = undefined;
     path ?= '';
     stats: TsFolderStats = undefined;

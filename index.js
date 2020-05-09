@@ -4,11 +4,11 @@ var process_1 = require("./src/process");
 var appRoot = require('app-root-path').toString();
 function initProcess() {
     console.log(appRoot);
-    var src = "/Users/utilisateur/Documents/projets/amadeus/amadeus-cmt/src/";
+    // const src = `/Users/utilisateur/Documents/projets/amadeus/amadeus-cmt/src/`;
     // const src = `/Users/utilisateur/Documents/projets/aura/victi-aura-affectations-frontend/src/`;
     // const src = `/Users/utilisateur/Documents/projets/retex/airbus-retex-front/src/`;
     // const src = `/Users/utilisateur/Documents/projets/naval-group/code/full/20200506-1451/cyms/src/`;
-    // const src = `${appRoot}/src/mocks/`;
+    var src = appRoot + "/src/mocks/";
     console.log('SRC = ', src);
     var process = new process_1.Process(src);
     var options = {

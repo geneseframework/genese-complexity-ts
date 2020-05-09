@@ -4,12 +4,14 @@ import * as Handlebars from "handlebars";
 import { Evaluation } from '../models/evaluation.model';
 import { TsFolder } from '../models/ts-folder.model';
 import { Options } from '../models/options';
+import { RowFolderReport } from '../models/row-folder.model';
 
 const appRoot = require('app-root-path').toString();
 
 export class TsFolderReportService {
 
-    private evaluations: Evaluation[] = [];
+    private filesArray: Evaluation[] = [];
+    private foldersArray: RowFolderReport[] = [];
     template: HandlebarsTemplateDelegate;
     tsFolder: TsFolder = undefined;
 
@@ -19,7 +21,22 @@ export class TsFolderReportService {
     }
 
 
-    getEvaluations(tsFolder: TsFolder): Evaluation[] {
+    getFoldersArray(tsFolder: TsFolder): RowFolderReport[] {
+        let evaluations: RowFolderReport[] = [];
+        for (const subFolder of tsFolder.subFolders) {
+            // tsFolder.
+            for (const tsFile of subFolder.tsFiles) {
+                for (const tsMethod of tsFile.tsMethods) {
+                    // evaluations.push(tsMethod.getEvaluation());
+                }
+            }
+            // evaluations = evaluations.concat(this.getFilesArray(subFolder));
+        }
+        return evaluations;
+    }
+
+
+    getFilesArray(tsFolder: TsFolder): Evaluation[] {
         let evaluations: Evaluation[] = [];
         for (const subFolder of tsFolder.subFolders) {
             for (const tsFile of subFolder.tsFiles) {
@@ -27,7 +44,7 @@ export class TsFolderReportService {
                     evaluations.push(tsMethod.getEvaluation());
                 }
             }
-            evaluations = evaluations.concat(this.getEvaluations(subFolder));
+            evaluations = evaluations.concat(this.getFilesArray(subFolder));
         }
         return evaluations;
     }
@@ -36,12 +53,14 @@ export class TsFolderReportService {
     generateReport(): void {
         const parentFolder: TsFolder = new TsFolder();
         parentFolder.subFolders.push(this.tsFolder);
-        this.evaluations = this.getEvaluations(parentFolder);
+        this.foldersArray = this.getFoldersArray(parentFolder);
+        this.filesArray = this.getFilesArray(parentFolder);
         this.registerPartial("cognitiveBarchartScript", 'cognitive-barchart');
         this.registerPartial("cyclomaticBarchartScript", 'cyclomatic-barchart');
         this.registerPartial("cognitiveDoughnutScript", 'cognitive-doughnut');
         this.registerPartial("cyclomaticDoughnutScript", 'cyclomatic-doughnut');
-        this.registerPartial("analyse", 'row');
+        this.registerPartial("rowFolder", 'row-folders');
+        this.registerPartial("rowFile", 'row-files');
         const reportTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/report.handlebars`, 'utf-8'));
         this.template = Handlebars.compile(reportTemplate);
         this.writeReport();
@@ -51,7 +70,8 @@ export class TsFolderReportService {
     private writeReport() {
         const template = this.template({
             colors: Options.colors,
-            report: this.evaluations,
+            filesArray: this.filesArray,
+            foldersArray: this.foldersArray,
             stats: this.tsFolder.getStats(),
             thresholds: Options.getThresholds()
         });

@@ -1,4 +1,4 @@
-import { Bar } from './point.model';
+import { Bar } from './bar.model';
 import { Options } from './options';
 import { ComplexityType } from '../enums/complexity-type.enum';
 import { ChartColor } from '../enums/colors.enum';

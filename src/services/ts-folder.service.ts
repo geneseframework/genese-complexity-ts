@@ -20,7 +20,7 @@ export class TsFolderService extends StatsService {
     }
 
 
-    static generate(path: string, extension?: string, folder: TsFolder = new TsFolder()): TsFolder {
+    static generateTree(path: string, extension?: string, folder: TsFolder = new TsFolder()): TsFolder {
         if (!path) {
             console.log('ERROR: no path.')
             return undefined;
@@ -32,13 +32,13 @@ export class TsFolderService extends StatsService {
             const pathElement = path + elementName;
             if (fs.statSync(pathElement).isDirectory()) {
                 let subFolder = new TsFolder();
-                subFolder = TsFolderService.generate(`${pathElement}/`, extension, subFolder);
+                subFolder = TsFolderService.generateTree(`${pathElement}/`, extension, subFolder);
                 subFolder.parent = folder;
                 subFolder.path = pathElement;
                 tsFolder.subFolders.push(subFolder);
             } else {
                 if (!extension || extension === getExtension(pathElement)) {
-                    tsFolder.tsFiles.push(TsFileService.generate(pathElement, folder));
+                    tsFolder.tsFiles.push(TsFileService.generateTree(pathElement, folder));
                 }
             }
         });

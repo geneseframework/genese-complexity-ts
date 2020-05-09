@@ -1,18 +1,18 @@
 import * as ts from 'typescript';
 import * as utils from 'tsutils';
-import { TsBloc } from '../models/ts-bloc.model';
+import { TsTree } from '../models/ts-tree.model';
 import { Ast } from './ast.service';
 
 export class ComplexityService {
 
 
 
-    static calculateCognitiveComplexity(tsBloc: TsBloc): number {
+    static calculateCognitiveComplexity(tsTree: TsTree): number {
         let complexity = 0;
-        if (tsBloc) {
-            for (const bloc of tsBloc?.children) {
-                complexity += ComplexityService.addCognitiveComplexity(bloc);
-                complexity += ComplexityService.calculateCognitiveComplexity(bloc);
+        if (tsTree) {
+            for (const tree of tsTree?.children) {
+                complexity += ComplexityService.addCognitiveComplexity(tree);
+                complexity += ComplexityService.calculateCognitiveComplexity(tree);
             }
         }
         return complexity;
@@ -68,12 +68,12 @@ export class ComplexityService {
     }
 
 
-    static addCognitiveComplexity(tsBloc: TsBloc): number {
+    static addCognitiveComplexity(tsTree: TsTree): number {
         let complexity = 0;
-        if (!tsBloc?.node || tsBloc?.depth === undefined) {
+        if (!tsTree?.node || tsTree?.depth === undefined) {
             return 0;
         }
-        switch (tsBloc.node.kind) {
+        switch (tsTree.node.kind) {
             case ts.SyntaxKind.ArrowFunction:
             case ts.SyntaxKind.CatchClause:
             case ts.SyntaxKind.DoStatement:
@@ -86,18 +86,18 @@ export class ComplexityService {
             // case ts.SyntaxKind.QuestionDotToken:
             case ts.SyntaxKind.SwitchStatement:
             case ts.SyntaxKind.WhileStatement:
-                complexity = tsBloc.depth + 1;
+                complexity = tsTree.depth + 1;
                 break;
             case ts.SyntaxKind.BinaryExpression:
-                complexity = ComplexityService.addBinaryCognitiveCpx(tsBloc);
+                complexity = ComplexityService.addBinaryCognitiveCpx(tsTree);
                 break;
             case ts.SyntaxKind.PropertyAccessExpression:
-                if (ComplexityService.isRecursion(tsBloc, tsBloc.node)) {
+                if (ComplexityService.isRecursion(tsTree, tsTree.node)) {
                     complexity++;
                 }
                 break;
             case ts.SyntaxKind.ConditionalExpression:
-                complexity = ComplexityService.conditionalExpressionIsTrivial(tsBloc) ? 0 : 1;
+                complexity = ComplexityService.conditionalExpressionIsTrivial(tsTree) ? 0 : 1;
                 break;
             default:
                 complexity = 0;
@@ -106,8 +106,8 @@ export class ComplexityService {
     }
 
 
-    static conditionalExpressionIsTrivial(tsBloc: TsBloc): boolean {
-        return (ComplexityService.isLiteral(tsBloc?.node?.['whenTrue']) && ComplexityService.isLiteral(tsBloc?.node?.['whenFalse']));
+    static conditionalExpressionIsTrivial(tsTree: TsTree): boolean {
+        return (ComplexityService.isLiteral(tsTree?.node?.['whenTrue']) && ComplexityService.isLiteral(tsTree?.node?.['whenFalse']));
     }
 
 
@@ -119,18 +119,18 @@ export class ComplexityService {
     }
 
 
-    static isRecursion(tsBloc: TsBloc, node: ts.Node): boolean {
-        return node?.['name']?.['escapedText'] === tsBloc?.tsMethod?.name;
+    static isRecursion(tsTree: TsTree, node: ts.Node): boolean {
+        return node?.['name']?.['escapedText'] === tsTree?.tsMethod?.name;
     }
 
 
-    static addBinaryCognitiveCpx(tsBloc: TsBloc): number {
-        if (!tsBloc?.node || !tsBloc.parent.node) {
+    static addBinaryCognitiveCpx(tsTree: TsTree): number {
+        if (!tsTree?.node || !tsTree.parent.node) {
             return 0;
         }
         let complexity = 0;
-        if (Ast.isBinary(tsBloc.node) && Ast.isLogicDoor(tsBloc.node)) {
-            if (Ast.isSameOperatorToken(tsBloc.node, tsBloc.parent.node) && !Ast.isOrTokenBetweenBinaries(tsBloc.node)) {
+        if (Ast.isBinary(tsTree.node) && Ast.isLogicDoor(tsTree.node)) {
+            if (Ast.isSameOperatorToken(tsTree.node, tsTree.parent.node) && !Ast.isOrTokenBetweenBinaries(tsTree.node)) {
                 complexity = 0;
             } else {
                 complexity = 1;
@@ -168,9 +168,9 @@ export class ComplexityService {
     }
 
 
-    static increasesCognitiveComplexity(tsBloc: TsBloc): boolean {
+    static increasesCognitiveComplexity(tsTree: TsTree): boolean {
 
-        switch (tsBloc?.node?.kind) {
+        switch (tsTree?.node?.kind) {
             case ts.SyntaxKind.ArrowFunction:
             case ts.SyntaxKind.CatchClause:
             case ts.SyntaxKind.DoStatement:
@@ -180,14 +180,13 @@ export class ComplexityService {
             case ts.SyntaxKind.FunctionExpression:
             case ts.SyntaxKind.IfStatement:
             case ts.SyntaxKind.MethodDeclaration:
-            // case ts.SyntaxKind.QuestionDotToken:
             case ts.SyntaxKind.SwitchStatement:
             case ts.SyntaxKind.WhileStatement:
                 return true;
             case ts.SyntaxKind.BinaryExpression:
-                return ComplexityService.addBinaryCognitiveCpx(tsBloc) > 0;
+                return ComplexityService.addBinaryCognitiveCpx(tsTree) > 0;
             case ts.SyntaxKind.ConditionalExpression:
-                return !ComplexityService.conditionalExpressionIsTrivial(tsBloc);
+                return !ComplexityService.conditionalExpressionIsTrivial(tsTree);
             default:
                 return false;
         }
