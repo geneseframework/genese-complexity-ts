@@ -9,6 +9,7 @@ export class Stats {
     barChartCognitive?: Barchart = new Barchart(ComplexityType.COGNITIVE);
     barChartCyclomatic?: Barchart = new Barchart(ComplexityType.CYCLOMATIC);
     numberOfMethodsByStatus?: ComplexitiesByStatus = new ComplexitiesByStatus();
+    numberOfFiles ?= 0;
     numberOfMethods ?= 0;
     percentsByStatus?: ComplexitiesByStatus = {};
     totalCognitiveComplexity ?= 0;

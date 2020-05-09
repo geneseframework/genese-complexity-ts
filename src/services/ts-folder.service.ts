@@ -2,16 +2,15 @@ import * as fs from 'fs-extra';
 import { TsFolder } from '../models/ts-folder.model';
 import { getExtension } from './file.service';
 import { TsFileService } from './ts-file.service';
-import { TsFolderStats } from '../models/ts-folder-stats.interface';
 import { TsFile } from '../models/ts-file.model';
 import { BarchartService } from './barchart.service';
 import { ComplexityType } from '../enums/complexity-type.enum';
-import { TsFileStats } from '../models/ts-file-stats.interface';
 import { StatsService } from './stats.service';
+import { Stats } from '../models/stats.model';
 
 export class TsFolderService extends StatsService {
 
-    protected _stats: TsFolderStats = undefined;
+    protected _stats: Stats = undefined;
     tsFolder: TsFolder = undefined;
 
     constructor(tsFolder: TsFolder) {
@@ -42,6 +41,7 @@ export class TsFolderService extends StatsService {
                 }
             }
         });
+        tsFolder.evaluate();
         return tsFolder;
     }
 
@@ -70,7 +70,7 @@ export class TsFolderService extends StatsService {
     }
 
 
-    addMethodsByStatus(type: ComplexityType, tsFileStats: TsFileStats): void {
+    addMethodsByStatus(type: ComplexityType, tsFileStats: Stats): void {
         this._stats.numberOfMethodsByStatus[type].correct += tsFileStats.numberOfMethodsByStatus[type].correct;
         this._stats.numberOfMethodsByStatus[type].error += tsFileStats.numberOfMethodsByStatus[type].error;
         this._stats.numberOfMethodsByStatus[type].warning += tsFileStats.numberOfMethodsByStatus[type].warning;

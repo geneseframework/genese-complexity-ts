@@ -1,15 +1,22 @@
 import { TsFile } from './ts-file.model';
-import { Evaluation } from './evaluation.model';
 import { TsFolderService } from '../services/ts-folder.service';
-import { TsFolderStats } from './ts-folder-stats.interface';
+import { Stats } from './stats.model';
+import { Evaluate } from '../interfaces/evaluate.interface';
+import { ComplexitiesByStatus } from '../interfaces/complexities-by-status.interface';
+import { Ast } from '../services/ast.service';
+import { getFilename } from '../services/file.service';
 
-export class TsFolder {
+export class TsFolder implements Evaluate {
 
-    private _evaluation?: Evaluation = undefined;
+    cognitiveValue ?= 0;
+    complexitiesByStatus?: ComplexitiesByStatus = {};
+    cyclomaticValue ?= 0;
+    name ?= '';
     numberOfFiles ?= 0;
+    numberOfMethods ?= 0;
     parent?: TsFolder = undefined;
     path ?= '';
-    stats: TsFolderStats = undefined;
+    stats: Stats = undefined;
     subFolders?: TsFolder[] = [];
     tsFiles?: TsFile[] = [];
     tsFolderService?: TsFolderService = undefined;
@@ -19,12 +26,7 @@ export class TsFolder {
     }
 
 
-    getEvaluation(): Evaluation {
-        return this._evaluation ?? this.evaluate();
-    }
-
-
-    getStats(): TsFolderStats {
+    getStats(): Stats {
         if (!this.stats) {
             this.stats = this.tsFolderService.getStats(this).plugChartHoles();
         }
@@ -32,13 +34,11 @@ export class TsFolder {
     }
 
 
-    private evaluate(): Evaluation {
-        let evaluation: Evaluation = new Evaluation();
+    evaluate(): void {
         for (const file of this.tsFiles) {
-            evaluation = evaluation.add(file.getEvaluation());
+            this.cognitiveValue += file.cognitiveValue;
+            this.cyclomaticValue += file.cyclomaticValue;
         }
-        this._evaluation = evaluation;
-        return evaluation;
     }
 
 }

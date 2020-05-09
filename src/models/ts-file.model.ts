@@ -1,31 +1,40 @@
 import * as ts from 'typescript';
 import { TsMethod } from './ts-method.model';
 import { TsFolder } from './ts-folder.model';
-import { Evaluation } from './evaluation.model';
-import { TsFileStats } from './ts-file-stats.interface';
 import { TsFileService } from '../services/ts-file.service';
+import { Stats } from './stats.model';
+import { Evaluate } from '../interfaces/evaluate.interface';
+import { ComplexitiesByStatus } from '../interfaces/complexities-by-status.interface';
+import { ComplexitiesByStatusService } from '../services/complexities-by-status.service';
 
-export class TsFile {
+export class TsFile implements Evaluate {
 
-    private _evaluation?: Evaluation = undefined;
-    tsMethods?: TsMethod[] = [];
+    cognitiveValue ?= 0;
+    complexitiesByStatus?: ComplexitiesByStatus = undefined;
+    cyclomaticValue ?= 0;
     name ?= '';
     sourceFile?: ts.SourceFile = undefined;
-    stats?: TsFileStats = undefined;
+    stats?: Stats = undefined;
     tsFileService: TsFileService = undefined;
     tsFolder?: TsFolder = new TsFolder();
+    tsMethods?: TsMethod[] = [];
 
     constructor() {
         this.tsFileService = new TsFileService(this);
     }
 
 
-    getEvaluation(): Evaluation {
-        return this._evaluation ?? this.evaluate();
+    evaluate(): void {
+        const cpss = new ComplexitiesByStatusService();
+        for (const method of this.tsMethods) {
+            this.cognitiveValue += method.cognitiveValue;
+            this.cyclomaticValue += method.cyclomaticValue;
+            this.complexitiesByStatus = cpss.incrementStatusWithMethod(this.complexitiesByStatus, method);
+        }
     }
 
 
-    getStats(): TsFileStats {
+    getStats(): Stats {
         if (!this.stats) {
             this.stats = this.tsFileService.getStats(this);
         }
@@ -35,15 +44,5 @@ export class TsFile {
 
     setName(): void {
         this.name = this.sourceFile.fileName;
-    }
-
-
-    private evaluate(): Evaluation {
-        let evaluation: Evaluation = new Evaluation();
-        for (const method of this.tsMethods) {
-            evaluation = evaluation.add(method.getEvaluation());
-        }
-        this._evaluation = evaluation;
-        return evaluation;
     }
 }
