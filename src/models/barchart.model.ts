@@ -59,7 +59,8 @@ export class Barchart {
     plugChartHoles(): Barchart {
         this.sort();
         const cpxMax: number = this.data[this.data.length - 1]?.x;
-        for (let cpx = 0; cpx < cpxMax; cpx++) {
+        const cpxMin: number = this.cpxType === ComplexityType.COGNITIVE ? 0 : 1;
+        for (let cpx = cpxMin; cpx < cpxMax; cpx++) {
             if (!this.data.find(e => e.x === cpx)) {
                 this.addResult(cpx, 0);
             }

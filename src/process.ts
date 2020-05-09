@@ -21,11 +21,11 @@ export class Process {
 
     start(options: any): void {
         console.log('START CALCULATION');
-        this.getDebugReport();
-        // this.setOptions(options)
-        //     .createOutDir()
-        //     .setTsFolder()
-        //     .generateReport();
+        // this.getDebugReport();
+        this.setOptions(options)
+            .createOutDir()
+            .setTsFolder()
+            .generateReport();
         console.log('REPORT GENERATED SUCCESSFULLY');
     }
 
