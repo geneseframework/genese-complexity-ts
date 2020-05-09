@@ -9,13 +9,13 @@ const appRoot = appRootPath.toString();
 export class Options {
 
     static cognitiveCpx: Complexity = {
-        errorThreshold: 4,
+        errorThreshold: 8,
         type: ComplexityType.COGNITIVE,
-        warningThreshold: 3
+        warningThreshold: 4
     };
     static colors: ChartColor[] = [ChartColor.CORRECT, ChartColor.WARNING, ChartColor.ERROR];
     static cyclomaticCpx: Complexity = {
-        errorThreshold: 5,
+        errorThreshold: 8,
         type: ComplexityType.CYCLOMATIC,
         warningThreshold: 4
     };

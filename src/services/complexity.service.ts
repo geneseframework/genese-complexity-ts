@@ -76,7 +76,6 @@ export class ComplexityService {
         switch (tsBloc.node.kind) {
             case ts.SyntaxKind.ArrowFunction:
             case ts.SyntaxKind.CatchClause:
-            case ts.SyntaxKind.ConditionalExpression:
             case ts.SyntaxKind.DoStatement:
             case ts.SyntaxKind.ForStatement:
             case ts.SyntaxKind.ForInStatement:
@@ -84,18 +83,21 @@ export class ComplexityService {
             case ts.SyntaxKind.FunctionExpression:
             case ts.SyntaxKind.IfStatement:
             case ts.SyntaxKind.MethodDeclaration:
-            case ts.SyntaxKind.QuestionDotToken:
+            // case ts.SyntaxKind.QuestionDotToken:
             case ts.SyntaxKind.SwitchStatement:
             case ts.SyntaxKind.WhileStatement:
                 complexity = tsBloc.depth + 1;
                 break;
             case ts.SyntaxKind.BinaryExpression:
-                complexity = ComplexityService.addBinaryCognitiveComplexity(tsBloc);
+                complexity = ComplexityService.addBinaryCognitiveCpx(tsBloc);
                 break;
             case ts.SyntaxKind.PropertyAccessExpression:
                 if (ComplexityService.isRecursion(tsBloc, tsBloc.node)) {
                     complexity++;
                 }
+                break;
+            case ts.SyntaxKind.ConditionalExpression:
+                complexity = ComplexityService.conditionalExpressionIsTrivial(tsBloc) ? 0 : 1;
                 break;
             default:
                 complexity = 0;
@@ -104,12 +106,25 @@ export class ComplexityService {
     }
 
 
+    static conditionalExpressionIsTrivial(tsBloc: TsBloc): boolean {
+        return (ComplexityService.isLiteral(tsBloc?.node?.['whenTrue']) && ComplexityService.isLiteral(tsBloc?.node?.['whenFalse']));
+    }
+
+
+    static isLiteral(node: ts.Node): boolean {
+        return node?.kind === ts.SyntaxKind.StringLiteral
+            || node?.kind === ts.SyntaxKind.NumericLiteral
+            || node?.kind === ts.SyntaxKind.TrueKeyword
+            || node?.kind === ts.SyntaxKind.FalseKeyword;
+    }
+
+
     static isRecursion(tsBloc: TsBloc, node: ts.Node): boolean {
         return node?.['name']?.['escapedText'] === tsBloc?.tsMethod?.name;
     }
 
 
-    static addBinaryCognitiveComplexity(tsBloc: TsBloc): number {
+    static addBinaryCognitiveCpx(tsBloc: TsBloc): number {
         if (!tsBloc?.node || !tsBloc.parent.node) {
             return 0;
         }
@@ -131,7 +146,6 @@ export class ComplexityService {
                 return (node).statements.length > 0;
             case ts.SyntaxKind.QuestionDotToken:
             case ts.SyntaxKind.CatchClause:
-            case ts.SyntaxKind.ConditionalExpression:
             case ts.SyntaxKind.DoStatement:
             case ts.SyntaxKind.ForStatement:
             case ts.SyntaxKind.ForInStatement:
@@ -147,6 +161,7 @@ export class ComplexityService {
                     default:
                         return false;
                 }
+            case ts.SyntaxKind.ConditionalExpression:
             default:
                 return false;
         }
@@ -158,7 +173,6 @@ export class ComplexityService {
         switch (tsBloc?.node?.kind) {
             case ts.SyntaxKind.ArrowFunction:
             case ts.SyntaxKind.CatchClause:
-            case ts.SyntaxKind.ConditionalExpression:
             case ts.SyntaxKind.DoStatement:
             case ts.SyntaxKind.ForStatement:
             case ts.SyntaxKind.ForInStatement:
@@ -166,14 +180,14 @@ export class ComplexityService {
             case ts.SyntaxKind.FunctionExpression:
             case ts.SyntaxKind.IfStatement:
             case ts.SyntaxKind.MethodDeclaration:
-            case ts.SyntaxKind.QuestionDotToken:
+            // case ts.SyntaxKind.QuestionDotToken:
             case ts.SyntaxKind.SwitchStatement:
             case ts.SyntaxKind.WhileStatement:
                 return true;
             case ts.SyntaxKind.BinaryExpression:
-                return ComplexityService.addBinaryCognitiveComplexity(tsBloc) > 0;
-            case ts.SyntaxKind.PropertyAccessExpression:
-                return ComplexityService.isRecursion(tsBloc, tsBloc.node);
+                return ComplexityService.addBinaryCognitiveCpx(tsBloc) > 0;
+            case ts.SyntaxKind.ConditionalExpression:
+                return !ComplexityService.conditionalExpressionIsTrivial(tsBloc);
             default:
                 return false;
         }

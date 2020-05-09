@@ -1,35 +1,24 @@
-import { EvaluationValuesInterface } from '../interfaces/evaluation-values.interface';
-
-import { Observable, of, Subject } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-
 let DICTIONARY;
-let OperationType;
-let Status;
 
 export class AstMock {
+    formIsValid;
+    createOrEdit;
+    dialogRef;
+    incidentService;
+    incident;
+    error;
 
-    utils;
-    geneseService;
-
-    updateIncidentStatus(incidentId: string, newStatus): Observable<any> {
-        const QUESTION: string = DICTIONARY.CONFIRMATION_DIALOG[`${newStatus === Status.CLOSED ? 'CLOSE' : 'REOPEN'}_INCIDENT`];
-        return this.utils
-            .openConfirmationDialog(QUESTION, true)
-            .afterClosed()
-            .pipe(
-                switchMap((res: string | false) => {
-                    return res !== false
-                        ? this.geneseService.putIncidentByIncidentId(
-                            {
-                                operation_type: newStatus === Status.CLOSED ? OperationType.CLOSE : OperationType.REOPEN,
-                                message: res,
-                            },
-                            incidentId
-                        )
-                        : of(null);
-                })
+    submit(): void {
+        if (this.formIsValid) {
+            this.createOrEdit().subscribe(
+                () => {
+                    this.dialogRef.close();
+                    this.incidentService.incident.next(this.incident.incident_id);
+                },
+                (err: any) => {
+                    this.error = err?.error?.description || DICTIONARY.DEFAULT_ERROR;
+                }
             );
+        }
     }
-
 }
