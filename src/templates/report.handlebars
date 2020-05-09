@@ -111,7 +111,7 @@
         </div>
 
         <!--        -------------------------------------------------------------------------------------->
-        <!--        -----------------------------------------   Charts   ---------------------------->
+        <!--        -----------------------------------------   Charts   --------------------------------->
         <!--        -------------------------------------------------------------------------------------->
 
         <div class="charts">
@@ -134,7 +134,41 @@
         </div>
 
     </div>
-    <table class="coverage-summary">
+
+
+    <!--        -------------------------------------------------------------------------------------->
+    <!--        -----------------------------------   Report arrays   -------------------------------->
+    <!--        -------------------------------------------------------------------------------------->
+
+
+    <!--        ----------------------------------   Folders array   --------------------------------->
+
+    <table class="array-report">
+        <thead>
+        <tr>
+            <th class="file" rowspan="2">Folders</th>
+            <th class="column methodColumn" rowspan="2">Number of files</th>
+            <th class="column cyclomaticColumn" rowspan="2">Number of methods</th>
+            <th class="column cognitiveColumn" colspan="3">Cognitive complexity of methods</th>
+            <th class="column cognitiveColumn" colspan="3">Cyclomatic complexity of methods</th>
+        </tr>
+        <tr>
+            <th class="column cognitiveColumn">Correct</th>
+            <th class="column cognitiveColumn">Warning</th>
+            <th class="column cognitiveColumn">Error</th>
+            <th class="column cognitiveColumn">Correct</th>
+            <th class="column cognitiveColumn">Warning</th>
+            <th class="column cognitiveColumn">Error</th>
+        </tr>
+        </thead>
+        {{#each report}}
+            {{>analyse analyse=.}}
+        {{/each}}
+    </table>
+
+    <!--        ----------------------------------   Files array   --------------------------------->
+
+    <table class="array-report">
         <thead>
         <tr>
             <th class="file">File</th>
@@ -147,8 +181,16 @@
             {{>analyse analyse=.}}
         {{/each}}
     </table>
-</div>
-<script src="../../node_modules/chart.js/dist/Chart.js"></script>
+
+
+
+    <!--        -------------------------------------------------------------------------------------->
+    <!--        -----------------------------------   Scripts-----   --------------------------------->
+    <!--        -------------------------------------------------------------------------------------->
+
+
+
+    <script src="../../node_modules/chart.js/dist/Chart.js"></script>
 
 {{>cognitiveDoughnutScript}}
 {{>cognitiveBarchartScript}}

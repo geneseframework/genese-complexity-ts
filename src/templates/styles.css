@@ -113,42 +113,44 @@ table.coverage td span.cline-any {
 .missing-if-branch .typ, .skip-if-branch .typ {
     color: inherit !important;
 }
-.coverage-summary {
+.array-report {
     border-collapse: collapse;
     width: 100%;
 }
-.coverage-summary tr { border-bottom: 1px solid #bbb; }
+.array-report tr { border-bottom: 1px solid #bbb; }
 .keyline-all { border: 1px solid #ddd; }
-.coverage-summary td, .coverage-summary th { padding: 10px; }
-.coverage-summary tbody { border: 1px solid #bbb; }
-.coverage-summary td { border-right: 1px solid #bbb; }
-.coverage-summary td:last-child { border-right: none; }
-.coverage-summary th {
-    text-align: left;
-    font-weight: normal;
+.array-report td, .array-report th { padding: 10px; }
+.array-report tbody { border: 1px solid #bbb; }
+.array-report td { border-right: 1px solid #bbb; }
+.array-report td:last-child { border-right: none; }
+.array-report th {
+    text-align: center;
+    font-weight: bold;
     white-space: nowrap;
+    border: 1px solid #bbb;
+    background-color: #ddd;
 }
-.coverage-summary th.file { border-right: none !important; }
-.coverage-summary th.pct { }
-.coverage-summary th.pic,
-.coverage-summary th.abs,
-.coverage-summary td.pct,
-.coverage-summary td.abs { text-align: right; }
-.coverage-summary td.file { white-space: nowrap;  }
-.coverage-summary td.pic { min-width: 120px !important;  }
-.coverage-summary tfoot td { }
+/*.array-report th.file { border-right: none !important; }*/
+.array-report th.pct { }
+.array-report th.pic,
+.array-report th.abs,
+.array-report td.pct,
+.array-report td.abs { text-align: right; }
+.array-report td.file { white-space: nowrap;  }
+.array-report td.pic { min-width: 120px !important;  }
+.array-report tfoot td { }
 
-.coverage-summary .sorter {
+.array-report .sorter {
     height: 10px;
     width: 7px;
     display: inline-block;
     margin-left: 0.5em;
     background: url(sort-arrow-sprite.png) no-repeat scroll 0 0 transparent;
 }
-.coverage-summary .sorted .sorter {
+.array-report .sorted .sorter {
     background-position: 0 -20px;
 }
-.coverage-summary .sorted-desc .sorter {
+.array-report .sorted-desc .sorter {
     background-position: 0 -10px;
 }
 .status-line {  height: 10px; }
@@ -184,7 +186,7 @@ table.coverage td span.cline-any {
 
 span.cline-neutral { background: #eaeaea; }
 
-.coverage-summary td.empty {
+.array-report td.empty {
     opacity: .5;
     padding-top: 4px;
     padding-bottom: 4px;
