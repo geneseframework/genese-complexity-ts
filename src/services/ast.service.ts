@@ -27,6 +27,7 @@ export class Ast {
             newBloc.tsMethod = tsBloc.tsMethod;
             newBloc.parent = tsBloc;
             newBloc.kind = Ast.getType(childNode);
+            newBloc.increasesCognitiveComplexity = CS.increasesCognitiveComplexity(newBloc);
             tsBloc.children.push(this.parseChildNodes(newBloc));
         });
         return tsBloc;

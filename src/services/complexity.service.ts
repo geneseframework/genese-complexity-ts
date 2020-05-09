@@ -151,4 +151,31 @@ export class ComplexityService {
                 return false;
         }
     }
+
+
+    static increasesCognitiveComplexity(tsBloc: TsBloc): boolean {
+
+        switch (tsBloc?.node?.kind) {
+            case ts.SyntaxKind.ArrowFunction:
+            case ts.SyntaxKind.CatchClause:
+            case ts.SyntaxKind.ConditionalExpression:
+            case ts.SyntaxKind.DoStatement:
+            case ts.SyntaxKind.ForStatement:
+            case ts.SyntaxKind.ForInStatement:
+            case ts.SyntaxKind.ForOfStatement:
+            case ts.SyntaxKind.FunctionExpression:
+            case ts.SyntaxKind.IfStatement:
+            case ts.SyntaxKind.MethodDeclaration:
+            case ts.SyntaxKind.QuestionDotToken:
+            case ts.SyntaxKind.SwitchStatement:
+            case ts.SyntaxKind.WhileStatement:
+                return true;
+            case ts.SyntaxKind.BinaryExpression:
+                return ComplexityService.addBinaryCognitiveComplexity(tsBloc) > 0;
+            case ts.SyntaxKind.PropertyAccessExpression:
+                return ComplexityService.isRecursion(tsBloc, tsBloc.node);
+            default:
+                return false;
+        }
+    }
 }

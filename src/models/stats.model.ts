@@ -45,6 +45,9 @@ export class Stats {
 
 
     cumulateComplexitiesByChart(data: Bar[]): number {
+        if (!data?.length) {
+            return 0;
+        }
         return data.map(e => e.x * e.y).reduce((total, current)  =>  total + current);
     }
 }
