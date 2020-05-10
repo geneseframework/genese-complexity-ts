@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import { TsMethod } from './ts-method.model';
-import { Ast } from '../services/ast.service';
+
 const chalk = require('chalk');
 
 export class TsTree {
