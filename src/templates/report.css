@@ -45,3 +45,18 @@
 .cyclomatic-charts {
     padding-top: 100px;
 }
+
+.correct {
+    color: rgba(3, 169, 244, 0.6);
+    font-weight: bold;
+}
+
+.warning {
+    color: rgba(255, 152, 0, 0.6);
+    font-weight: bold;
+}
+
+.error {
+    color: rgba(216, 27, 96, 0.6);
+    font-weight: bold;
+}
