@@ -6,5 +6,6 @@ export class RowFolderReport {
     numberOfFiles ?= 0;
     numberOfMethods ?= 0;
     path ?= '';
+    routeFromCurrentFolder ?= '';
 
 }

@@ -5,7 +5,7 @@ import { TsFolder } from '../models/ts-folder.model';
 import { Options } from '../models/options';
 import { RowFolderReport } from '../models/row-folder-report.model';
 import { RowFileReport } from '../models/row-file-report.model';
-import { createRelativeDir } from './file.service';
+import { createRelativeDir, getRouteBetweenPaths, getRouteToRoot } from './file.service';
 
 const appRoot = require('app-root-path').toString();
 
@@ -13,6 +13,7 @@ export class TsFolderReportService {
 
     private filesArray: RowFileReport[] = [];
     private foldersArray: RowFolderReport[] = [];
+    private relativeRootReports = '';
     template: HandlebarsTemplateDelegate;
     tsFolder: TsFolder = undefined;
 
@@ -24,24 +25,44 @@ export class TsFolderReportService {
 
     getFoldersArray(tsFolder: TsFolder): RowFolderReport[] {
         let report: RowFolderReport[] = [];
+        if (this.tsFolder.path !== Options.analysisPath) {
+            report.push(this.addRowBackToPreviousFolder());
+        }
+        return report.concat(this.getSubfoldersArray(tsFolder));
+    }
+
+
+    getSubfoldersArray(tsFolder: TsFolder): RowFolderReport[] {
+        let report: RowFolderReport[] = [];
         for (const subFolder of tsFolder.subFolders) {
             const subFolderReport: RowFolderReport = {
-                path: subFolder.relativePath,
+                complexitiesByStatus: subFolder.complexitiesByStatus,
                 numberOfFiles: subFolder.numberOfFiles,
                 numberOfMethods: subFolder.numberOfMethods,
-                complexitiesByStatus: subFolder.complexitiesByStatus
+                path: subFolder.relativePath,
+                routeFromCurrentFolder: getRouteBetweenPaths(this.tsFolder.relativePath, subFolder.relativePath)
             };
             report.push(subFolderReport);
-            report = report.concat(this.getFoldersArray(subFolder));
+            report = report.concat(this.getSubfoldersArray(subFolder));
         }
         return report;
     }
 
 
+    addRowBackToPreviousFolder(): RowFolderReport {
+        return {
+            complexitiesByStatus: undefined,
+            numberOfFiles: undefined,
+            numberOfMethods: undefined,
+            path: '../',
+            routeFromCurrentFolder: '..'
+
+        };
+    }
+
+
     getFilesArray(tsFolder: TsFolder): RowFileReport[] {
         let report: RowFileReport[] = [];
-        // for (const subFolder of tsFolder.subFolders) {
-        //     for (const tsFile of subFolder.tsFiles) {
         for (const tsFile of tsFolder.tsFiles) {
             for (const tsMethod of tsFile.tsMethods) {
                 report.push({
@@ -51,8 +72,6 @@ export class TsFolderReportService {
                     methodName: tsMethod.name
                 })
             }
-            // }
-            // report = report.concat(this.getFilesArray(subFolder));
         }
         return report;
     }
@@ -61,6 +80,7 @@ export class TsFolderReportService {
     generateReport(): void {
         const parentFolder: TsFolder = new TsFolder();
         parentFolder.subFolders.push(this.tsFolder);
+        this.relativeRootReports = getRouteToRoot(this.tsFolder.relativePath);
         this.foldersArray = this.getFoldersArray(parentFolder);
         this.filesArray = this.getFilesArray(this.tsFolder);
         this.registerPartial("cognitiveBarchartScript", 'cognitive-barchart');
@@ -80,6 +100,7 @@ export class TsFolderReportService {
             colors: Options.colors,
             filesArray: this.filesArray,
             foldersArray: this.foldersArray,
+            relativeRootReports: this.relativeRootReports,
             stats: this.tsFolder.getStats(),
             thresholds: Options.getThresholds()
         });

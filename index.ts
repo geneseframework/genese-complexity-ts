@@ -4,13 +4,14 @@ const appRoot = require('app-root-path').toString();
 
 function initProcess() {
     console.log(appRoot)
-    // const src = `/Users/utilisateur/Documents/projets/amadeus/amadeus-cmt/src/`;
-    // const src = `/Users/utilisateur/Documents/projets/aura/victi-aura-affectations-frontend/src/`;
-    // const src = `/Users/utilisateur/Documents/projets/retex/airbus-retex-front/src/`;
-    // const src = `/Users/utilisateur/Documents/projets/naval-group/code/full/20200506-1451/cyms/src/`;
-    const src = `${appRoot}/src/mocks/`;
-	const process = new Process(src);
+    // const analysisPath = `/Users/utilisateur/Documents/projets/amadeus/amadeus-cmt/src/`;
+    // const analysisPath = `/Users/utilisateur/Documents/projets/aura/victi-aura-affectations-frontend/src/`;
+    // const analysisPath = `/Users/utilisateur/Documents/projets/retex/airbus-retex-front/src/`;
+    // const analysisPath = `/Users/utilisateur/Documents/projets/naval-group/code/full/20200506-1451/cyms/src/`;
+    const analysisPath = `${appRoot}/src/mocks/`;
+	const process = new Process();
 	const options = {
+        analysisPath: analysisPath,
 	    outDir: `${appRoot}/genese/complexity/reports`,
         cognitive: {
             thresholdWarning: 3,

@@ -23,11 +23,6 @@ export function getAllFiles(dirPath: string, arrayOfFiles?: string[]): string[] 
 }
 
 
-export function getTypescriptFiles(dirPath: string): string[] {
-    return getAllFiles(dirPath).filter(e => getExtension(e) === 'ts');
-}
-
-
 export function getRelativePath(pathRoot: string, path: string): string {
     if (!path || !pathRoot) {
         return '';
@@ -36,6 +31,34 @@ export function getRelativePath(pathRoot: string, path: string): string {
     return pathRoot === pathWithoutEndSlash.slice(0, pathRoot.length) ? pathWithoutEndSlash.slice(pathRoot.length + 1, pathWithoutEndSlash.length) : pathWithoutEndSlash;
 }
 
+
+export function getRouteToRoot(relativePath: string): string {
+    if (!relativePath) {
+        return '';
+    }
+    let relativeRoot = '/..';
+    for (let i = 0; i < relativePath.length; i++) {
+        relativeRoot = relativePath.charAt(i) === '/' ? `/..${relativeRoot}` : relativeRoot;
+    }
+    return relativeRoot.slice(1);
+}
+
+
+export function getRouteBetweenPaths(pathSource: string, pathTarget: string): string {
+    if (!pathSource || !pathTarget) {
+        return '';
+    }
+    let commonRoute = '';
+    for (let i = 0; i < pathSource.length; i++) {
+        if (pathSource.charAt(i) === pathTarget.charAt(i)) {
+            commonRoute = `${commonRoute}${pathSource.charAt(i)}`
+        } else {
+            break;
+        }
+    }
+    const backToCommonRoute = getRouteToRoot(pathSource.slice(commonRoute.length)) || '.';
+    return `${backToCommonRoute}${pathTarget.slice(commonRoute.length)}`;
+}
 
 export function getExtension(filename: string): string {
     return filename.split('.').pop();
