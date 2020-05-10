@@ -31,8 +31,8 @@ export class ReportsService {
 
     private static createCssFiles(): void {
         createRelativeDir('styles');
-        copyFile(`${appRoot}/src/templates/report.css`, `${Options.outDir}/styles/report.css`);
-        copyFile(`${appRoot}/src/templates/styles.css`, `${Options.outDir}/styles/styles.css`);
-        copyFile(`${appRoot}/src/templates/prettify.css`, `${Options.outDir}/styles/prettify.css`);
+        copyFile(`${appRoot}/src/templates/styles/report.css`, `${Options.outDir}/styles/report.css`);
+        copyFile(`${appRoot}/src/templates/styles/styles.css`, `${Options.outDir}/styles/styles.css`);
+        copyFile(`${appRoot}/src/templates/styles/prettify.css`, `${Options.outDir}/styles/prettify.css`);
     }
 }

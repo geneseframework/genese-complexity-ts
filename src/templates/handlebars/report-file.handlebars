@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for All files</title>
+    <title>Genese complexity report</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="{{relativeRootReports}}/styles/prettify.css" />
     <link rel="stylesheet" href="{{relativeRootReports}}/styles/report.css" />
@@ -29,10 +29,6 @@
                 </div>
             </div>
             <div class="clearfix">
-                <div class='fl pad1y space-right2'>
-                    <span class="strong">{{stats.numberOfFiles}}</span>
-                    <span class="quiet">Files</span>
-                </div>
                 <div class='fl pad1y space-right2'>
                     <span class="strong">{{stats.numberOfMethods}}</span>
                     <span class="quiet">Methods</span>
@@ -146,46 +142,12 @@
     <!--        -------------------------------------------------------------------------------------->
 
 
-    <!--        ----------------------------------   Folders array   --------------------------------->
+    <!--        ----------------------------------   Methods array   --------------------------------->
 
-    <table class="array-report">
-        <thead>
-        <tr>
-            <th class="file" rowspan="2">Folders</th>
-            <th class="column methodColumn" rowspan="2">Number of files</th>
-            <th class="column cyclomaticColumn" rowspan="2">Number of methods</th>
-            <th class="column cognitiveColumn" colspan="3">Cognitive complexity of methods</th>
-            <th class="column cognitiveColumn" colspan="3">Cyclomatic complexity of methods</th>
-        </tr>
-        <tr>
-            <th class="column cognitiveColumn">Correct</th>
-            <th class="column cognitiveColumn">Warning</th>
-            <th class="column cognitiveColumn">Error</th>
-            <th class="column cognitiveColumn">Correct</th>
-            <th class="column cognitiveColumn">Warning</th>
-            <th class="column cognitiveColumn">Error</th>
-        </tr>
-        </thead>
         {{#each foldersArray}}
             {{>rowFolder rowFolder=.}}
         {{/each}}
-    </table>
 
-    <!--        ----------------------------------   Files array   --------------------------------->
-
-    <table class="array-report">
-        <thead>
-        <tr>
-            <th class="file">File</th>
-            <th class="column methodColumn">Method</th>
-            <th class="column cognitiveColumn">Cognitive complexity</th>
-            <th class="column cyclomaticColumn">Cyclomatic complexity</th>
-        </tr>
-        </thead>
-        {{#each filesArray}}
-            {{>rowFile rowFile=.}}
-        {{/each}}
-    </table>
 
 
 
