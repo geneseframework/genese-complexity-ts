@@ -27,6 +27,17 @@ export function getTypescriptFiles(dirPath: string): string[] {
 }
 
 
+export function getRelativePath(pathRoot: string, path: string): string {
+    console.log('ROOT', pathRoot);
+    console.log('ROOT path', path);
+    if (!path || !pathRoot) {
+        return '';
+    }
+    console.log('ROOT path slice', path.slice(0, pathRoot.length -1));
+    return pathRoot === path.slice(0, pathRoot.length) ? path.slice(pathRoot.length + 1) : path;
+}
+
+
 export function getExtension(filename: string): string {
     return filename.split('.').pop();
 }

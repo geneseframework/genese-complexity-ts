@@ -25,7 +25,7 @@ export class TsFolderReportService {
         let report: RowFolderReport[] = [];
         for (const subFolder of tsFolder.subFolders) {
             const subFolderReport: RowFolderReport = {
-                path: subFolder.path,
+                path: subFolder.relativePath,
                 numberOfFiles: subFolder.numberOfFiles,
                 numberOfMethods: subFolder.numberOfMethods,
                 complexitiesByStatus: subFolder.complexitiesByStatus

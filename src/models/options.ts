@@ -20,6 +20,7 @@ export class Options {
         warningThreshold: 4
     };
     static outDir = `${appRoot}/genese/complexity`;
+    static pathRoot = appRoot;
 
 
     static setOption(key: string, value: string): void {

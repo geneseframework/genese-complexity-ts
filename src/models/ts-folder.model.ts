@@ -17,6 +17,7 @@ export class TsFolder implements Evaluate {
     numberOfMethods ?= 0;
     parent?: TsFolder = undefined;
     path ?= '';
+    relativePath ?= '';
     stats: Stats = undefined;
     subFolders?: TsFolder[] = [];
     tsFiles?: TsFile[] = [];
