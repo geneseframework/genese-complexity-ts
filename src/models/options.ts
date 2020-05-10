@@ -8,6 +8,7 @@ const appRoot = appRootPath.toString();
 
 export class Options {
 
+    static analysisPath = appRoot;
     static cognitiveCpx: Complexity = {
         errorThreshold: 8,
         type: ComplexityType.COGNITIVE,

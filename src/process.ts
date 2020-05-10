@@ -14,11 +14,9 @@ const appRoot = appRootPath.toString();
 
 export class Process {
 
-    private readonly path: string;
     private tsFolder?: TsFolder = new TsFolder();
 
-    constructor(path: string) {
-        this.path = path;
+    constructor() {
     }
 
     start(options: any): void {
@@ -48,7 +46,7 @@ export class Process {
 
 
     generateTree(): Process {
-        this.tsFolder = TsFolderService.generateTree(this.path, 'ts');
+        this.tsFolder = TsFolderService.generateTree(Options.analysisPath, 'ts');
         return this;
     }
 

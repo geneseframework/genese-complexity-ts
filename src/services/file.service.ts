@@ -32,7 +32,7 @@ export function getRelativePath(pathRoot: string, path: string): string {
 }
 
 
-export function getRootReportsFromSubfolder(relativePath: string): string {
+export function getRouteToRoot(relativePath: string): string {
     if (!relativePath) {
         return '';
     }
@@ -43,6 +43,22 @@ export function getRootReportsFromSubfolder(relativePath: string): string {
     return relativeRoot.slice(1);
 }
 
+
+export function getRouteBetweenPaths(pathSource: string, pathTarget: string): string {
+    if (!pathSource || !pathTarget) {
+        return '';
+    }
+    let commonRoute = '';
+    for (let i = 0; i < pathSource.length; i++) {
+        if (pathSource.charAt(i) === pathTarget.charAt(i)) {
+            commonRoute = `${commonRoute}${pathSource.charAt(i)}`
+        } else {
+            break;
+        }
+    }
+    const backToCommonRoute = getRouteToRoot(pathSource.slice(commonRoute.length)) || '.';
+    return `${backToCommonRoute}${pathTarget.slice(commonRoute.length)}`;
+}
 
 export function getExtension(filename: string): string {
     return filename.split('.').pop();
