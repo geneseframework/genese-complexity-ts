@@ -5,6 +5,7 @@ import { TsFolder } from '../models/ts-folder.model';
 import { Options } from '../models/options';
 import { RowFolderReport } from '../models/row-folder-report.model';
 import { RowFileReport } from '../models/row-file-report.model';
+import { createRelativeDir } from './file.service';
 
 const appRoot = require('app-root-path').toString();
 
@@ -41,15 +42,15 @@ export class TsFolderReportService {
         let report: RowFileReport[] = [];
         // for (const subFolder of tsFolder.subFolders) {
         //     for (const tsFile of subFolder.tsFiles) {
-            for (const tsFile of tsFolder.tsFiles) {
-                for (const tsMethod of tsFile.tsMethods) {
-                    report.push({
-                        cognitiveValue: tsMethod.cognitiveValue,
-                        cyclomaticValue: tsMethod.cyclomaticValue,
-                        filename: tsFile.name,
-                        methodName: tsMethod.name
-                    })
-                }
+        for (const tsFile of tsFolder.tsFiles) {
+            for (const tsMethod of tsFile.tsMethods) {
+                report.push({
+                    cognitiveValue: tsMethod.cognitiveValue,
+                    cyclomaticValue: tsMethod.cyclomaticValue,
+                    filename: tsFile.name,
+                    methodName: tsMethod.name
+                })
+            }
             // }
             // report = report.concat(this.getFilesArray(subFolder));
         }
@@ -82,7 +83,9 @@ export class TsFolderReportService {
             stats: this.tsFolder.getStats(),
             thresholds: Options.getThresholds()
         });
-        fs.writeFileSync(`${Options.outDir}/report.html`, template, {encoding: 'utf-8'});
+        createRelativeDir(this.tsFolder.relativePath);
+        const pathReport = `${Options.outDir}/${this.tsFolder.relativePath}/report.html`;
+        fs.writeFileSync(pathReport, template, {encoding: 'utf-8'});
     }
 
 

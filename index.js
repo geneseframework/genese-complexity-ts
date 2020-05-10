@@ -11,7 +11,7 @@ function initProcess() {
     var src = appRoot + "/src/mocks/";
     var process = new process_1.Process(src);
     var options = {
-        outDir: appRoot + "/genese/complexity",
+        outDir: appRoot + "/genese/complexity/reports",
         cognitive: {
             thresholdWarning: 3,
             thresholdError: 4

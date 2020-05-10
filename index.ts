@@ -11,7 +11,7 @@ function initProcess() {
     const src = `${appRoot}/src/mocks/`;
 	const process = new Process(src);
 	const options = {
-	    outDir: `${appRoot}/genese/complexity`,
+	    outDir: `${appRoot}/genese/complexity/reports`,
         cognitive: {
             thresholdWarning: 3,
             thresholdError: 4

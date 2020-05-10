@@ -1,7 +1,7 @@
-import * as fs from 'fs-extra';
 import { TsFolder } from '../models/ts-folder.model';
 import { Options } from '../models/options';
 import { TsFolderReportService } from './ts-folder-report.service';
+import { copyFile, createRelativeDir } from './file.service';
 
 const appRoot = require('app-root-path').toString();
 
@@ -18,6 +18,7 @@ export class ReportsService {
     private static generateSubfoldersReports(tsFolder: TsFolder): void{
         ReportsService.generateFolderReport(tsFolder);
         for (const subFolder of tsFolder.subFolders) {
+            ReportsService.generateSubfoldersReports(subFolder);
         }
     }
 
@@ -29,8 +30,9 @@ export class ReportsService {
 
 
     private static createCssFiles(): void {
-        fs.copyFileSync(`${appRoot}/src/templates/report.css`, `${Options.outDir}/report.css`);
-        fs.copyFileSync(`${appRoot}/src/templates/styles.css`, `${Options.outDir}/styles.css`);
-        fs.copyFileSync(`${appRoot}/src/templates/prettify.css`, `${Options.outDir}/prettify.css`);
+        createRelativeDir('styles');
+        copyFile(`${appRoot}/src/templates/report.css`, `${Options.outDir}/styles/report.css`);
+        copyFile(`${appRoot}/src/templates/styles.css`, `${Options.outDir}/styles/styles.css`);
+        copyFile(`${appRoot}/src/templates/prettify.css`, `${Options.outDir}/styles/prettify.css`);
     }
 }

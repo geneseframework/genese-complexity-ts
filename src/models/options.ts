@@ -19,7 +19,7 @@ export class Options {
         type: ComplexityType.CYCLOMATIC,
         warningThreshold: 4
     };
-    static outDir = `${appRoot}/genese/complexity`;
+    static outDir = `${appRoot}/genese/complexity/reports`;
     static pathRoot = appRoot;
 
 
