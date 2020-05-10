@@ -1,4 +1,3 @@
-import * as ts from 'typescript';
 import * as fs from 'fs-extra';
 import { Options } from '../models/options';
 

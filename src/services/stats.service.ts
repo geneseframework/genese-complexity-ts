@@ -28,9 +28,4 @@ export abstract class StatsService {
         this._stats.barChartCognitive = this._stats.barChartCognitive.sort();
         this._stats.barChartCyclomatic = this._stats.barChartCyclomatic.sort();
     }
-
-
-    isFolder(fileOrFolder: TsFile | TsFolder): boolean {
-        return !!fileOrFolder?.['tsFolderService'];
-    }
 }

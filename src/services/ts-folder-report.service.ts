@@ -66,7 +66,9 @@ export class TsFolderReportService {
         for (const tsFile of tsFolder.tsFiles) {
             for (const tsMethod of tsFile.tsMethods) {
                 report.push({
+                    cognitiveColor: tsMethod.cognitiveStatus.toLowerCase(),
                     cognitiveValue: tsMethod.cognitiveValue,
+                    cyclomaticColor: tsMethod.cyclomaticStatus.toLowerCase(),
                     cyclomaticValue: tsMethod.cyclomaticValue,
                     filename: tsFile.name,
                     methodName: tsMethod.name

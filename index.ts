@@ -3,7 +3,6 @@ import { Process } from './src/process';
 const appRoot = require('app-root-path').toString();
 
 function initProcess() {
-    console.log(appRoot)
     // const analysisPath = `/Users/utilisateur/Documents/projets/amadeus/amadeus-cmt/src/`;
     // const analysisPath = `/Users/utilisateur/Documents/projets/aura/victi-aura-affectations-frontend/src/`;
     // const analysisPath = `/Users/utilisateur/Documents/projets/retex/airbus-retex-front/src/`;

@@ -7,8 +7,6 @@ import { MethodStatus } from '../enums/evaluation-status.enum';
 import { ComplexityType } from '../enums/complexity-type.enum';
 import { StatsService } from './stats.service';
 import { Stats } from '../models/stats.model';
-import { getRelativePath } from './file.service';
-import { Options } from '../models/options';
 
 export class TsFileService extends StatsService{
 
