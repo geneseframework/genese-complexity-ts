@@ -3,9 +3,6 @@ import { TsFolderService } from '../services/ts-folder.service';
 import { Stats } from './stats.model';
 import { Evaluate } from '../interfaces/evaluate.interface';
 import { ComplexitiesByStatus } from '../interfaces/complexities-by-status.interface';
-import { Ast } from '../services/ast.service';
-import { getFilename } from '../services/file.service';
-import { ComplexitiesByStatusService } from '../services/complexities-by-status.service';
 
 export class TsFolder implements Evaluate {
 

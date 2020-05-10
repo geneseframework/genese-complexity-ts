@@ -5,7 +5,7 @@ import { TsFolder } from '../models/ts-folder.model';
 import { Options } from '../models/options';
 import { RowFolderReport } from '../models/row-folder-report.model';
 import { RowFileReport } from '../models/row-file-report.model';
-import { createRelativeDir } from './file.service';
+import { createRelativeDir, getRootReportsFromSubfolder } from './file.service';
 
 const appRoot = require('app-root-path').toString();
 
@@ -80,6 +80,7 @@ export class TsFolderReportService {
             colors: Options.colors,
             filesArray: this.filesArray,
             foldersArray: this.foldersArray,
+            relativeRootReports: getRootReportsFromSubfolder(this.tsFolder.relativePath),
             stats: this.tsFolder.getStats(),
             thresholds: Options.getThresholds()
         });

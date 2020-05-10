@@ -23,17 +23,24 @@ export function getAllFiles(dirPath: string, arrayOfFiles?: string[]): string[] 
 }
 
 
-export function getTypescriptFiles(dirPath: string): string[] {
-    return getAllFiles(dirPath).filter(e => getExtension(e) === 'ts');
-}
-
-
 export function getRelativePath(pathRoot: string, path: string): string {
     if (!path || !pathRoot) {
         return '';
     }
     const pathWithoutEndSlash = path.charAt(path.length - 1) === `/` ? path.slice(0, path.length - 1) : path;
     return pathRoot === pathWithoutEndSlash.slice(0, pathRoot.length) ? pathWithoutEndSlash.slice(pathRoot.length + 1, pathWithoutEndSlash.length) : pathWithoutEndSlash;
+}
+
+
+export function getRootReportsFromSubfolder(relativePath: string): string {
+    if (!relativePath) {
+        return '';
+    }
+    let relativeRoot = '/..';
+    for (let i = 0; i < relativePath.length; i++) {
+        relativeRoot = relativePath.charAt(i) === '/' ? `/..${relativeRoot}` : relativeRoot;
+    }
+    return relativeRoot.slice(1);
 }
 
 
