@@ -11,7 +11,8 @@ export class Stats {
     numberOfMethodsByStatus?: ComplexitiesByStatus = new ComplexitiesByStatus();
     numberOfFiles ?= 0;
     numberOfMethods ?= 0;
-    percentsByStatus?: ComplexitiesByStatus = {};
+    percentsByStatus?: ComplexitiesByStatus = new ComplexitiesByStatus();
+    subject ?= '';
     totalCognitiveComplexity ?= 0;
     totalCyclomaticComplexity ?= 0;
 
@@ -24,7 +25,7 @@ export class Stats {
 
     addPercentagesByComplexity(cpx: ComplexityType): void {
         if (this.numberOfMethodsByStatus[cpx]) {
-            this.percentsByStatus[cpx] = {};
+            this.percentsByStatus[cpx] = new ComplexitiesByStatus();
             this.percentsByStatus[cpx].correct = Tools.percent(this.numberOfMethodsByStatus[cpx].correct, this.numberOfMethods);
             this.percentsByStatus[cpx].warning = Tools.percent(this.numberOfMethodsByStatus[cpx].warning, this.numberOfMethods);
             this.percentsByStatus[cpx].error = Tools.percent(this.numberOfMethodsByStatus[cpx].error, this.numberOfMethods);

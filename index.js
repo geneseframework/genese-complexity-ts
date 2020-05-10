@@ -9,10 +9,9 @@ function initProcess() {
     // const src = `/Users/utilisateur/Documents/projets/retex/airbus-retex-front/src/`;
     // const src = `/Users/utilisateur/Documents/projets/naval-group/code/full/20200506-1451/cyms/src/`;
     var src = appRoot + "/src/mocks/";
-    console.log('SRC = ', src);
     var process = new process_1.Process(src);
     var options = {
-        outDir: appRoot + "/genese/complexity",
+        outDir: appRoot + "/genese/complexity/reports",
         cognitive: {
             thresholdWarning: 3,
             thresholdError: 4

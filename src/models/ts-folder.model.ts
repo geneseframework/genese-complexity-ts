@@ -5,17 +5,18 @@ import { Evaluate } from '../interfaces/evaluate.interface';
 import { ComplexitiesByStatus } from '../interfaces/complexities-by-status.interface';
 import { Ast } from '../services/ast.service';
 import { getFilename } from '../services/file.service';
+import { ComplexitiesByStatusService } from '../services/complexities-by-status.service';
 
 export class TsFolder implements Evaluate {
 
     cognitiveValue ?= 0;
-    complexitiesByStatus?: ComplexitiesByStatus = {};
+    complexitiesByStatus?: ComplexitiesByStatus = new ComplexitiesByStatus();
     cyclomaticValue ?= 0;
-    name ?= '';
     numberOfFiles ?= 0;
     numberOfMethods ?= 0;
     parent?: TsFolder = undefined;
     path ?= '';
+    relativePath ?= '';
     stats: Stats = undefined;
     subFolders?: TsFolder[] = [];
     tsFiles?: TsFile[] = [];
@@ -38,6 +39,9 @@ export class TsFolder implements Evaluate {
         for (const file of this.tsFiles) {
             this.cognitiveValue += file.cognitiveValue;
             this.cyclomaticValue += file.cyclomaticValue;
+            this.numberOfMethods += file.tsMethods?.length ?? 0;
+            this.numberOfFiles++;
+            this.complexitiesByStatus = this.complexitiesByStatus.add(file.complexitiesByStatus);
         }
     }
 

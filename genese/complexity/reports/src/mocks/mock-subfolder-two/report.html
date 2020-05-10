@@ -1,0 +1,451 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for All files</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="prettify.css" />
+    <link rel="stylesheet" href="report.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+<div class="mainContainer">
+    <h1>Genese complexity report</h1>
+    <div class="header">
+
+        <!--        -------------------------------------------------------------------------------------->
+        <!--        -----------------------------------   Global statistics   ---------------------------->
+        <!--        -------------------------------------------------------------------------------------->
+
+        <!--        -----------------------------------   Files and methods   ---------------------------->
+
+        <div class="stats">
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">src/mocks/mock-subfolder-two</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">2</span>
+                    <span class="quiet">Files</span>
+                </div>
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">7</span>
+                    <span class="quiet">Methods</span>
+                </div>
+            </div>
+            <div class="clearfix padly">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">10</span>
+                    <span class="quiet">points of cognitive complexity</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">16</span>
+                    <span class="quiet">points of cyclomatic complexity</span>
+                </div>
+            </div>
+
+            <!--        -----------------------------------   Cognitive complexity   ---------------------------->
+
+            <div class="clearfix cognitive-subtitle">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">Cognitive complexity</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">100 %</span>
+                    <span class="quiet"> Correct</span>
+                    <span class='fraction'>7/7</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">0 %</span>
+                    <span class="quiet"> Warning</span>
+                    <span class='fraction'>0/7</span>
+                    <span class="quiet">(threshold : 4)</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">0 %</span>
+                    <span class="quiet"> Error</span>
+                    <span class='fraction'>0/7</span>
+                    <span class="quiet">(threshold : 8)</span>
+                </div>
+            </div>
+
+            <!--        -----------------------------------   Cyclomatic complexity   ---------------------------->
+
+            <div class="clearfix cyclomatic-subtitle">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">Cyclomatic complexity</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">100 %</span>
+                    <span class="quiet"> Correct</span>
+                    <span class='fraction'>7/7</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">0 %</span>
+                    <span class="quiet"> Warning</span>
+                    <span class='fraction'>0/7</span>
+                    <span class="quiet">(threshold : 4)</span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class='fl pad1y space-right2'>
+                    <span class="strong">0 %</span>
+                    <span class="quiet"> Error</span>
+                    <span class='fraction'>0/7</span>
+                    <span class="quiet">(threshold : 8)</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!--        -------------------------------------------------------------------------------------->
+        <!--        -----------------------------------------   Charts   --------------------------------->
+        <!--        -------------------------------------------------------------------------------------->
+
+        <div class="charts">
+            <div class="cognitive-charts">
+                <div class="doughnut">
+                    <canvas id="doughnut-cognitive-cpx" height="220"></canvas>
+                </div>
+                <div class="bar">
+                    <canvas id="bar-cognitive-cpx" height="250" width="800"></canvas>
+                </div>
+            </div>
+            <div class="cyclomatic-charts">
+                <div class="doughnut">
+                    <canvas id="doughnut-cyclomatic-cpx" height="220"></canvas>
+                </div>
+                <div class="bar">
+                    <canvas id="bar-cyclomatic-cpx" height="250" width="800"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--        -------------------------------------------------------------------------------------->
+    <!--        -----------------------------------   Report arrays   -------------------------------->
+    <!--        -------------------------------------------------------------------------------------->
+
+
+    <!--        ----------------------------------   Folders array   --------------------------------->
+
+    <table class="array-report">
+        <thead>
+        <tr>
+            <th class="file" rowspan="2">Folders</th>
+            <th class="column methodColumn" rowspan="2">Number of files</th>
+            <th class="column cyclomaticColumn" rowspan="2">Number of methods</th>
+            <th class="column cognitiveColumn" colspan="3">Cognitive complexity of methods</th>
+            <th class="column cognitiveColumn" colspan="3">Cyclomatic complexity of methods</th>
+        </tr>
+        <tr>
+            <th class="column cognitiveColumn">Correct</th>
+            <th class="column cognitiveColumn">Warning</th>
+            <th class="column cognitiveColumn">Error</th>
+            <th class="column cognitiveColumn">Correct</th>
+            <th class="column cognitiveColumn">Warning</th>
+            <th class="column cognitiveColumn">Error</th>
+        </tr>
+        </thead>
+            <tr>
+                <td>src/mocks/mock-subfolder-two</td>
+                <td class="center">2</td>
+                <td class="center">7</td>
+                <td class="center">4</td>
+                <td class="center">0</td>
+                <td class="center">0</td>
+                <td class="center">4</td>
+                <td class="center">0</td>
+                <td class="center">0</td>
+            </tr>
+    </table>
+
+    <!--        ----------------------------------   Files array   --------------------------------->
+
+    <table class="array-report">
+        <thead>
+        <tr>
+            <th class="file">File</th>
+            <th class="column methodColumn">Method</th>
+            <th class="column cyclomaticColumn">Cyclomatic complexity</th>
+            <th class="column cognitiveColumn">Cognitive complexity</th>
+        </tr>
+        </thead>
+            <tr>
+                <td>callbacks.mock.ts</td>
+                <td>caller</td>
+                <td class="center">3</td>
+                <td class="center">3</td>
+            </tr>
+            <tr>
+                <td>callbacks.mock.ts</td>
+                <td>callerFunction</td>
+                <td class="center">3</td>
+                <td class="center">3</td>
+            </tr>
+            <tr>
+                <td>callbacks.mock.ts</td>
+                <td>methodWithCallback</td>
+                <td class="center">1</td>
+                <td class="center">0</td>
+            </tr>
+            <tr>
+                <td>switches.mock.ts</td>
+                <td>switches</td>
+                <td class="center">3</td>
+                <td class="center">1</td>
+            </tr>
+            <tr>
+                <td>switches.mock.ts</td>
+                <td>tryCatch</td>
+                <td class="center">2</td>
+                <td class="center">1</td>
+            </tr>
+            <tr>
+                <td>switches.mock.ts</td>
+                <td>recursion</td>
+                <td class="center">2</td>
+                <td class="center">2</td>
+            </tr>
+            <tr>
+                <td>switches.mock.ts</td>
+                <td>questionDotToken</td>
+                <td class="center">2</td>
+                <td class="center">0</td>
+            </tr>
+    </table>
+
+
+
+    <!--        -------------------------------------------------------------------------------------->
+    <!--        -----------------------------------   Scripts-----   --------------------------------->
+    <!--        -------------------------------------------------------------------------------------->
+
+
+
+    <script src="../../node_modules/chart.js/dist/Chart.js"></script>
+
+    <script>
+        var ctxDougnutCognitive = document.getElementById('doughnut-cognitive-cpx').getContext("2d");
+        var doughnutCognitive = new Chart(ctxDougnutCognitive, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [
+                        7,
+                        0,
+                        0,
+                    ],
+                    backgroundColor: [
+                            'rgba(3, 169, 244, 0.6)',
+                            'rgba(255, 152, 0, 0.6)',
+                            'rgba(216, 27, 96, 0.6)',
+                    ]
+                }],
+                labels: [
+                    'complexity <=  ',
+                    'complexity >  ',
+                    'complexity >  ',
+                ]
+            },
+            options: {
+                layout: {
+                    padding: {
+                        maintainAspectRatio: false,
+                        responsive: false,
+                        left: 50,
+                        right: 0,
+                        top: 0,
+                        bottom: 0
+                    }
+                },
+                legend: {
+                    display: false
+                },
+                position: 'left',
+                title: {
+                    display: true,
+                    text: 'Cognitive complexity'
+                }
+            }
+        });
+    </script>
+    <script>
+        var ctxBarCognitive = document.getElementById('bar-cognitive-cpx').getContext("2d");
+        var barCognitive = new Chart(ctxBarCognitive, {
+            type: 'bar',
+            data: {
+                labels: [
+                        0,
+                        1,
+                        2,
+                        3,
+                ],
+                datasets: [{
+                    data: [
+                            2,
+                            2,
+                            1,
+                            2,
+                    ],
+                    backgroundColor: [
+                            'rgba(3, 169, 244, 0.6)',
+                            'rgba(3, 169, 244, 0.6)',
+                            'rgba(3, 169, 244, 0.6)',
+                            'rgba(3, 169, 244, 0.6)',
+                    ],
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'Cognitive complexity',
+                    position: 'top'
+                },
+                scales: {
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Complexity'
+                        },
+                        ticks: {
+                            suggestedMin: 0
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Number of methods'
+                        },
+                        ticks: {
+                            suggestedMin: 0
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+    <script>
+        var ctxDougnutCyclomatic = document.getElementById('doughnut-cyclomatic-cpx').getContext("2d");
+        var doughnutCyclomatic = new Chart(ctxDougnutCyclomatic, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [
+                        7,
+                        0,
+                        0,
+                    ],
+                    backgroundColor: [
+                            'rgba(3, 169, 244, 0.6)',
+                            'rgba(255, 152, 0, 0.6)',
+                            'rgba(216, 27, 96, 0.6)',
+                    ]
+                }],
+                labels: [
+                    'complexity <=  ',
+                    'complexity >  ',
+                    'complexity >  ',
+                ]
+            },
+            options: {
+                layout: {
+                    padding: {
+                        maintainAspectRatio: false,
+                        responsive: false,
+                        left: 50,
+                        right: 0,
+                        top: 0,
+                        bottom: 0
+                    }
+                },
+                legend: {
+                    display: false
+                },
+                position: 'left',
+                title: {
+                    display: true,
+                    text: 'Cyclomatic complexity'
+                }
+            }
+        });
+    </script>
+    <script>
+        var ctxBarCyclomatic = document.getElementById('bar-cyclomatic-cpx').getContext("2d");
+        var barCyclomatic = new Chart(ctxBarCyclomatic, {
+            type: 'bar',
+            data: {
+                labels: [
+                        1,
+                        2,
+                        3,
+                ],
+                datasets: [{
+                    data: [
+                            1,
+                            3,
+                            3,
+                    ],
+                    backgroundColor: [
+                            'rgba(3, 169, 244, 0.6)',
+                            'rgba(3, 169, 244, 0.6)',
+                            'rgba(3, 169, 244, 0.6)',
+                    ],
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'Cyclomatic complexity',
+                    position: 'top'
+                },
+                scales: {
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Complexity'
+                        },
+                        ticks: {
+                            suggestedMin: 0
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Number of methods'
+                        },
+                        ticks: {
+                            suggestedMin: 0
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+</html>

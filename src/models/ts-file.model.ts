@@ -29,7 +29,7 @@ export class TsFile implements Evaluate {
         for (const method of this.tsMethods) {
             this.cognitiveValue += method.cognitiveValue;
             this.cyclomaticValue += method.cyclomaticValue;
-            this.complexitiesByStatus = cpss.incrementStatusWithMethod(this.complexitiesByStatus, method);
+            this.complexitiesByStatus = cpss.addMethodCpxByStatus(this.complexitiesByStatus, method);
         }
     }
 

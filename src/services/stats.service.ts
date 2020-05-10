@@ -6,6 +6,7 @@ export abstract class StatsService {
 
     protected abstract _stats: Stats = undefined;
     protected abstract calculateStats(fileOrFolder: TsFile | TsFolder): void;
+    protected abstract getSubject(): void;
 
 
     getStats(fileOrFolder: any): Stats {
@@ -14,6 +15,7 @@ export abstract class StatsService {
         } else {
             this._stats = new Stats();
             this.calculateStats(fileOrFolder);
+            this.getSubject();
             this._stats.addPercentages();
             this._stats.cumulateComplexities();
             this.sortBarCharts();

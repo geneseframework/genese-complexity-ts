@@ -155,6 +155,9 @@ table.coverage td span.cline-any {
 .array-report .sorted-desc .sorter {
     background-position: 0 -10px;
 }
+.array-report .center {
+    text-align: center;
+}
 .status-line {  height: 10px; }
 /* yellow */
 .cbranch-no { background: yellow !important; color: #111; }

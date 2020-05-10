@@ -1,12 +1,13 @@
 import * as fs from 'fs-extra';
 import { TsFolder } from '../models/ts-folder.model';
-import { getExtension } from './file.service';
+import { getExtension, getRelativePath } from './file.service';
 import { TsFileService } from './ts-file.service';
 import { TsFile } from '../models/ts-file.model';
 import { BarchartService } from './barchart.service';
 import { ComplexityType } from '../enums/complexity-type.enum';
 import { StatsService } from './stats.service';
 import { Stats } from '../models/stats.model';
+import { Options } from '../models/options';
 
 export class TsFolderService extends StatsService {
 
@@ -26,6 +27,7 @@ export class TsFolderService extends StatsService {
         }
         const tsFolder: TsFolder = new TsFolder();
         tsFolder.path = path;
+        tsFolder.relativePath = getRelativePath(Options.pathRoot, path);
         const filesOrDirs = fs.readdirSync(path);
         filesOrDirs.forEach(function(elementName) {
             const pathElement = path + elementName;
@@ -74,6 +76,11 @@ export class TsFolderService extends StatsService {
         this._stats.numberOfMethodsByStatus[type].correct += tsFileStats.numberOfMethodsByStatus[type].correct;
         this._stats.numberOfMethodsByStatus[type].error += tsFileStats.numberOfMethodsByStatus[type].error;
         this._stats.numberOfMethodsByStatus[type].warning += tsFileStats.numberOfMethodsByStatus[type].warning;
+    }
+
+
+    getSubject(): void {
+        this._stats.subject = getRelativePath(Options.pathRoot, this.tsFolder.path);
     }
 
 }

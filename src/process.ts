@@ -6,6 +6,8 @@ import { TsFolderService } from './services/ts-folder.service';
 import { TsFile } from './models/ts-file.model';
 import { TsFileService } from './services/ts-file.service';
 import { Options } from './models/options';
+import { ReportsService } from './services/reports.service';
+import { createOutDir } from './services/file.service';
 
 const appRootPath = require('app-root-path');
 const appRoot = appRootPath.toString();
@@ -25,7 +27,7 @@ export class Process {
         this.setOptions(options)
             .createOutDir()
             .generateTree()
-            .generateReport();
+            .generateReports();
         console.log('REPORT GENERATED SUCCESSFULLY');
     }
 
@@ -38,12 +40,9 @@ export class Process {
 
     getDebugReport() {
         const tsFile: TsFile = TsFileService.generateTree(`${appRoot}/src/mocks/ast.mock.ts`);
-        // console.log('FILEEE', tsFile)
         for (const method of tsFile.tsMethods) {
-            // console.log('MTHD NAME', method.name)
             const tree = method.tsTree;
             // tree.printAllChildren();
-            console.log('EVL', method)
         }
     }
 
@@ -54,18 +53,13 @@ export class Process {
     }
 
 
-    generateReport(): void {
-        const reportService: TsFolderReportService = new TsFolderReportService(this.tsFolder);
-        reportService.generateReport();
+    generateReports(): void {
+        ReportsService.generateAllReports(this.tsFolder);
     }
 
 
     createOutDir(): Process {
-        if (fs.existsSync(Options.outDir)) {
-            fs.emptyDirSync(Options.outDir);
-        } else {
-            fs.mkdirsSync(Options.outDir);
-        }
+        createOutDir();
         return this;
     }
 }
