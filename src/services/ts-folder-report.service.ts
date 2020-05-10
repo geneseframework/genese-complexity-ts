@@ -39,8 +39,9 @@ export class TsFolderReportService {
 
     getFilesArray(tsFolder: TsFolder): RowFileReport[] {
         let report: RowFileReport[] = [];
-        for (const subFolder of tsFolder.subFolders) {
-            for (const tsFile of subFolder.tsFiles) {
+        // for (const subFolder of tsFolder.subFolders) {
+        //     for (const tsFile of subFolder.tsFiles) {
+            for (const tsFile of tsFolder.tsFiles) {
                 for (const tsMethod of tsFile.tsMethods) {
                     report.push({
                         cognitiveValue: tsMethod.cognitiveValue,
@@ -49,8 +50,8 @@ export class TsFolderReportService {
                         methodName: tsMethod.name
                     })
                 }
-            }
-            report = report.concat(this.getFilesArray(subFolder));
+            // }
+            // report = report.concat(this.getFilesArray(subFolder));
         }
         return report;
     }
@@ -60,7 +61,7 @@ export class TsFolderReportService {
         const parentFolder: TsFolder = new TsFolder();
         parentFolder.subFolders.push(this.tsFolder);
         this.foldersArray = this.getFoldersArray(parentFolder);
-        this.filesArray = this.getFilesArray(parentFolder);
+        this.filesArray = this.getFilesArray(this.tsFolder);
         this.registerPartial("cognitiveBarchartScript", 'cognitive-barchart');
         this.registerPartial("cyclomaticBarchartScript", 'cyclomatic-barchart');
         this.registerPartial("cognitiveDoughnutScript", 'cognitive-doughnut');
@@ -79,6 +80,7 @@ export class TsFolderReportService {
             filesArray: this.filesArray,
             foldersArray: this.foldersArray,
             stats: this.tsFolder.getStats(),
+            subjectOfReport: this.tsFolder.relativePath,
             thresholds: Options.getThresholds()
         });
         fs.writeFileSync(`${Options.outDir}/report.html`, template, {encoding: 'utf-8'});
