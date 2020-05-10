@@ -35,15 +35,11 @@ export class Options {
 
 
     static getThresholds(): ComplexitiesByStatus {
-        return {
-            cognitive: {
-                warning: Options.cognitiveCpx.warningThreshold,
-                error: Options.cognitiveCpx.errorThreshold,
-            },
-            cyclomatic: {
-                warning: Options.cyclomaticCpx.warningThreshold,
-                error: Options.cyclomaticCpx.errorThreshold,
-            }
-        }
+        const cpxByStatus = new ComplexitiesByStatus();
+        cpxByStatus.cognitive.warning = Options.cognitiveCpx.warningThreshold;
+        cpxByStatus.cognitive.error = Options.cognitiveCpx.errorThreshold;
+        cpxByStatus.cyclomatic.warning = Options.cyclomaticCpx.warningThreshold;
+        cpxByStatus.cyclomatic.error = Options.cyclomaticCpx.errorThreshold;
+        return cpxByStatus;
     }
 }

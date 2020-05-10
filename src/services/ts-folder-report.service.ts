@@ -30,9 +30,13 @@ export class TsFolderReportService {
                 numberOfMethods: subFolder.numberOfMethods,
                 complexitiesByStatus: subFolder.complexitiesByStatus
             };
+            console.log('complexitiesByStatus', subFolder.complexitiesByStatus)
             report.push(subFolderReport);
+            // console.log('MID REPORT', report.map(e => e.numberOfFiles));
             report = report.concat(this.getFoldersArray(subFolder));
         }
+        console.log('ENND REPORT', report.map(e => e.complexitiesByStatus));
+        // console.log('ENND REPORT', report.map(e => e.numberOfFiles));
         return report;
     }
 
@@ -60,6 +64,7 @@ export class TsFolderReportService {
         const parentFolder: TsFolder = new TsFolder();
         parentFolder.subFolders.push(this.tsFolder);
         this.foldersArray = this.getFoldersArray(parentFolder);
+        console.log('FOLDERS ARRAY', this.foldersArray)
         this.filesArray = this.getFilesArray(parentFolder);
         this.registerPartial("cognitiveBarchartScript", 'cognitive-barchart');
         this.registerPartial("cyclomaticBarchartScript", 'cyclomatic-barchart');

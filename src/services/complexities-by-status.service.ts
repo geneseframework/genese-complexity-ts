@@ -5,7 +5,7 @@ import { ComplexityType } from '../enums/complexity-type.enum';
 
 export class ComplexitiesByStatusService {
 
-    incrementStatusWithMethod(cpxByStatus: ComplexitiesByStatus, tsMethod: TsMethod): ComplexitiesByStatus {
+    addMethodCpxByStatus(cpxByStatus: ComplexitiesByStatus, tsMethod: TsMethod): ComplexitiesByStatus {
         let cpx: ComplexitiesByStatus = cpxByStatus ?? new ComplexitiesByStatus();
         cpx = this.incrementMethodByCpxType(cpx, ComplexityType.COGNITIVE, tsMethod.cognitiveStatus);
         cpx = this.incrementMethodByCpxType(cpx, ComplexityType.CYCLOMATIC, tsMethod.cyclomaticStatus);
