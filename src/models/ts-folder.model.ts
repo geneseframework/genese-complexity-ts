@@ -36,15 +36,13 @@ export class TsFolder implements Evaluate {
 
 
     evaluate(): void {
-        console.log('FOLDER CPX START', this.complexitiesByStatus);
         for (const file of this.tsFiles) {
-            console.log('FILE NAME filename', file.name);
             this.cognitiveValue += file.cognitiveValue;
             this.cyclomaticValue += file.cyclomaticValue;
-            console.log('FOLDER FILE CPX', file.complexitiesByStatus);
+            this.numberOfMethods += file.tsMethods?.length ?? 0;
+            this.numberOfFiles++;
             this.complexitiesByStatus = this.complexitiesByStatus.add(file.complexitiesByStatus);
         }
-        console.log('FOLDER CPX END', this.complexitiesByStatus);
     }
 
 }

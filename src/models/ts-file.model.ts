@@ -30,8 +30,6 @@ export class TsFile implements Evaluate {
             this.cognitiveValue += method.cognitiveValue;
             this.cyclomaticValue += method.cyclomaticValue;
             this.complexitiesByStatus = cpss.addMethodCpxByStatus(this.complexitiesByStatus, method);
-            // console.log('FILE', this.name);
-            // console.log('FILE cpx', this.complexitiesByStatus);
         }
     }
 

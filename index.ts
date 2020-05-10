@@ -9,7 +9,6 @@ function initProcess() {
     // const src = `/Users/utilisateur/Documents/projets/retex/airbus-retex-front/src/`;
     // const src = `/Users/utilisateur/Documents/projets/naval-group/code/full/20200506-1451/cyms/src/`;
     const src = `${appRoot}/src/mocks/`;
-    console.log('SRC = ', src)
 	const process = new Process(src);
 	const options = {
 	    outDir: `${appRoot}/genese/complexity`,
