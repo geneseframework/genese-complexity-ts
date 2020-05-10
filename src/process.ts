@@ -6,6 +6,7 @@ import { TsFolderService } from './services/ts-folder.service';
 import { TsFile } from './models/ts-file.model';
 import { TsFileService } from './services/ts-file.service';
 import { Options } from './models/options';
+import { ReportsService } from './services/reports.service';
 
 const appRootPath = require('app-root-path');
 const appRoot = appRootPath.toString();
@@ -25,7 +26,7 @@ export class Process {
         this.setOptions(options)
             .createOutDir()
             .generateTree()
-            .generateReport();
+            .generateReports();
         console.log('REPORT GENERATED SUCCESSFULLY');
     }
 
@@ -51,6 +52,11 @@ export class Process {
     generateTree(): Process {
         this.tsFolder = TsFolderService.generateTree(this.path, 'ts');
         return this;
+    }
+
+
+    generateReports(): void {
+        ReportsService.generateAllReports(this.tsFolder);
     }
 
 
