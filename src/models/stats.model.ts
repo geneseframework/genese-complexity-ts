@@ -12,6 +12,7 @@ export class Stats {
     numberOfFiles ?= 0;
     numberOfMethods ?= 0;
     percentsByStatus?: ComplexitiesByStatus = new ComplexitiesByStatus();
+    subject ?= '';
     totalCognitiveComplexity ?= 0;
     totalCyclomaticComplexity ?= 0;
 

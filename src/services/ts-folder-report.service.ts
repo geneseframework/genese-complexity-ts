@@ -80,7 +80,6 @@ export class TsFolderReportService {
             filesArray: this.filesArray,
             foldersArray: this.foldersArray,
             stats: this.tsFolder.getStats(),
-            subjectOfReport: this.tsFolder.relativePath,
             thresholds: Options.getThresholds()
         });
         fs.writeFileSync(`${Options.outDir}/report.html`, template, {encoding: 'utf-8'});

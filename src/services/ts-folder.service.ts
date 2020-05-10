@@ -78,4 +78,9 @@ export class TsFolderService extends StatsService {
         this._stats.numberOfMethodsByStatus[type].warning += tsFileStats.numberOfMethodsByStatus[type].warning;
     }
 
+
+    getSubject(): void {
+        this._stats.subject = getRelativePath(Options.pathRoot, this.tsFolder.path);
+    }
+
 }

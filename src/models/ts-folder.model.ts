@@ -12,7 +12,6 @@ export class TsFolder implements Evaluate {
     cognitiveValue ?= 0;
     complexitiesByStatus?: ComplexitiesByStatus = new ComplexitiesByStatus();
     cyclomaticValue ?= 0;
-    name ?= '';
     numberOfFiles ?= 0;
     numberOfMethods ?= 0;
     parent?: TsFolder = undefined;
