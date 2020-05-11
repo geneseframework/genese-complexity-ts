@@ -156,7 +156,21 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+                submit(): void {
+                    if (this.formIsValid) {
+                        this.createOrEdit().subscribe(
+                            () &#x3D;&gt; {
+                                this.dialogRef.close();
+                                this.incidentService.incident.next(this.incident.incident_id);
+                            },
+                            (err: any) &#x3D;&gt; {
+                                this.error &#x3D; err?.error?.description || DICTIONARY.DEFAULT_ERROR;
+                            }
+                        );
+                    }
+                }</td>
                 </tr>
             </table>
 

@@ -156,7 +156,18 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+            
+                ifElse(data): EvaluationValuesInterface {
+                    if (data &#x3D;&#x3D;&#x3D; &#x27;a&#x27;) {
+                        data &#x3D; &#x27;b&#x27;;
+                    } else {
+                        data &#x3D; &#x27;c&#x27;;
+                    }
+                    return {cyclomaticValue: 2, cognitiveValue: 1};
+                }</td>
                 </tr>
             </table>
             
@@ -173,7 +184,15 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+                ifAnd(a, b): EvaluationValuesInterface {
+                    if (a &amp;&amp; b) {
+                        console.log(a);
+                    }
+                    return {cyclomaticValue: 3, cognitiveValue: 2};
+                }</td>
                 </tr>
             </table>
             
@@ -190,7 +209,15 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+                ifOr(a, b): EvaluationValuesInterface {
+                    if (a || b) {
+                        console.log(a);
+                    }
+                    return {cyclomaticValue: 3, cognitiveValue: 2};
+                }</td>
                 </tr>
             </table>
             
@@ -207,7 +234,15 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+                ifAndAnd(a, b, c): EvaluationValuesInterface {
+                    if (a &amp;&amp; b &amp;&amp; c) {
+                        console.log(a);
+                    }
+                    return {cyclomaticValue: 4, cognitiveValue: 2};
+                }</td>
                 </tr>
             </table>
             
@@ -224,7 +259,15 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+                ifAndOr(a, b, c): EvaluationValuesInterface {
+                    if (a &amp;&amp; b || c) {
+                        console.log(a);
+                    }
+                    return {cyclomaticValue: 4, cognitiveValue: 3};
+                }</td>
                 </tr>
             </table>
             
@@ -241,7 +284,15 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+                ifAndAndOrAnd(a, b, c, d, e, f): EvaluationValuesInterface {
+                    if (a &amp;&amp; b &amp;&amp; c || d &amp;&amp; e &amp;&amp; f) {
+                        console.log(a);
+                    }
+                    return {cyclomaticValue: 7, cognitiveValue: 4};
+                }</td>
                 </tr>
             </table>
             
@@ -258,7 +309,15 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+                ifAndAndOrAndAndOrOr(a, b, c, d, e, f): EvaluationValuesInterface {
+                    if (a &amp;&amp; b &amp;&amp; c || d &amp;&amp; e &amp;&amp; f || a || b) {
+                        console.log(a);
+                    }
+                    return {cyclomaticValue: 9, cognitiveValue: 5};
+                }</td>
                 </tr>
             </table>
             
@@ -275,7 +334,19 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+                ifIfIf(data: number): EvaluationValuesInterface {
+                    if (data &gt; 2) {
+                        if (data &gt; 3) {
+                            if (data &gt; 4) {
+                                console.log(&#x27;data &gt; 4&#x27;);
+                            }
+                        }
+                    }
+                    return {cyclomaticValue: 4, cognitiveValue: 6};
+                }</td>
                 </tr>
             </table>
             
@@ -292,7 +363,22 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+            
+                ifIfIfElse(data: number): EvaluationValuesInterface {
+                    if (data &gt; 2) {
+                        if (data &gt; 3) {
+                            if (data &gt; 4) {
+                                console.log(&#x27;data &gt; 4&#x27;);
+                            } else {
+                                console.log(&#x27;data &lt;&#x3D; 4&#x27;);
+                            }
+                        }
+                    }
+                    return {cyclomaticValue: 4, cognitiveValue: 6};
+                }</td>
                 </tr>
             </table>
             
@@ -309,7 +395,21 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+                forForFor(max: number): EvaluationValuesInterface {
+                    let total &#x3D; 0;
+                    for (let i &#x3D; 1; i &lt; max; ++i) {
+                        for (let j &#x3D; 2; j &lt; i; ++j) {
+                            for (let k &#x3D; 2; k &lt; 10; ++k) {
+                                console.log(&#x60;k &#x3D; ${k}&#x60;);
+                            }
+                        }
+                        total +&#x3D; i;
+                    }
+                    return {cyclomaticValue: 4, cognitiveValue: 6};
+                }</td>
                 </tr>
             </table>
 

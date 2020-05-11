@@ -156,7 +156,22 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+                switches(numberOfWords: number): EvaluationValuesInterface {
+                    switch (numberOfWords) {
+                        case 1:
+                            console.log(&quot;one&quot;);
+                            break;
+                        case 2:
+                            console.log(&quot;a couple&quot;);
+                            break;
+                        default:
+                            console.log(&quot;lots&quot;);
+                    }
+                    return {cyclomaticValue: 3, cognitiveValue: 1};
+                }</td>
                 </tr>
             </table>
             
@@ -173,7 +188,17 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+                tryCatch(): EvaluationValuesInterface {
+                    try {
+                        const a &#x3D; 1;
+                    } catch (e) {
+                        console.log(e);
+                    }
+                    return {cyclomaticValue: 2, cognitiveValue: 1};
+                }</td>
                 </tr>
             </table>
             
@@ -190,7 +215,15 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+                recursion(a): EvaluationValuesInterface {
+                    if (a &gt; 10) {
+                        this.recursion(a);
+                    }
+                    return {cyclomaticValue: 2, cognitiveValue: 2};
+                }</td>
                 </tr>
             </table>
             
@@ -207,7 +240,13 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+                questionDotToken(time: any): EvaluationValuesInterface {
+                    time &#x3D; time?.name;
+                    return {cyclomaticValue: 1, cognitiveValue: 0};
+                }</td>
                 </tr>
             </table>
 

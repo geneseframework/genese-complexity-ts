@@ -156,7 +156,16 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+                caller(a) {
+                    this.methodWithCallback(a, (b) &#x3D;&gt; {
+                        if (a &lt; 2) {
+                            console.log(b)
+                        }
+                    })
+                    return {cyclomaticValue: 3, cognitiveValue: 3};
+                }</td>
                 </tr>
             </table>
             
@@ -173,7 +182,17 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+                callerFunction(a) {
+                    this.methodWithCallback(a, function (b) {
+                        if (b &lt; 6) {
+                            console.log(&#x27;b&#x27;, b)
+                        }
+                    })
+                    return {cyclomaticValue: 3, cognitiveValue: 3};
+                }</td>
                 </tr>
             </table>
             
@@ -190,7 +209,13 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+                methodWithCallback(a, callback) {
+                    callback(a + 3);
+                    return {cyclomaticValue: 0, cognitiveValue: 0};
+                }</td>
                 </tr>
             </table>
 

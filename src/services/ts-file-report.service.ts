@@ -25,11 +25,12 @@ export class TsFileReportService {
         let report: MethodReport[] = [];
         for (const method of this.tsFile.tsMethods) {
             const methodReport: MethodReport = {
-                methodName: method.name,
+                code: method.getCode(),
                 cognitiveColor: method.cognitiveStatus.toLowerCase(),
                 cognitiveValue: method.cognitiveValue,
                 cyclomaticColor: method.cyclomaticStatus.toLowerCase(),
                 cyclomaticValue: method.cyclomaticValue,
+                methodName: method.name,
             };
             report.push(methodReport);
         }
@@ -39,7 +40,7 @@ export class TsFileReportService {
 
     generateReport(): void {
         this.methods = this.getMethodsArray();
-        // console.log('METHODS ARRAY', this.methods[0])
+        // console.log('METHODS ARRAY', this.methods)
         this.relativeRootReports = getRouteToRoot(this.tsFile.tsFolder?.relativePath);
         this.registerPartial("cognitiveBarchartScript", 'cognitive-barchart');
         this.registerPartial("cyclomaticBarchartScript", 'cyclomatic-barchart');

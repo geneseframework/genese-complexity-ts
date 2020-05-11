@@ -156,7 +156,26 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+                /**
+                 * Insert a value in an object for a given path
+                 * @param object The object where we want to set a thing
+                 * @param path the path were we want insert the thing
+                 * @param value the thing to insert
+                 * @returns {Object}
+                 */
+                set(object: Object, path: string | string[] &#x3D; &#x27;&#x27;, value: any): Object {
+                    if (!object) {
+                        return undefined;
+                    }
+                    if (!Array.isArray(path)) {
+                        path &#x3D; path.toString().match(/[^.[\]]+/g) || [];
+                    }
+                    path.slice(0, -1)
+                        .reduce((acc: Object, curr: any, index: number) &#x3D;&gt; this.reducer(acc, curr, index, +path), object)[path[path.length - 1]] &#x3D; value; // Finally assign the value to the last key
+                    return object; // Return the top-level object to allow chaining
+                }</td>
                 </tr>
             </table>
             
@@ -173,7 +192,11 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+                reducer(acc: Object, curr: any, index: number, path: number) {
+                    return Object(acc[curr]) &#x3D;&#x3D;&#x3D; acc[curr] ? acc[curr] : (acc[curr] &#x3D; isNaN(+path[index + 1]) ? {} : []);
+                }</td>
                 </tr>
             </table>
             
@@ -190,7 +213,21 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+                /**
+                 * Keep the incidents count up to date
+                 * And set the top buttons labels
+                 * @returns {void}
+                 */
+                setCountByStatusText(): void {
+                    const { target_capacity: capacity, target_high_capacity: highCapacity } &#x3D; this.incidentsListService.filters;
+                    // const CAPACITY &#x3D; capacity
+                    //     ? this.capacityService.getCapacityConfig(highCapacity, capacity)
+                    //     : this.capacityService.getHighCapacityConfig(highCapacity);
+                    for (const tb of this.incidentsListService || []) {
+                        tb.text &#x3D; &#x60;${this.CAPACITY?.label || this.LABELS.ALL} - ${this.LABELS[tb.status]} (${this.countByStatus[tb.status]})&#x60;;
+                    }
+                }</td>
                 </tr>
             </table>
             
@@ -207,7 +244,18 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+                /**
+                 * Get an item from local storage
+                 * @param key the ke yof the item
+                 * @param parse boolean to know if we parse the item or not
+                 * @returns {any}
+                 */
+                getFromLocalStorage(key: any, parse &#x3D; true): any {
+                    const item: any &#x3D; localStorage.getItem(key);
+                    return parse ? JSON.parse(item) : item;
+                }</td>
                 </tr>
             </table>
             
@@ -224,7 +272,17 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+                /**
+                 * Set an item in the local storage
+                 * @param key the key of the item
+                 * @param item the item
+                 * @returns {void}
+                 */
+                setToLocalStorage(key: any, item: any): void {
+                    localStorage.setItem(key, JSON.stringify(item));
+                }</td>
                 </tr>
             </table>
             
@@ -241,7 +299,23 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+                /**
+                 * Check if a date is after an other
+                 * @param date1 the concerned date
+                 * @param date2 the other date
+                 * @returns {boolean}
+                 */
+                dateIsAfter(date1: string | number | Date, date2: string | number | Date): boolean {
+                    const UTC_DATE_1 &#x3D; new Date(date1).getTime();
+                    const UTC_DATE_2 &#x3D; new Date(date2).getTime();
+                    if (isNaN(UTC_DATE_1) || isNaN(UTC_DATE_2)) {
+                        return true;
+                    } else {
+                        return UTC_DATE_1 - UTC_DATE_2 &gt; 0;
+                    }
+                }</td>
                 </tr>
             </table>
             
@@ -258,7 +332,22 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+                /**
+                 * Get the date format in ZULU
+                 * @returns {string}
+                 */
+                getZuluDate(date: any &#x3D; new Date()): string {
+                    if (!(date instanceof Date)) {
+                        date &#x3D; new Date(date);
+                    }
+                    const DAY &#x3D; &#x60;${date.getUTCDate() &lt; 10 ? &#x27;0&#x27; : &#x27;&#x27;}${date.getUTCDate()}&#x60;;
+                    const MONTH &#x3D; &#x60;${date.getUTCMonth() &lt; 10 ? &#x27;0&#x27; : &#x27;&#x27;}${date.getUTCMonth() + 1}&#x60;;
+                    const YEAR &#x3D; &#x60;${date.getUTCFullYear()}&#x60;;
+                    return &#x60;${DAY}/${MONTH}/${YEAR}&#x60;;
+                }</td>
                 </tr>
             </table>
             
@@ -275,7 +364,22 @@
                 </tr>
                 </thead>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5">
+            
+            
+                /**
+                 * Get the time format in ZULU
+                 * @returns {string}
+                 */
+                getZuluTime(time: any &#x3D; new Date()): string {
+                    if (!(time instanceof Date)) {
+                        time &#x3D; new Date(time);
+                    }
+                    const HOURS &#x3D; &#x60;${time.getUTCHours() &lt; 10 ? &#x27;0&#x27; : &#x27;&#x27;}${time.getUTCHours()}&#x60;;
+                    const MINUTES &#x3D; &#x60;${time.getUTCMinutes() &lt; 10 ? &#x27;0&#x27; : &#x27;&#x27;}${time.getUTCMinutes()}&#x60;;
+                    const SECONDS &#x3D; &#x60;${time.getUTCSeconds() &lt; 10 ? &#x27;0&#x27; : &#x27;&#x27;}${time.getUTCSeconds()}&#x60;;
+                    return &#x60;GMT ${HOURS}:${MINUTES}:${SECONDS} Z&#x60;;
+                }</td>
                 </tr>
             </table>
 
