@@ -2,7 +2,7 @@ import * as fs from 'fs-extra';
 import * as eol from "eol";
 import * as Handlebars from "handlebars";
 import { Options } from '../models/options';
-import { getExtension, getFilenameWithoutExtension } from './file.service';
+import { getFilenameWithoutExtension, getRouteToRoot } from './file.service';
 import { TsFile } from '../models/ts-file.model';
 import { MethodReport } from '../models/method-report.model';
 
@@ -39,11 +39,13 @@ export class TsFileReportService {
 
     generateReport(): void {
         this.methods = this.getMethodsArray();
+        // console.log('METHODS ARRAY', this.methods[0])
+        this.relativeRootReports = getRouteToRoot(this.tsFile.tsFolder?.relativePath);
         this.registerPartial("cognitiveBarchartScript", 'cognitive-barchart');
         this.registerPartial("cyclomaticBarchartScript", 'cyclomatic-barchart');
         this.registerPartial("cognitiveDoughnutScript", 'cognitive-doughnut');
         this.registerPartial("cyclomaticDoughnutScript", 'cyclomatic-doughnut');
-        this.registerPartial("method", 'method');
+        this.registerPartial("method", 'methods');
         const reportTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/handlebars/file-report.handlebars`, 'utf-8'));
         this.template = Handlebars.compile(reportTemplate);
         this.writeReport();
@@ -59,7 +61,6 @@ export class TsFileReportService {
             thresholds: Options.getThresholds()
         });
         const filenameWithoutExtension = getFilenameWithoutExtension(this.tsFile.name);
-        console.log('FNWE', filenameWithoutExtension);
         const pathReport = `${Options.outDir}/${this.tsFile.tsFolder?.relativePath}/${filenameWithoutExtension}.html`;
         fs.writeFileSync(pathReport, template, {encoding: 'utf-8'});
     }
