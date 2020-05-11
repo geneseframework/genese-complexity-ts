@@ -5,6 +5,7 @@
 <head>
     <title>Genese complexity report</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../styles/prism.css" />
     <link rel="stylesheet" href="../../../styles/prettify.css" />
     <link rel="stylesheet" href="../../../styles/report.css" />
     <link rel="stylesheet" href="../../../styles/styles.css" />
@@ -142,7 +143,6 @@
     <!--        -------------------------------------------------------------------------------------->
 
 
-            
             <table class="array-report">
                 <thead>
                 <tr>
@@ -157,6 +157,9 @@
                 </thead>
                 <tr>
                     <td colspan="5">
+                        <pre>
+                            <code class="language-js">
+                                    
             
             
                 switches(numberOfWords: number): EvaluationValuesInterface {
@@ -171,10 +174,12 @@
                             console.log(&quot;lots&quot;);
                     }
                     return {cyclomaticValue: 3, cognitiveValue: 1};
-                }</td>
+                }
+                            </code>
+                        </pre>
+                    </td>
                 </tr>
             </table>
-            
             <table class="array-report">
                 <thead>
                 <tr>
@@ -189,6 +194,9 @@
                 </thead>
                 <tr>
                     <td colspan="5">
+                        <pre>
+                            <code class="language-js">
+                                    
             
             
                 tryCatch(): EvaluationValuesInterface {
@@ -198,10 +206,12 @@
                         console.log(e);
                     }
                     return {cyclomaticValue: 2, cognitiveValue: 1};
-                }</td>
+                }
+                            </code>
+                        </pre>
+                    </td>
                 </tr>
             </table>
-            
             <table class="array-report">
                 <thead>
                 <tr>
@@ -216,6 +226,9 @@
                 </thead>
                 <tr>
                     <td colspan="5">
+                        <pre>
+                            <code class="language-js">
+                                    
             
             
                 recursion(a): EvaluationValuesInterface {
@@ -223,10 +236,12 @@
                         this.recursion(a);
                     }
                     return {cyclomaticValue: 2, cognitiveValue: 2};
-                }</td>
+                }
+                            </code>
+                        </pre>
+                    </td>
                 </tr>
             </table>
-            
             <table class="array-report">
                 <thead>
                 <tr>
@@ -241,12 +256,18 @@
                 </thead>
                 <tr>
                     <td colspan="5">
+                        <pre>
+                            <code class="language-js">
+                                    
             
             
                 questionDotToken(time: any): EvaluationValuesInterface {
                     time &#x3D; time?.name;
                     return {cyclomaticValue: 1, cognitiveValue: 0};
-                }</td>
+                }
+                            </code>
+                        </pre>
+                    </td>
                 </tr>
             </table>
 
@@ -260,6 +281,7 @@
 
 
     <script src="../../../../../../node_modules/chart.js/dist/Chart.js"></script>
+    <script src="../../../styles/prism.js">
 
     <script>
         var ctxDougnutCognitive = document.getElementById('doughnut-cognitive-cpx').getContext("2d");

@@ -5,6 +5,7 @@
 <head>
     <title>Genese complexity report</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../styles/prism.css" />
     <link rel="stylesheet" href="../../../../styles/prettify.css" />
     <link rel="stylesheet" href="../../../../styles/report.css" />
     <link rel="stylesheet" href="../../../../styles/styles.css" />
@@ -142,7 +143,6 @@
     <!--        -------------------------------------------------------------------------------------->
 
 
-            
             <table class="array-report">
                 <thead>
                 <tr>
@@ -157,6 +157,9 @@
                 </thead>
                 <tr>
                     <td colspan="5">
+                        <pre>
+                            <code class="language-js">
+                                    
             
                 forIfAndAndOrAndAndOrOr(a, b, c, d, e, f): EvaluationValuesInterface {
                     for (let i &#x3D; 0; i &lt; 10; i++) {
@@ -165,10 +168,12 @@
                         }
                     }
                     return {cyclomaticValue: 9, cognitiveValue: 5};
-                }</td>
+                }
+                            </code>
+                        </pre>
+                    </td>
                 </tr>
             </table>
-            
             <table class="array-report">
                 <thead>
                 <tr>
@@ -183,6 +188,9 @@
                 </thead>
                 <tr>
                     <td colspan="5">
+                        <pre>
+                            <code class="language-js">
+                                    
             
             
                 forForIfAndAndOrAndAndOrOr(a, b, c, d, e, f): EvaluationValuesInterface {
@@ -197,10 +205,12 @@
                         console.log(b);
                     }
                     return {cyclomaticValue: 9, cognitiveValue: 5};
-                }</td>
+                }
+                            </code>
+                        </pre>
+                    </td>
                 </tr>
             </table>
-            
             <table class="array-report">
                 <thead>
                 <tr>
@@ -215,15 +225,20 @@
                 </thead>
                 <tr>
                     <td colspan="5">
+                        <pre>
+                            <code class="language-js">
+                                    
             
             
                 ternary(a): EvaluationValuesInterface {
                     const result &#x3D; a &gt; 10 ? 5 : 3;
                     return {cyclomaticValue: 2, cognitiveValue: 0};
-                }</td>
+                }
+                            </code>
+                        </pre>
+                    </td>
                 </tr>
             </table>
-            
             <table class="array-report">
                 <thead>
                 <tr>
@@ -238,11 +253,17 @@
                 </thead>
                 <tr>
                     <td colspan="5">
+                        <pre>
+                            <code class="language-js">
+                                    
             
                 ternaries(a): EvaluationValuesInterface {
                     const result &#x3D; a &gt; 10 ? 5 : ((a &lt;5) ? 3 : 2);
                     return {cyclomaticValue: 2, cognitiveValue: 0};
-                }</td>
+                }
+                            </code>
+                        </pre>
+                    </td>
                 </tr>
             </table>
 
@@ -256,6 +277,7 @@
 
 
     <script src="../../../../../../../node_modules/chart.js/dist/Chart.js"></script>
+    <script src="../../../../styles/prism.js">
 
     <script>
         var ctxDougnutCognitive = document.getElementById('doughnut-cognitive-cpx').getContext("2d");

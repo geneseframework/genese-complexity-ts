@@ -5,6 +5,7 @@
 <head>
     <title>Genese complexity report</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../styles/prism.css" />
     <link rel="stylesheet" href="../../../../styles/prettify.css" />
     <link rel="stylesheet" href="../../../../styles/report.css" />
     <link rel="stylesheet" href="../../../../styles/styles.css" />
@@ -142,7 +143,6 @@
     <!--        -------------------------------------------------------------------------------------->
 
 
-            
             <table class="array-report">
                 <thead>
                 <tr>
@@ -157,6 +157,9 @@
                 </thead>
                 <tr>
                     <td colspan="5">
+                        <pre>
+                            <code class="language-js">
+                                    
             
                 /**
                  * Insert a value in an object for a given path
@@ -175,10 +178,12 @@
                     path.slice(0, -1)
                         .reduce((acc: Object, curr: any, index: number) &#x3D;&gt; this.reducer(acc, curr, index, +path), object)[path[path.length - 1]] &#x3D; value; // Finally assign the value to the last key
                     return object; // Return the top-level object to allow chaining
-                }</td>
+                }
+                            </code>
+                        </pre>
+                    </td>
                 </tr>
             </table>
-            
             <table class="array-report">
                 <thead>
                 <tr>
@@ -193,13 +198,18 @@
                 </thead>
                 <tr>
                     <td colspan="5">
+                        <pre>
+                            <code class="language-js">
+                                    
             
                 reducer(acc: Object, curr: any, index: number, path: number) {
                     return Object(acc[curr]) &#x3D;&#x3D;&#x3D; acc[curr] ? acc[curr] : (acc[curr] &#x3D; isNaN(+path[index + 1]) ? {} : []);
-                }</td>
+                }
+                            </code>
+                        </pre>
+                    </td>
                 </tr>
             </table>
-            
             <table class="array-report">
                 <thead>
                 <tr>
@@ -214,6 +224,9 @@
                 </thead>
                 <tr>
                     <td colspan="5">
+                        <pre>
+                            <code class="language-js">
+                                    
                 /**
                  * Keep the incidents count up to date
                  * And set the top buttons labels
@@ -227,10 +240,12 @@
                     for (const tb of this.incidentsListService || []) {
                         tb.text &#x3D; &#x60;${this.CAPACITY?.label || this.LABELS.ALL} - ${this.LABELS[tb.status]} (${this.countByStatus[tb.status]})&#x60;;
                     }
-                }</td>
+                }
+                            </code>
+                        </pre>
+                    </td>
                 </tr>
             </table>
-            
             <table class="array-report">
                 <thead>
                 <tr>
@@ -245,6 +260,9 @@
                 </thead>
                 <tr>
                     <td colspan="5">
+                        <pre>
+                            <code class="language-js">
+                                    
             
                 /**
                  * Get an item from local storage
@@ -255,10 +273,12 @@
                 getFromLocalStorage(key: any, parse &#x3D; true): any {
                     const item: any &#x3D; localStorage.getItem(key);
                     return parse ? JSON.parse(item) : item;
-                }</td>
+                }
+                            </code>
+                        </pre>
+                    </td>
                 </tr>
             </table>
-            
             <table class="array-report">
                 <thead>
                 <tr>
@@ -273,6 +293,9 @@
                 </thead>
                 <tr>
                     <td colspan="5">
+                        <pre>
+                            <code class="language-js">
+                                    
             
                 /**
                  * Set an item in the local storage
@@ -282,10 +305,12 @@
                  */
                 setToLocalStorage(key: any, item: any): void {
                     localStorage.setItem(key, JSON.stringify(item));
-                }</td>
+                }
+                            </code>
+                        </pre>
+                    </td>
                 </tr>
             </table>
-            
             <table class="array-report">
                 <thead>
                 <tr>
@@ -300,6 +325,9 @@
                 </thead>
                 <tr>
                     <td colspan="5">
+                        <pre>
+                            <code class="language-js">
+                                    
             
                 /**
                  * Check if a date is after an other
@@ -315,10 +343,12 @@
                     } else {
                         return UTC_DATE_1 - UTC_DATE_2 &gt; 0;
                     }
-                }</td>
+                }
+                            </code>
+                        </pre>
+                    </td>
                 </tr>
             </table>
-            
             <table class="array-report">
                 <thead>
                 <tr>
@@ -333,6 +363,9 @@
                 </thead>
                 <tr>
                     <td colspan="5">
+                        <pre>
+                            <code class="language-js">
+                                    
             
             
                 /**
@@ -347,10 +380,12 @@
                     const MONTH &#x3D; &#x60;${date.getUTCMonth() &lt; 10 ? &#x27;0&#x27; : &#x27;&#x27;}${date.getUTCMonth() + 1}&#x60;;
                     const YEAR &#x3D; &#x60;${date.getUTCFullYear()}&#x60;;
                     return &#x60;${DAY}/${MONTH}/${YEAR}&#x60;;
-                }</td>
+                }
+                            </code>
+                        </pre>
+                    </td>
                 </tr>
             </table>
-            
             <table class="array-report">
                 <thead>
                 <tr>
@@ -365,6 +400,9 @@
                 </thead>
                 <tr>
                     <td colspan="5">
+                        <pre>
+                            <code class="language-js">
+                                    
             
             
                 /**
@@ -379,7 +417,10 @@
                     const MINUTES &#x3D; &#x60;${time.getUTCMinutes() &lt; 10 ? &#x27;0&#x27; : &#x27;&#x27;}${time.getUTCMinutes()}&#x60;;
                     const SECONDS &#x3D; &#x60;${time.getUTCSeconds() &lt; 10 ? &#x27;0&#x27; : &#x27;&#x27;}${time.getUTCSeconds()}&#x60;;
                     return &#x60;GMT ${HOURS}:${MINUTES}:${SECONDS} Z&#x60;;
-                }</td>
+                }
+                            </code>
+                        </pre>
+                    </td>
                 </tr>
             </table>
 
@@ -393,6 +434,7 @@
 
 
     <script src="../../../../../../../node_modules/chart.js/dist/Chart.js"></script>
+    <script src="../../../../styles/prism.js">
 
     <script>
         var ctxDougnutCognitive = document.getElementById('doughnut-cognitive-cpx').getContext("2d");
