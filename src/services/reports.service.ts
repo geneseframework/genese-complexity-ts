@@ -10,7 +10,7 @@ const appRoot = require('app-root-path').toString();
 export class ReportsService {
 
     static generateAllReports(tsFolder: TsFolder): void {
-        ReportsService.createCssFiles();
+        ReportsService.createStyleFiles();
         const parentFolder: TsFolder = new TsFolder();
         parentFolder.subFolders.push(tsFolder);
         ReportsService.generateSubfoldersReports(tsFolder);
@@ -40,10 +40,12 @@ export class ReportsService {
     }
 
 
-    private static createCssFiles(): void {
+    private static createStyleFiles(): void {
         createRelativeDir('styles');
         copyFile(`${appRoot}/src/templates/styles/report.css`, `${Options.outDir}/styles/report.css`);
         copyFile(`${appRoot}/src/templates/styles/styles.css`, `${Options.outDir}/styles/styles.css`);
         copyFile(`${appRoot}/src/templates/styles/prettify.css`, `${Options.outDir}/styles/prettify.css`);
+        copyFile(`${appRoot}/src/templates/styles/prism.css`, `${Options.outDir}/styles/prism.css`);
+        copyFile(`${appRoot}/src/templates/styles/prism.js`, `${Options.outDir}/styles/prism.js`);
     }
 }

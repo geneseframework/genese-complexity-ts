@@ -7,6 +7,9 @@ export class ComplexitiesByStatus implements Addition<ComplexitiesByStatus> {
     cyclomatic?: Statuses = new Statuses();
 
     add(cpxByStatus: ComplexitiesByStatus): ComplexitiesByStatus {
+        if (!cpxByStatus) {
+            return new ComplexitiesByStatus();
+        }
         const result: ComplexitiesByStatus = new ComplexitiesByStatus();
         result.cognitive = result.cognitive.add(cpxByStatus.cognitive);
         result.cyclomatic = result.cyclomatic.add(cpxByStatus.cyclomatic);
