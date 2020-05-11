@@ -60,7 +60,16 @@ export function getRouteBetweenPaths(pathSource: string, pathTarget: string): st
 }
 
 export function getExtension(filename: string): string {
-    return filename.split('.').pop();
+    return filename ? filename.split('.').pop() : '';
+}
+
+
+export function getFilenameWithoutExtension(filename: string): string {
+    if (!filename) {
+        return '';
+    }
+    const extensionLength = getExtension(filename).length;
+    return filename.slice(0, -(extensionLength + 1));
 }
 
 

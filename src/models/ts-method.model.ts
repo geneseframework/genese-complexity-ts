@@ -51,4 +51,9 @@ export class TsMethod implements Evaluate {
         return status;
     }
 
+
+    getCode(): string {
+        return this.node.getFullText(this.tsFile.sourceFile);
+    }
+
 }

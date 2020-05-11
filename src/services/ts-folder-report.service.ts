@@ -5,7 +5,14 @@ import { TsFolder } from '../models/ts-folder.model';
 import { Options } from '../models/options';
 import { RowFolderReport } from '../models/row-folder-report.model';
 import { RowFileReport } from '../models/row-file-report.model';
-import { createRelativeDir, getRouteBetweenPaths, getRouteToRoot } from './file.service';
+import {
+    createRelativeDir,
+    getFilenameWithoutExtension,
+    getRelativePath,
+    getRouteBetweenPaths,
+    getRouteToRoot
+} from './file.service';
+import { TsFile } from '../models/ts-file.model';
 
 const appRoot = require('app-root-path').toString();
 
@@ -71,11 +78,18 @@ export class TsFolderReportService {
                     cyclomaticColor: tsMethod.cyclomaticStatus.toLowerCase(),
                     cyclomaticValue: tsMethod.cyclomaticValue,
                     filename: tsFile.name,
+                    link: this.getLink(tsFile),
                     methodName: tsMethod.name
                 })
             }
         }
         return report;
+    }
+
+
+    getLink(tsFile: TsFile): string {
+        const route = getRouteBetweenPaths(this.tsFolder.relativePath, tsFile.tsFolder?.relativePath);
+        return `${route}/${getFilenameWithoutExtension(tsFile.name)}.html`;
     }
 
 
@@ -91,7 +105,7 @@ export class TsFolderReportService {
         this.registerPartial("cyclomaticDoughnutScript", 'cyclomatic-doughnut');
         this.registerPartial("rowFolder", 'row-folders');
         this.registerPartial("rowFile", 'row-files');
-        const reportTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/report.handlebars`, 'utf-8'));
+        const reportTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/handlebars/folder-report.handlebars`, 'utf-8'));
         this.template = Handlebars.compile(reportTemplate);
         this.writeReport();
     }
@@ -107,13 +121,13 @@ export class TsFolderReportService {
             thresholds: Options.getThresholds()
         });
         createRelativeDir(this.tsFolder.relativePath);
-        const pathReport = `${Options.outDir}/${this.tsFolder.relativePath}/report.html`;
+        const pathReport = `${Options.outDir}/${this.tsFolder.relativePath}/folder-report.html`;
         fs.writeFileSync(pathReport, template, {encoding: 'utf-8'});
     }
 
 
     private registerPartial(partialName: string, filename: string): void {
-        const partial = eol.auto(fs.readFileSync(`${appRoot}/src/templates/${filename}.handlebars`, 'utf-8'));
+        const partial = eol.auto(fs.readFileSync(`${appRoot}/src/templates/handlebars/${filename}.handlebars`, 'utf-8'));
         Handlebars.registerPartial(partialName, partial);
     }
 }

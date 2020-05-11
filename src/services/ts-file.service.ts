@@ -21,6 +21,7 @@ export class TsFileService extends StatsService{
     static generateTree(path: string, tsFolder: TsFolder = new TsFolder()): TsFile {
         const tsFile: TsFile = new TsFile();
         tsFile.sourceFile = Ast.getSourceFile(path);
+        // console.log('GENERATE F', tsFolder)
         tsFile.tsFolder = tsFolder;
         tsFile.setName();
         tsFile.tsMethods = TsMethodService.generateTree(tsFile);

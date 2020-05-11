@@ -60,3 +60,27 @@
     color: rgba(216, 27, 96, 0.6);
     font-weight: bold;
 }
+
+.array-report .right {
+    text-align: right;
+}
+
+.array-report .bgwhite {
+    background-color: white;
+}
+
+.array-report .bgcorrect {
+    background-color: rgba(3, 169, 244, 0.6);
+}
+
+.array-report .bgwarning {
+    background-color: rgba(255, 152, 0, 0.6);
+}
+
+.array-report .bgerror {
+    background-color: rgba(216, 27, 96, 0.6);
+}
+
+.method-name-column {
+    width: 20%;
+}
