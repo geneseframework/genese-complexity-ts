@@ -5,7 +5,14 @@ import { TsFolder } from '../models/ts-folder.model';
 import { Options } from '../models/options';
 import { RowFolderReport } from '../models/row-folder-report.model';
 import { RowFileReport } from '../models/row-file-report.model';
-import { createRelativeDir, getRouteBetweenPaths, getRouteToRoot } from './file.service';
+import {
+    createRelativeDir,
+    getFilenameWithoutExtension,
+    getRelativePath,
+    getRouteBetweenPaths,
+    getRouteToRoot
+} from './file.service';
+import { TsFile } from '../models/ts-file.model';
 
 const appRoot = require('app-root-path').toString();
 
@@ -71,11 +78,18 @@ export class TsFolderReportService {
                     cyclomaticColor: tsMethod.cyclomaticStatus.toLowerCase(),
                     cyclomaticValue: tsMethod.cyclomaticValue,
                     filename: tsFile.name,
+                    link: this.getLink(tsFile),
                     methodName: tsMethod.name
                 })
             }
         }
         return report;
+    }
+
+
+    getLink(tsFile: TsFile): string {
+        const route = getRouteBetweenPaths(this.tsFolder.relativePath, tsFile.tsFolder?.relativePath);
+        return `${route}/${getFilenameWithoutExtension(tsFile.name)}.html`;
     }
 
 

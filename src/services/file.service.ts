@@ -64,6 +64,15 @@ export function getExtension(filename: string): string {
 }
 
 
+export function getFilenameWithoutExtension(filename: string): string {
+    if (!filename) {
+        return '';
+    }
+    const extensionLength = getExtension(filename).length;
+    return filename.slice(0, -(extensionLength + 1));
+}
+
+
 export function createRelativeDir(relativePath: string): void {
     const path = `${Options.outDir}/${relativePath}`;
     if (fs.existsSync(path)) {

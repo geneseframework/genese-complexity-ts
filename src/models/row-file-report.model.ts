@@ -5,6 +5,7 @@ export class RowFileReport {
     cyclomaticColor ?= 'correct';
     cyclomaticValue ?= 0;
     filename ?= '';
+    link ?= '';
     methodName ?= '';
 
 }
