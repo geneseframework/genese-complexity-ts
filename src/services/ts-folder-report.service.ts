@@ -91,7 +91,7 @@ export class TsFolderReportService {
         this.registerPartial("cyclomaticDoughnutScript", 'cyclomatic-doughnut');
         this.registerPartial("rowFolder", 'row-folders');
         this.registerPartial("rowFile", 'row-files');
-        const reportTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/handlebars/report-folder.handlebars`, 'utf-8'));
+        const reportTemplate = eol.auto(fs.readFileSync(`${appRoot}/src/templates/handlebars/folder-report.handlebars`, 'utf-8'));
         this.template = Handlebars.compile(reportTemplate);
         this.writeReport();
     }
@@ -107,7 +107,7 @@ export class TsFolderReportService {
             thresholds: Options.getThresholds()
         });
         createRelativeDir(this.tsFolder.relativePath);
-        const pathReport = `${Options.outDir}/${this.tsFolder.relativePath}/report.html`;
+        const pathReport = `${Options.outDir}/${this.tsFolder.relativePath}/folder-report.html`;
         fs.writeFileSync(pathReport, template, {encoding: 'utf-8'});
     }
 

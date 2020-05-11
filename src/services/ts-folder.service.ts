@@ -39,7 +39,7 @@ export class TsFolderService extends StatsService {
                 tsFolder.subFolders.push(subFolder);
             } else {
                 if (!extension || extension === getExtension(pathElement)) {
-                    tsFolder.tsFiles.push(TsFileService.generateTree(pathElement, folder));
+                    tsFolder.tsFiles.push(TsFileService.generateTree(pathElement, tsFolder));
                 }
             }
         });
