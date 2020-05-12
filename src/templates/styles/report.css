@@ -18,38 +18,42 @@
 }
 
 .stats-and-charts {
-    height: 700px;
+    height: 650px;
+    display: flex;
+    flex-direction: row;
+}
+
+.stats-and-charts .stats-and-doughnut {
     display: flex;
     flex-direction: row;
 }
 
 .stats {
+    padding-top: 50px;
+    width: 300px;
+    padding-left: 50px;
+}
+
+.stats-cognitive {
     flex: 1;
 }
 
-.cognitive-subtitle {
-    padding-top: 60px;
+.stats-cyclomatic {
+    flex: 1;
 }
 
-.cyclomatic-subtitle {
-    padding-top: 170px;
-}
-
-.charts {
-    flex: 3;
-    height: 300px;
-}
 
 .doughnut {
     display: inline-block;
+    margin-left: -30px;
 }
 
 
 .bar {
-    width: 800px;
-    height: 200px;
+    /*height: 400px;*/
+    /*width: 90%;*/
     display: inline-block;
-    padding-left: 50px;
+    padding-left: 30px;
     vertical-align: top;
 }
 
