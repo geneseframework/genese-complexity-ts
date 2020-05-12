@@ -148,6 +148,11 @@
 
     <!--        ----------------------------------   Folders array   --------------------------------->
 
+    <div class="clearfix cognitive-subtitle">
+        <div class='fl pad1y space-right2'>
+            <span class="strong">Subfolders of {{stats.subject}}</span>
+        </div>
+    </div>
     <table class="array-report">
         <thead>
         <tr>
@@ -173,6 +178,33 @@
 
     <!--        ----------------------------------   Files array   --------------------------------->
 
+    <div class="clearfix cognitive-subtitle">
+        <div class='fl pad1y space-right2'>
+            <span class="strong">Files of {{stats.subject}}</span>
+        </div>
+    </div>
+    <table class="array-report">
+        <thead>
+        <tr>
+            <th>File</th>
+            <th>Method</th>
+            <th>Cognitive complexity</th>
+            <th>Cyclomatic complexity</th>
+        </tr>
+        </thead>
+        {{#each filesArray}}
+            {{>rowFile rowFile=.}}
+        {{/each}}
+    </table>
+
+
+    <!--        ----------------------------------   Methods array   --------------------------------->
+
+    <div class="clearfix cognitive-subtitle">
+        <div class='fl pad1y space-right2'>
+            <span class="strong">Methods of {{stats.subject}} folder and its subfolders</span>
+        </div>
+    </div>
     <table class="array-report">
         <thead>
         <tr>

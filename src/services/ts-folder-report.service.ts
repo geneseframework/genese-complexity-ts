@@ -8,7 +8,6 @@ import { RowFileReport } from '../models/row-file-report.model';
 import {
     createRelativeDir,
     getFilenameWithoutExtension,
-    getRelativePath,
     getRouteBetweenPaths,
     getRouteToRoot
 } from './file.service';
@@ -20,6 +19,7 @@ export class TsFolderReportService {
 
     private filesArray: RowFileReport[] = [];
     private foldersArray: RowFolderReport[] = [];
+    private methodsArray: RowFileReport[] = [];
     private relativeRootReports = '';
     template: HandlebarsTemplateDelegate;
     tsFolder: TsFolder = undefined;
@@ -87,6 +87,25 @@ export class TsFolderReportService {
     }
 
 
+    getMethodsArray(tsFolder: TsFolder): RowFileReport[] {
+        let report: RowFileReport[] = [];
+        for (const tsFile of tsFolder.tsFiles) {
+            for (const tsMethod of tsFile.tsMethods) {
+                report.push({
+                    cognitiveColor: tsMethod.cognitiveStatus.toLowerCase(),
+                    cognitiveValue: tsMethod.cognitiveValue,
+                    cyclomaticColor: tsMethod.cyclomaticStatus.toLowerCase(),
+                    cyclomaticValue: tsMethod.cyclomaticValue,
+                    filename: tsFile.name,
+                    link: this.getLink(tsFile),
+                    methodName: tsMethod.name
+                })
+            }
+        }
+        return report;
+    }
+
+
     getLink(tsFile: TsFile): string {
         const route = getRouteBetweenPaths(this.tsFolder.relativePath, tsFile.tsFolder?.relativePath);
         return `${route}/${getFilenameWithoutExtension(tsFile.name)}.html`;
@@ -97,8 +116,9 @@ export class TsFolderReportService {
         const parentFolder: TsFolder = new TsFolder();
         parentFolder.subFolders.push(this.tsFolder);
         this.relativeRootReports = getRouteToRoot(this.tsFolder.relativePath);
-        this.foldersArray = this.getFoldersArray(parentFolder);
         this.filesArray = this.getFilesArray(this.tsFolder);
+        this.foldersArray = this.getFoldersArray(parentFolder);
+        this.methodsArray = this.getMethodsArray(parentFolder);
         this.registerPartial("cognitiveBarchartScript", 'cognitive-barchart');
         this.registerPartial("cyclomaticBarchartScript", 'cyclomatic-barchart');
         this.registerPartial("cognitiveDoughnutScript", 'cognitive-doughnut');
@@ -116,6 +136,7 @@ export class TsFolderReportService {
             colors: Options.colors,
             filesArray: this.filesArray,
             foldersArray: this.foldersArray,
+            methodsArray: this.methodsArray,
             relativeRootReports: this.relativeRootReports,
             stats: this.tsFolder.getStats(),
             thresholds: Options.getThresholds()
