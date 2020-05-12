@@ -1,8 +1,23 @@
 .mainContainer {
-    padding: 20px;
+    padding: 20px ;
 }
 
 .header {
+    background-color: #000066;
+    color: #71c2e9;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.header .header-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.stats-and-charts {
     height: 700px;
     display: flex;
     flex-direction: row;
