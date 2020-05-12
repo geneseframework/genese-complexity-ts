@@ -1,6 +1,8 @@
-<tr>
-    <td><a href="{{rowFile.link}}">{{rowFile.filename}}</a></td>
-    <td>{{rowFile.methodName}}</td>
-    <td class="center {{rowFile.cognitiveColor}}">{{rowFile.cognitiveValue}}</td>
-    <td class="center {{rowFile.cyclomaticColor}}">{{rowFile.cyclomaticValue}}</td>
-</tr>
+{{#with rowFile}}
+    <tr>
+        <td><a href="{{linkFile}}">{{filename}}</a></td>
+        <td>{{methodName}}</td>
+        <td class="center {{cognitiveColor}}">{{cognitiveValue}}</td>
+        <td class="center {{cyclomaticColor}}">{{cyclomaticValue}}</td>
+    </tr>
+{{/with}}

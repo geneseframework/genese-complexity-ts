@@ -1,11 +1,19 @@
-<tr>
-    <td><a href="{{rowFolder.routeFromCurrentFolder}}/folder-report.html">{{rowFolder.path}}</a></td>
-    <td class="center">{{rowFolder.numberOfFiles}}</td>
-    <td class="center">{{rowFolder.numberOfMethods}}</td>
-    <td class="center correct">{{rowFolder.complexitiesByStatus.cognitive.correct}}</td>
-    <td class="center warning">{{rowFolder.complexitiesByStatus.cognitive.warning}}</td>
-    <td class="center error">{{rowFolder.complexitiesByStatus.cognitive.error}}</td>
-    <td class="center correct">{{rowFolder.complexitiesByStatus.cyclomatic.correct}}</td>
-    <td class="center warning">{{rowFolder.complexitiesByStatus.cyclomatic.warning}}</td>
-    <td class="center error">{{rowFolder.complexitiesByStatus.cyclomatic.error}}</td>
-</tr>
+{{#with rowFolder}}
+    <tr>
+        <td>
+            {{#if routeFromCurrentFolder}}
+                <a href="{{routeFromCurrentFolder}}/folder-report.html">{{path}}</a>
+            {{else}}
+                {{path}}
+            {{/if}}
+        </td>
+        <td class="center">{{numberOfFiles}}</td>
+        <td class="center">{{numberOfMethods}}</td>
+        <td class="center correct">{{complexitiesByStatus.cognitive.correct}}</td>
+        <td class="center warning">{{complexitiesByStatus.cognitive.warning}}</td>
+        <td class="center error">{{complexitiesByStatus.cognitive.error}}</td>
+        <td class="center correct">{{complexitiesByStatus.cyclomatic.correct}}</td>
+        <td class="center warning">{{complexitiesByStatus.cyclomatic.warning}}</td>
+        <td class="center error">{{complexitiesByStatus.cyclomatic.error}}</td>
+    </tr>
+{{/with}}
