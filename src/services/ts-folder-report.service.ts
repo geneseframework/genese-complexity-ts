@@ -89,18 +89,21 @@ export class TsFolderReportService {
 
     getMethodsArray(tsFolder: TsFolder): RowFileReport[] {
         let report: RowFileReport[] = [];
-        for (const tsFile of tsFolder.tsFiles) {
-            for (const tsMethod of tsFile.tsMethods) {
-                report.push({
-                    cognitiveColor: tsMethod.cognitiveStatus.toLowerCase(),
-                    cognitiveValue: tsMethod.cognitiveValue,
-                    cyclomaticColor: tsMethod.cyclomaticStatus.toLowerCase(),
-                    cyclomaticValue: tsMethod.cyclomaticValue,
-                    filename: tsFile.name,
-                    link: this.getLink(tsFile),
-                    methodName: tsMethod.name
-                })
+        for (const subFolder of tsFolder.subFolders) {
+            for (const tsFile of subFolder.tsFiles) {
+                for (const tsMethod of tsFile.tsMethods) {
+                    report.push({
+                        cognitiveColor: tsMethod.cognitiveStatus.toLowerCase(),
+                        cognitiveValue: tsMethod.cognitiveValue,
+                        cyclomaticColor: tsMethod.cyclomaticStatus.toLowerCase(),
+                        cyclomaticValue: tsMethod.cyclomaticValue,
+                        filename: tsFile.name,
+                        link: this.getLink(tsFile),
+                        methodName: tsMethod.name
+                    })
+                }
             }
+            report = report.concat(this.getMethodsArray(subFolder));
         }
         return report;
     }
