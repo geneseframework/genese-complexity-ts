@@ -48,7 +48,7 @@ export class TsFolderReportService {
                 numberOfFiles: subFolder.numberOfFiles,
                 numberOfMethods: subFolder.numberOfMethods,
                 path: subFolder.relativePath,
-                routeFromCurrentFolder: getRouteBetweenPaths(this.tsFolder.relativePath, subFolder.relativePath)
+                routeFromCurrentFolder: this.tsFolder.relativePath === subFolder.relativePath ? undefined : getRouteBetweenPaths(this.tsFolder.relativePath, subFolder.relativePath)
             };
             report.push(subFolderReport);
             report = report.concat(this.getSubfoldersArray(subFolder));
@@ -79,7 +79,7 @@ export class TsFolderReportService {
                     cyclomaticColor: tsMethod.cyclomaticStatus.toLowerCase(),
                     cyclomaticValue: tsMethod.cyclomaticValue,
                     filename: tsFile.name,
-                    link: this.getLink(tsFile),
+                    linkFile: this.getFileLink(tsFile),
                     methodName: tsMethod.name
                 })
             }
@@ -105,7 +105,7 @@ export class TsFolderReportService {
                         cyclomaticColor: tsMethod.cyclomaticStatus.toLowerCase(),
                         cyclomaticValue: tsMethod.cyclomaticValue,
                         filename: tsFile.name,
-                        link: this.getLink(tsFile),
+                        linkFile: this.getFileLink(tsFile),
                         methodName: tsMethod.name
                     })
                 }
@@ -121,7 +121,10 @@ export class TsFolderReportService {
     }
 
 
-    getLink(tsFile: TsFile): string {
+    getFileLink(tsFile: TsFile): string {
+        if (this.tsFolder.relativePath === tsFile.tsFolder?.relativePath) {
+            return undefined;
+        }
         const route = getRouteBetweenPaths(this.tsFolder.relativePath, tsFile.tsFolder?.relativePath);
         return `${route}/${getFilenameWithoutExtension(tsFile.name)}.html`;
     }
