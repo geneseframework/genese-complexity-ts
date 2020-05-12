@@ -8,11 +8,11 @@ import { RowFileReport } from '../models/row-file-report.model';
 import {
     createRelativeDir,
     getFilenameWithoutExtension,
-    getRelativePath,
     getRouteBetweenPaths,
     getRouteToRoot
 } from './file.service';
 import { TsFile } from '../models/ts-file.model';
+import { MethodReport } from '../models/method-report.model';
 
 const appRoot = require('app-root-path').toString();
 
@@ -20,6 +20,7 @@ export class TsFolderReportService {
 
     private filesArray: RowFileReport[] = [];
     private foldersArray: RowFolderReport[] = [];
+    private methodsArray: RowFileReport[] = [];
     private relativeRootReports = '';
     template: HandlebarsTemplateDelegate;
     tsFolder: TsFolder = undefined;
@@ -87,6 +88,39 @@ export class TsFolderReportService {
     }
 
 
+    getMethodsArraySortedByDecreasingCognitiveCpx(tsFolder: TsFolder): RowFileReport[] {
+        const report = this.getMethodsArray(tsFolder);
+        return this.sortByDecreasingCognitiveCpx(report);
+    }
+
+
+    getMethodsArray(tsFolder: TsFolder): RowFileReport[] {
+        let report: RowFileReport[] = [];
+        for (const subFolder of tsFolder.subFolders) {
+            for (const tsFile of subFolder.tsFiles) {
+                for (const tsMethod of tsFile.tsMethods) {
+                    report.push({
+                        cognitiveColor: tsMethod.cognitiveStatus.toLowerCase(),
+                        cognitiveValue: tsMethod.cognitiveValue,
+                        cyclomaticColor: tsMethod.cyclomaticStatus.toLowerCase(),
+                        cyclomaticValue: tsMethod.cyclomaticValue,
+                        filename: tsFile.name,
+                        link: this.getLink(tsFile),
+                        methodName: tsMethod.name
+                    })
+                }
+            }
+            report = report.concat(this.getMethodsArray(subFolder));
+        }
+        return report;
+    }
+
+
+    sortByDecreasingCognitiveCpx(methodsReport: MethodReport[]): MethodReport[] {
+        return methodsReport.sort((a, b) => b.cognitiveValue - a.cognitiveValue);
+    }
+
+
     getLink(tsFile: TsFile): string {
         const route = getRouteBetweenPaths(this.tsFolder.relativePath, tsFile.tsFolder?.relativePath);
         return `${route}/${getFilenameWithoutExtension(tsFile.name)}.html`;
@@ -97,8 +131,9 @@ export class TsFolderReportService {
         const parentFolder: TsFolder = new TsFolder();
         parentFolder.subFolders.push(this.tsFolder);
         this.relativeRootReports = getRouteToRoot(this.tsFolder.relativePath);
-        this.foldersArray = this.getFoldersArray(parentFolder);
         this.filesArray = this.getFilesArray(this.tsFolder);
+        this.foldersArray = this.getFoldersArray(parentFolder);
+        this.methodsArray = this.getMethodsArraySortedByDecreasingCognitiveCpx(parentFolder);
         this.registerPartial("cognitiveBarchartScript", 'cognitive-barchart');
         this.registerPartial("cyclomaticBarchartScript", 'cyclomatic-barchart');
         this.registerPartial("cognitiveDoughnutScript", 'cognitive-doughnut');
@@ -116,6 +151,7 @@ export class TsFolderReportService {
             colors: Options.colors,
             filesArray: this.filesArray,
             foldersArray: this.foldersArray,
+            methodsArray: this.methodsArray,
             relativeRootReports: this.relativeRootReports,
             stats: this.tsFolder.getStats(),
             thresholds: Options.getThresholds()
