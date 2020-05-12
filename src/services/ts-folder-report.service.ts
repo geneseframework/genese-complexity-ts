@@ -12,6 +12,7 @@ import {
     getRouteToRoot
 } from './file.service';
 import { TsFile } from '../models/ts-file.model';
+import { MethodReport } from '../models/method-report.model';
 
 const appRoot = require('app-root-path').toString();
 
@@ -87,6 +88,12 @@ export class TsFolderReportService {
     }
 
 
+    getMethodsArraySortedByDecreasingCognitiveCpx(tsFolder: TsFolder): RowFileReport[] {
+        const report = this.getMethodsArray(tsFolder);
+        return this.sortByDecreasingCognitiveCpx(report);
+    }
+
+
     getMethodsArray(tsFolder: TsFolder): RowFileReport[] {
         let report: RowFileReport[] = [];
         for (const subFolder of tsFolder.subFolders) {
@@ -109,6 +116,11 @@ export class TsFolderReportService {
     }
 
 
+    sortByDecreasingCognitiveCpx(methodsReport: MethodReport[]): MethodReport[] {
+        return methodsReport.sort((a, b) => b.cognitiveValue - a.cognitiveValue);
+    }
+
+
     getLink(tsFile: TsFile): string {
         const route = getRouteBetweenPaths(this.tsFolder.relativePath, tsFile.tsFolder?.relativePath);
         return `${route}/${getFilenameWithoutExtension(tsFile.name)}.html`;
@@ -121,7 +133,7 @@ export class TsFolderReportService {
         this.relativeRootReports = getRouteToRoot(this.tsFolder.relativePath);
         this.filesArray = this.getFilesArray(this.tsFolder);
         this.foldersArray = this.getFoldersArray(parentFolder);
-        this.methodsArray = this.getMethodsArray(parentFolder);
+        this.methodsArray = this.getMethodsArraySortedByDecreasingCognitiveCpx(parentFolder);
         this.registerPartial("cognitiveBarchartScript", 'cognitive-barchart');
         this.registerPartial("cyclomaticBarchartScript", 'cyclomatic-barchart');
         this.registerPartial("cognitiveDoughnutScript", 'cognitive-doughnut');
