@@ -4,7 +4,8 @@
 
 .header {
     background-color: #000066;
-    color: #71c2e9;
+    color: deepskyblue;
+    /*color: #71c2e9;*/
     padding: 20px;
     display: flex;
     flex-direction: row;
