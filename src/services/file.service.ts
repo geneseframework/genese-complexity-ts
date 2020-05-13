@@ -23,17 +23,25 @@ export function getAllFiles(dirPath: string, arrayOfFiles?: string[]): string[] 
 
 
 export function getRelativePath(pathRoot: string, path: string): string {
-    if (!path || !pathRoot) {
+    if (!path || !pathRoot || path === pathRoot) {
         return '';
     }
+    // console.log('GET RLP pathRoot', pathRoot)
+    // console.log('GET RLP path', path)
     const pathWithoutEndSlash = path.charAt(path.length - 1) === `/` ? path.slice(0, path.length - 1) : path;
-    return pathRoot === pathWithoutEndSlash.slice(0, pathRoot.length) ? pathWithoutEndSlash.slice(pathRoot.length + 1, pathWithoutEndSlash.length) : pathWithoutEndSlash;
+    // console.log('GET RLP pathWithoutEndSlash', pathWithoutEndSlash)
+    const slice = pathWithoutEndSlash.slice(0, pathRoot.length);
+    // console.log('SLICEEE', slice)
+    const  relpath =pathRoot === pathWithoutEndSlash.slice(0, pathRoot.length) ? pathWithoutEndSlash.slice(pathRoot.length, pathWithoutEndSlash.length) : pathWithoutEndSlash;
+    // console.log('REELPTH', relpath)
+    // throw new Error()
+    return relpath;
 }
 
 
 export function getRouteToRoot(relativePath: string): string {
     if (!relativePath) {
-        return '';
+        return '.';
     }
     let relativeRoot = '/..';
     for (let i = 0; i < relativePath.length; i++) {
@@ -74,7 +82,7 @@ export function getFilenameWithoutExtension(filename: string): string {
 
 
 export function createRelativeDir(relativePath: string): void {
-    const path = `${Options.outDir}/${relativePath}`;
+    const path = `${Options.pathReports}/${relativePath}`;
     if (fs.existsSync(path)) {
         fs.emptyDirSync(path);
     } else {
@@ -84,10 +92,10 @@ export function createRelativeDir(relativePath: string): void {
 
 
 export function createOutDir(): void {
-    if (fs.existsSync(Options.outDir)) {
-        fs.emptyDirSync(Options.outDir);
+    if (fs.existsSync(Options.pathReports)) {
+        fs.emptyDirSync(Options.pathReports);
     } else {
-        fs.mkdirsSync(Options.outDir);
+        fs.mkdirsSync(Options.pathReports);
     }
 }
 

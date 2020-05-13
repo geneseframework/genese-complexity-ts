@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "downlevelIteration": true,
-    "outDir": "./dist/out-tsc",
+    "outDir": "./dist/out-tsc2",
     "sourceMap": true,
     "declaration": false,
     "module": "esnext",

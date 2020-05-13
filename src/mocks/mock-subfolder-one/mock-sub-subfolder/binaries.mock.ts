@@ -8,7 +8,7 @@ export class BinariesMock {
                 console.log(a);
             }
         }
-        return {cyclomaticValue: 9, cognitiveValue: 5};
+        return {cyclomaticValue: 7, cognitiveValue: 5};
     }
 
 
@@ -23,7 +23,7 @@ export class BinariesMock {
         if (a > b) {
             console.log(b);
         }
-        return {cyclomaticValue: 9, cognitiveValue: 5};
+        return {cyclomaticValue: 9, cognitiveValue: 11};
     }
 
 

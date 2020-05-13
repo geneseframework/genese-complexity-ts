@@ -33,25 +33,27 @@ export class TsFolderReportService {
 
     getFoldersArray(tsFolder: TsFolder): RowFolderReport[] {
         let report: RowFolderReport[] = [];
-        if (this.tsFolder.path !== Options.analysisPath) {
+        if (this.tsFolder.path !== Options.pathFolderToAnalyse) {
             report.push(this.addRowBackToPreviousFolder());
         }
         return report.concat(this.getSubfoldersArray(tsFolder));
     }
 
 
-    getSubfoldersArray(tsFolder: TsFolder): RowFolderReport[] {
+    getSubfoldersArray(tsFolder: TsFolder, isSubfolder = false): RowFolderReport[] {
         let report: RowFolderReport[] = [];
         for (const subFolder of tsFolder.subFolders) {
             const subFolderReport: RowFolderReport = {
-                complexitiesByStatus: subFolder.complexitiesByStatus,
-                numberOfFiles: subFolder.numberOfFiles,
-                numberOfMethods: subFolder.numberOfMethods,
+                complexitiesByStatus: subFolder.getStats().numberOfMethodsByStatus,
+                numberOfFiles: subFolder.getStats().numberOfFiles,
+                numberOfMethods: subFolder.getStats().numberOfMethods,
                 path: subFolder.relativePath,
                 routeFromCurrentFolder: this.tsFolder.relativePath === subFolder.relativePath ? undefined : getRouteBetweenPaths(this.tsFolder.relativePath, subFolder.relativePath)
             };
             report.push(subFolderReport);
-            report = report.concat(this.getSubfoldersArray(subFolder));
+            // if (!isSubfolder) {
+                report = report.concat(this.getSubfoldersArray(subFolder, true));
+            // }
         }
         return report;
     }
@@ -134,6 +136,7 @@ export class TsFolderReportService {
         const parentFolder: TsFolder = new TsFolder();
         parentFolder.subFolders.push(this.tsFolder);
         this.relativeRootReports = getRouteToRoot(this.tsFolder.relativePath);
+        // console.log('RELROUTE tsFolder.relativePath', this.tsFolder.relativePath);
         this.filesArray = this.getFilesArray(this.tsFolder);
         this.foldersArray = this.getFoldersArray(parentFolder);
         this.methodsArray = this.getMethodsArraySortedByDecreasingCognitiveCpx(parentFolder);
@@ -150,6 +153,7 @@ export class TsFolderReportService {
 
 
     private writeReport() {
+        console.log('FOLDERS ARRR', this.foldersArray)
         const template = this.template({
             colors: Options.colors,
             filesArray: this.filesArray,
@@ -159,8 +163,10 @@ export class TsFolderReportService {
             stats: this.tsFolder.getStats(),
             thresholds: Options.getThresholds()
         });
-        createRelativeDir(this.tsFolder.relativePath);
-        const pathReport = `${Options.outDir}/${this.tsFolder.relativePath}/folder-report.html`;
+        if (this.tsFolder.relativePath) {
+            createRelativeDir(this.tsFolder.relativePath);
+        }
+        const pathReport = `${Options.pathReports}/${this.tsFolder.relativePath}/folder-report.html`;
         fs.writeFileSync(pathReport, template, {encoding: 'utf-8'});
     }
 

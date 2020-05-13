@@ -20,7 +20,7 @@ export class ReportsService {
     private static generateSubfoldersReports(tsFolder: TsFolder): void{
         ReportsService.generateFolderReport(tsFolder);
         for (const subFolder of tsFolder.subFolders) {
-            ReportsService.generateSubfoldersReports(subFolder);
+            // ReportsService.generateSubfoldersReports(subFolder);
         }
     }
 
@@ -41,11 +41,11 @@ export class ReportsService {
 
 
     private static createStyleFiles(): void {
-        createRelativeDir('styles');
-        copyFile(`${appRoot}/src/templates/styles/report.css`, `${Options.outDir}/styles/report.css`);
-        copyFile(`${appRoot}/src/templates/styles/styles.css`, `${Options.outDir}/styles/styles.css`);
-        copyFile(`${appRoot}/src/templates/styles/prettify.css`, `${Options.outDir}/styles/prettify.css`);
-        copyFile(`${appRoot}/src/templates/styles/prism.css`, `${Options.outDir}/styles/prism.css`);
-        copyFile(`${appRoot}/src/templates/styles/prism.js`, `${Options.outDir}/styles/prism.js`);
+        createRelativeDir('reports-styles');
+        copyFile(`${appRoot}/src/templates/styles/report.css`, `${Options.pathReports}/reports-styles/report.css`);
+        copyFile(`${appRoot}/src/templates/styles/styles.css`, `${Options.pathReports}/reports-styles/styles.css`);
+        copyFile(`${appRoot}/src/templates/styles/prettify.css`, `${Options.pathReports}/reports-styles/prettify.css`);
+        copyFile(`${appRoot}/src/templates/styles/prism.css`, `${Options.pathReports}/reports-styles/prism.css`);
+        copyFile(`${appRoot}/src/templates/styles/prism.js`, `${Options.pathReports}/reports-styles/prism.js`);
     }
 }
