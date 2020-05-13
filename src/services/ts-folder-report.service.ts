@@ -79,7 +79,7 @@ export class TsFolderReportService {
                     cyclomaticColor: tsMethod.cyclomaticStatus.toLowerCase(),
                     cyclomaticValue: tsMethod.cyclomaticValue,
                     filename: tsFile.name,
-                    linkFile: this.getFileLink(tsFile),
+                    linkFile: this.getFileLink(tsFile, false),
                     methodName: tsMethod.name
                 })
             }
@@ -105,7 +105,7 @@ export class TsFolderReportService {
                         cyclomaticColor: tsMethod.cyclomaticStatus.toLowerCase(),
                         cyclomaticValue: tsMethod.cyclomaticValue,
                         filename: tsFile.name,
-                        linkFile: this.getFileLink(tsFile),
+                        linkFile: this.getFileLink(tsFile, true),
                         methodName: tsMethod.name
                     })
                 }
@@ -121,9 +121,9 @@ export class TsFolderReportService {
     }
 
 
-    getFileLink(tsFile: TsFile): string {
-        if (this.tsFolder.relativePath === tsFile.tsFolder?.relativePath) {
-            return undefined;
+    getFileLink(tsFile: TsFile, isMethodsArray: boolean): string {
+        if (this.tsFolder.relativePath === tsFile.tsFolder?.relativePath && isMethodsArray) {
+            return `./${getFilenameWithoutExtension(tsFile.name)}.html`;
         }
         const route = getRouteBetweenPaths(this.tsFolder.relativePath, tsFile.tsFolder?.relativePath);
         return `${route}/${getFilenameWithoutExtension(tsFile.name)}.html`;

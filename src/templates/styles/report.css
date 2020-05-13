@@ -4,11 +4,15 @@
 
 .header {
     background-color: #000066;
-    color: #71c2e9;
+    color: deepskyblue;
     padding: 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.header .header-left .backlink {
+    cursor: pointer;
 }
 
 .header .header-right {
