@@ -21,6 +21,11 @@
     justify-content: space-around;
 }
 
+.header .header-left .backLink {
+    color: #71c2e9;
+    cursor: pointer;
+}
+
 .stats-and-charts {
     height: 650px;
     display: flex;

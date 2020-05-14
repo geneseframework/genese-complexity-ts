@@ -5,19 +5,30 @@
 <head>
     <title>Genese complexity report for all files</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="{{relativeRootReports}}/styles/prettify.css" />
-    <link rel="stylesheet" href="{{relativeRootReports}}/styles/report.css" />
-    <link rel="stylesheet" href="{{relativeRootReports}}/styles/styles.css" />
+    <link rel="stylesheet" href="./{{relativeRootReports}}/reports-styles/prettify.css" />
+    <link rel="stylesheet" href="./{{relativeRootReports}}/reports-styles/report.css" />
+    <link rel="stylesheet" href="./{{relativeRootReports}}/reports-styles/styles.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
+
+<!--        -------------------------------------------------------------------------------------->
+<!--        ---------------------------------------   Header   ----------------------------------->
+<!--        -------------------------------------------------------------------------------------->
+
+
 <div class="header">
     <div class="header-left">
         <div>
             <h1>Genese complexity report</h1>
         </div>
-        <div>{{stats.subject}}</div>
+        <div class="pad1y">
+            {{#if relativeRootReports}}
+                <a class="backLink" href="../folder-report.html"><-</a>
+            {{/if}}
+            {{stats.subject}}
+        </div>
         <div class="clearfix">
             <div class='fl pad1y space-right2'>
                 <span class="strong">{{stats.numberOfFiles}}</span>
@@ -45,19 +56,15 @@
         </div>
     </div>
 </div>
+
+<!--        -------------------------------------------------------------------------------------->
+<!--        -----------------------------------   Stats and charts   ----------------------------->
+<!--        -------------------------------------------------------------------------------------->
+
 <div class="mainContainer">
-
-
-    <!--        -------------------------------------------------------------------------------------->
-    <!--        -----------------------------------   Stats and charts   ---------------------------->
-    <!--        -------------------------------------------------------------------------------------->
-
-
     <div class="stats-and-charts">
 
-        <!--        -------------------------------------------------------------------------------------->
         <!--        -----------------------------------   Cognitive complexity   ---------------------------->
-        <!--        -------------------------------------------------------------------------------------->
 
         <div class="stats-cognitive">
             <div class="stats-and-doughnut">
@@ -103,10 +110,7 @@
             </div>
         </div>
 
-        <!--        -------------------------------------------------------------------------------------->
         <!--        -----------------------------------   Cyclomatic complexity   ---------------------------->
-        <!--        -------------------------------------------------------------------------------------->
-
 
         <div class="stats-cyclomatic">
             <div class="stats-and-doughnut">

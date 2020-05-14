@@ -8,7 +8,6 @@ const appRoot = appRootPath.toString();
 
 export class Options {
 
-    static analysisPath = appRoot;
     static cognitiveCpx: Complexity = {
         errorThreshold: 8,
         type: ComplexityType.COGNITIVE,
@@ -20,7 +19,8 @@ export class Options {
         type: ComplexityType.CYCLOMATIC,
         warningThreshold: 4
     };
-    static outDir = `${appRoot}/genese/complexity/reports`;
+    static pathReports = `${appRoot}/genese/complexity/reports`;
+    static pathFolderToAnalyse = appRoot;
     static pathRoot = appRoot;
 
 

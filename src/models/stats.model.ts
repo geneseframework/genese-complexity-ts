@@ -14,6 +14,7 @@ export class Stats {
     percentsByStatus?: ComplexitiesByStatus = new ComplexitiesByStatus();
     subject ?= '';
     totalCognitiveComplexity ?= 0;
+    // totalComplexitiesByStatus?: ComplexitiesByStatus = new ComplexitiesByStatus();
     totalCyclomaticComplexity ?= 0;
 
 

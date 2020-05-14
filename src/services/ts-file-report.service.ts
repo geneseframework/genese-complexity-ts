@@ -42,6 +42,9 @@ export class TsFileReportService {
         this.methods = this.getMethodsArray();
         // console.log('METHODS ARRAY', this.methods)
         this.relativeRootReports = getRouteToRoot(this.tsFile.tsFolder?.relativePath);
+        // console.log('RTR FILE NM', this.tsFile.name)
+        // console.log('RTR', this.tsFile.tsFolder?.relativePath)
+        // console.log('RTR this.relativeRootReports', this.relativeRootReports)
         this.registerPartial("cognitiveBarchartScript", 'cognitive-barchart');
         this.registerPartial("cyclomaticBarchartScript", 'cyclomatic-barchart');
         this.registerPartial("cognitiveDoughnutScript", 'cognitive-doughnut');
@@ -62,7 +65,7 @@ export class TsFileReportService {
             thresholds: Options.getThresholds()
         });
         const filenameWithoutExtension = getFilenameWithoutExtension(this.tsFile.name);
-        const pathReport = `${Options.outDir}/${this.tsFile.tsFolder?.relativePath}/${filenameWithoutExtension}.html`;
+        const pathReport = `${Options.pathReports}/${this.tsFile.tsFolder?.relativePath}/${filenameWithoutExtension}.html`;
         fs.writeFileSync(pathReport, template, {encoding: 'utf-8'});
     }
 

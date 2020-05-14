@@ -30,9 +30,14 @@ export class Process {
 
     setOptions(options: any): Process {
         Options.setOptions(options);
+        // console.log('OPTIONSSS', Options)
         return this;
     }
 
+    createOutDir(): Process {
+        createOutDir();
+        return this;
+    }
 
     getDebugReport() {
         const tsFile: TsFile = TsFileService.generateTree(`${appRoot}/src/mocks/ast.mock.ts`);
@@ -44,7 +49,7 @@ export class Process {
 
 
     generateTree(): Process {
-        this.tsFolder = TsFolderService.generateTree(Options.analysisPath, 'ts');
+        this.tsFolder = TsFolderService.generateTree(Options.pathFolderToAnalyse, 'ts');
         return this;
     }
 
@@ -53,9 +58,4 @@ export class Process {
         ReportsService.generateAllReports(this.tsFolder);
     }
 
-
-    createOutDir(): Process {
-        createOutDir();
-        return this;
-    }
 }
