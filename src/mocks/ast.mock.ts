@@ -15,6 +15,13 @@ export class AstMock {
     genese;
     userAccountStateUpdated;
 
+    // hasModifications(): boolean {
+    //     +        return this.user.firstname !== this.#_originalUser.firstname ||
+    //         +            this.user.lastname !== this.#_originalUser.lastname ||
+    //         +            JSON.stringify(this.user.profiles_id.sort()) !== JSON.stringify(this.#_originalUser.profiles_id.sort()) ||
+    //         +            (this.password !== '' && this.passwordsMatch);
+    //     +    }
+
     openDeleteConfirmationModal(): void {
         this.utils.openWarningDialog(this.dictionary.ADMIN.DIALOG.WARNING,
             this.dictionary.ADMIN.DIALOG.CONFIRMATION(
