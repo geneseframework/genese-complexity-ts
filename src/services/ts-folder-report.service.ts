@@ -71,19 +71,6 @@ export class TsFolderReportService {
     }
 
 
-    getRouteToSubfolder(subfolder: TsFolder): string {
-        const  route = getRouteFromFolderToSubFolder(this.tsFolder, subfolder);
-        if (subfolder.relativePath === 'app') {
-            console.log('ROUtE this.tsFolder', this.tsFolder.path)
-            console.log('ROUtE this.tsFolder relativePath', this.tsFolder.relativePath)
-            console.log('ROUtE subfolder', subfolder.path)
-            console.log('ROUtE subfolder relativePath', subfolder.relativePath)
-            console.log('ROUtE SUBFF', route)
-        }
-        return route;
-    }
-
-
     getFilesArray(tsFolder: TsFolder): RowFileReport[] {
         let report: RowFileReport[] = [];
         for (const tsFile of tsFolder.tsFiles) {
