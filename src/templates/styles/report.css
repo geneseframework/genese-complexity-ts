@@ -21,6 +21,10 @@
     justify-content: space-around;
 }
 
+.header .header-left .backLink {
+    cursor: pointer;
+}
+
 .stats-and-charts {
     height: 650px;
     display: flex;
