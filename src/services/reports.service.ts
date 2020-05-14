@@ -20,7 +20,7 @@ export class ReportsService {
     private static generateSubfoldersReports(tsFolder: TsFolder): void{
         ReportsService.generateFolderReport(tsFolder);
         for (const subFolder of tsFolder.subFolders) {
-            // ReportsService.generateSubfoldersReports(subFolder);
+            ReportsService.generateSubfoldersReports(subFolder);
         }
     }
 

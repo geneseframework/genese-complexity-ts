@@ -1,5 +1,7 @@
 import * as fs from 'fs-extra';
 import { Options } from '../models/options';
+import { TsFolder } from '../models/ts-folder.model';
+import { TsFile } from '../models/ts-file.model';
 
 export function getFilename(filePath = ''): string {
     const splittedPath = filePath.split('/');
@@ -26,22 +28,15 @@ export function getRelativePath(pathRoot: string, path: string): string {
     if (!path || !pathRoot || path === pathRoot) {
         return '';
     }
-    // console.log('GET RLP pathRoot', pathRoot)
-    // console.log('GET RLP path', path)
     const pathWithoutEndSlash = path.charAt(path.length - 1) === `/` ? path.slice(0, path.length - 1) : path;
-    // console.log('GET RLP pathWithoutEndSlash', pathWithoutEndSlash)
-    const slice = pathWithoutEndSlash.slice(0, pathRoot.length);
-    // console.log('SLICEEE', slice)
     const  relpath =pathRoot === pathWithoutEndSlash.slice(0, pathRoot.length) ? pathWithoutEndSlash.slice(pathRoot.length, pathWithoutEndSlash.length) : pathWithoutEndSlash;
-    // console.log('REELPTH', relpath)
-    // throw new Error()
     return relpath;
 }
 
 
 export function getRouteToRoot(relativePath: string): string {
     if (!relativePath) {
-        return '.';
+        return '';
     }
     let relativeRoot = '/..';
     for (let i = 0; i < relativePath.length; i++) {
@@ -52,8 +47,8 @@ export function getRouteToRoot(relativePath: string): string {
 
 
 export function getRouteBetweenPaths(pathSource: string, pathTarget: string): string {
-    if (!pathSource || !pathTarget) {
-        return '';
+    if (pathSource === undefined || pathTarget === undefined) {
+        return undefined;
     }
     let commonRoute = '';
     for (let i = 0; i < pathSource.length; i++) {
@@ -63,8 +58,21 @@ export function getRouteBetweenPaths(pathSource: string, pathTarget: string): st
             break;
         }
     }
-    const backToCommonRoute = getRouteToRoot(pathSource.slice(commonRoute.length)) || '.';
+    const backToCommonRoute = getRouteToRoot(pathSource.slice(commonRoute.length));
     return `${backToCommonRoute}${pathTarget.slice(commonRoute.length)}`;
+}
+
+
+export function getRouteFromFolderToFile(tsFolder: TsFolder, tsFile: TsFile): string {
+    if (!tsFile || !tsFolder) {
+        return undefined;
+    }
+    if (tsFile.tsFolder.path.slice(0, tsFolder.path.length) !== tsFolder.path) {
+        throw 'err'
+    } else {
+        return `.${tsFile.tsFolder.path.slice(tsFolder.path.length)}`;
+    }
+
 }
 
 export function getExtension(filename: string): string {
