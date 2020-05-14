@@ -14,13 +14,16 @@ export class AstMock {
     user;
     genese;
     userAccountStateUpdated;
+    originalUser;
+    passwordsMatch;
+    password;
 
-    // hasModifications(): boolean {
-    //     +        return this.user.firstname !== this.#_originalUser.firstname ||
-    //         +            this.user.lastname !== this.#_originalUser.lastname ||
-    //         +            JSON.stringify(this.user.profiles_id.sort()) !== JSON.stringify(this.#_originalUser.profiles_id.sort()) ||
-    //         +            (this.password !== '' && this.passwordsMatch);
-    //     +    }
+    hasModifications(): boolean {
+        return this.user.firstname !== this.originalUser.firstname ||
+            this.user.lastname !== this.originalUser.lastname ||
+            JSON.stringify(this.user.profiles_id.sort()) !== JSON.stringify(this.originalUser.profiles_id.sort()) ||
+            (this.password !== '' && this.passwordsMatch);
+    }
 
     openDeleteConfirmationModal(): void {
         this.utils.openWarningDialog(this.dictionary.ADMIN.DIALOG.WARNING,
