@@ -8,7 +8,7 @@ import { RowFileReport } from '../models/row-file-report.model';
 import {
     createRelativeDir,
     getFilenameWithoutExtension,
-    getRouteBetweenPaths, getRouteFromFolderToFile,
+    getRouteBetweenPaths, getRouteFromFolderToFile, getRouteFromFolderToSubFolder,
     getRouteToRoot
 } from './file.service';
 import { TsFile } from '../models/ts-file.model';
@@ -42,17 +42,17 @@ export class TsFolderReportService {
 
     getSubfoldersArray(tsFolder: TsFolder, isSubfolder = false): RowFolderReport[] {
         let report: RowFolderReport[] = [];
-        for (const subFolder of tsFolder.subFolders) {
-            const subFolderReport: RowFolderReport = {
-                complexitiesByStatus: subFolder.getStats().numberOfMethodsByStatus,
-                numberOfFiles: subFolder.getStats().numberOfFiles,
-                numberOfMethods: subFolder.getStats().numberOfMethods,
-                path: subFolder.relativePath,
-                routeFromCurrentFolder: this.tsFolder.relativePath === subFolder.relativePath ? undefined : getRouteBetweenPaths(this.tsFolder.relativePath, subFolder.relativePath)
+        for (const subfolder of tsFolder.subFolders) {
+            const subfolderReport: RowFolderReport = {
+                complexitiesByStatus: subfolder.getStats().numberOfMethodsByStatus,
+                numberOfFiles: subfolder.getStats().numberOfFiles,
+                numberOfMethods: subfolder.getStats().numberOfMethods,
+                path: subfolder.relativePath,
+                routeFromCurrentFolder: getRouteFromFolderToSubFolder(this.tsFolder, subfolder)
             };
-            report.push(subFolderReport);
+            report.push(subfolderReport);
             if (!isSubfolder) {
-                report = report.concat(this.getSubfoldersArray(subFolder, true));
+                report = report.concat(this.getSubfoldersArray(subfolder, true));
             }
         }
         return report;
@@ -68,6 +68,19 @@ export class TsFolderReportService {
             routeFromCurrentFolder: '..'
 
         };
+    }
+
+
+    getRouteToSubfolder(subfolder: TsFolder): string {
+        const  route = getRouteFromFolderToSubFolder(this.tsFolder, subfolder);
+        if (subfolder.relativePath === 'app') {
+            console.log('ROUtE this.tsFolder', this.tsFolder.path)
+            console.log('ROUtE this.tsFolder relativePath', this.tsFolder.relativePath)
+            console.log('ROUtE subfolder', subfolder.path)
+            console.log('ROUtE subfolder relativePath', subfolder.relativePath)
+            console.log('ROUtE SUBFF', route)
+        }
+        return route;
     }
 
 
@@ -98,8 +111,8 @@ export class TsFolderReportService {
 
     getMethodsArray(tsFolder: TsFolder): RowFileReport[] {
         let report: RowFileReport[] = [];
-        for (const subFolder of tsFolder.subFolders) {
-            for (const tsFile of subFolder.tsFiles) {
+        for (const subfolder of tsFolder.subFolders) {
+            for (const tsFile of subfolder.tsFiles) {
                 for (const tsMethod of tsFile.tsMethods) {
                     report.push({
                         cognitiveColor: tsMethod.cognitiveStatus.toLowerCase(),
@@ -112,7 +125,7 @@ export class TsFolderReportService {
                     })
                 }
             }
-            report = report.concat(this.getMethodsArray(subFolder));
+            report = report.concat(this.getMethodsArray(subfolder));
         }
         return report;
     }

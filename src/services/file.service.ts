@@ -68,12 +68,27 @@ export function getRouteFromFolderToFile(tsFolder: TsFolder, tsFile: TsFile): st
         return undefined;
     }
     if (tsFile.tsFolder.path.slice(0, tsFolder.path.length) !== tsFolder.path) {
-        throw 'err'
+        console.log(`The file ${tsFile.name} is not inside the folder ${tsFolder.path}`);
+        return undefined;
     } else {
         return `.${tsFile.tsFolder.path.slice(tsFolder.path.length)}`;
     }
-
 }
+
+
+export function getRouteFromFolderToSubFolder(folder: TsFolder, subfolder: TsFolder): string {
+    if (!folder || !subfolder|| subfolder.path === folder.path ) {
+        return undefined;
+    }
+    if (subfolder.path.slice(0, folder.path.length) !== folder.path) {
+        console.log(`The folder ${subfolder.path} is not a subfolder of ${folder.path}`);
+        return undefined;
+    } else {
+        const linkStarter = folder.relativePath === '' ? './' : '.';
+        return `${linkStarter}${subfolder.path.slice(folder.path.length)}`;
+    }
+}
+
 
 export function getExtension(filename: string): string {
     return filename ? filename.split('.').pop() : '';
