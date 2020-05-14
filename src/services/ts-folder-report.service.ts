@@ -20,6 +20,7 @@ export class TsFolderReportService {
 
     private filesArray: RowFileReport[] = [];
     private foldersArray: RowFolderReport[] = [];
+    private isRootFolder = false;
     private methodsArray: RowFileReport[] = [];
     private relativeRootReports = '';
     template: HandlebarsTemplateDelegate;
@@ -156,6 +157,7 @@ export class TsFolderReportService {
             colors: Options.colors,
             filesArray: this.filesArray,
             foldersArray: this.foldersArray,
+            isRootFolder: this.isRootFolder,
             methodsArray: this.methodsArray,
             relativeRootReports: this.relativeRootReports,
             stats: this.tsFolder.getStats(),

@@ -17,12 +17,18 @@
 <!--        ---------------------------------------   Header   ----------------------------------->
 <!--        -------------------------------------------------------------------------------------->
 
+
 <div class="header">
     <div class="header-left">
         <div>
             <h1>Genese complexity report</h1>
         </div>
-        <div class="pad1y">{{stats.subject}}</div>
+        <div class="pad1y">
+            {{#if relativeRootReports}}
+                <a class="backLink" href="../folder-report.html"><-</a>
+            {{/if}}
+            {{stats.subject}}
+        </div>
         <div class="clearfix">
             <div class='fl pad1y space-right2'>
                 <span class="strong">{{stats.numberOfFiles}}</span>
