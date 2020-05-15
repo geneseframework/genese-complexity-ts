@@ -13,13 +13,13 @@ function initProcess() {
 	const options: Options = {
         pathFolderToAnalyse: pathFolderToAnalyse,
 	    outDir: `${appRoot}/genese/complexity/reports`,
-        cognitive: {
-            thresholdWarning: 3,
-            thresholdError: 4
+        cognitiveCpx: {
+            errorThreshold: 9,
+            warningThreshold: 4
         },
-        cyclomatic: {
-            thresholdWarning: 4,
-            thresholdError: 6
+        cyclomaticCpx: {
+            errorThreshold: 10,
+            warningThreshold: 5
         },
     }
 	process.start(options);
