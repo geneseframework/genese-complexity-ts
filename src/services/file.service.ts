@@ -71,7 +71,8 @@ export function getRouteFromFolderToFile(tsFolder: TsFolder, tsFile: TsFile): st
         console.log(`The file ${tsFile.name} is not inside the folder ${tsFolder.path}`);
         return undefined;
     } else {
-        return `.${tsFile.tsFolder.path.slice(tsFolder.path.length)}`;
+        const linkStarter = tsFolder.relativePath === '' ? './' : '.';
+        return `${linkStarter}${tsFile.tsFolder.path.slice(tsFolder.path.length)}`;
     }
 }
 

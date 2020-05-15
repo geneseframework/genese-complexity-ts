@@ -40,11 +40,7 @@ export class TsFileReportService {
 
     generateReport(): void {
         this.methods = this.getMethodsArray();
-        // console.log('METHODS ARRAY', this.methods)
         this.relativeRootReports = getRouteToRoot(this.tsFile.tsFolder?.relativePath);
-        // console.log('RTR FILE NM', this.tsFile.name)
-        // console.log('RTR', this.tsFile.tsFolder?.relativePath)
-        // console.log('RTR this.relativeRootReports', this.relativeRootReports)
         this.registerPartial("cognitiveBarchartScript", 'cognitive-barchart');
         this.registerPartial("cyclomaticBarchartScript", 'cyclomatic-barchart');
         this.registerPartial("cognitiveDoughnutScript", 'cognitive-doughnut');
