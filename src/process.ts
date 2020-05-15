@@ -17,10 +17,10 @@ export class Process {
     constructor() {
     }
 
-    start(options: any): void {
+    start(): void {
         console.log('START CALCULATION');
         // this.getDebugReport();
-        this.setOptions(options)
+        this.setOptions()
             .createOutDir()
             .generateTree()
             .generateReports();
@@ -28,9 +28,8 @@ export class Process {
     }
 
 
-    setOptions(options: any): Process {
-        Options.setOptions(options);
-        // console.log('OPTIONSSS', Options)
+    setOptions(): Process {
+        Options.setOptions();
         return this;
     }
 

@@ -2,37 +2,31 @@ import { ComplexityType } from '../enums/complexity-type.enum';
 import { Complexity } from '../interfaces/complexity.interface';
 import { ChartColor } from '../enums/colors.enum';
 import { ComplexitiesByStatus } from '../interfaces/complexities-by-status.interface';
+import { getPath } from '../services/file.service';
 
-const appRootPath = require('app-root-path');
-const appRoot = appRootPath.toString();
 
 export class Options {
 
     static cognitiveCpx: Complexity = {
-        errorThreshold: 8,
+        errorThreshold: 10,
         type: ComplexityType.COGNITIVE,
-        warningThreshold: 4
+        warningThreshold: 5
     };
     static colors: ChartColor[] = [ChartColor.CORRECT, ChartColor.WARNING, ChartColor.ERROR];
     static cyclomaticCpx: Complexity = {
-        errorThreshold: 8,
+        errorThreshold: 10,
         type: ComplexityType.CYCLOMATIC,
-        warningThreshold: 4
+        warningThreshold: 5
     };
-    static pathReports = `${appRoot}/genese/complexity/reports`;
-    static pathFolderToAnalyse = appRoot;
-    static pathRoot = appRoot;
+    static pathReports = '';
+    static pathFolderToAnalyse = '';
+    static pathRoot = '';
 
 
-    static setOption(key: string, value: string): void {
-        Options[key] = value;
-    }
-
-
-    static setOptions(options: object): void {
-        for (const key of Object.keys(options)) {
-            Options.setOption(key, options[key]);
-        }
+    static setOptions(): void {
+            Options.pathRoot = getPath(process.argv[1]);
+            Options.pathFolderToAnalyse = process.argv[2] ?? '.';
+            Options.pathReports = `${Options.pathRoot}/genese/complexity/reports`;
     }
 
 

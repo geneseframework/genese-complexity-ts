@@ -3,8 +3,8 @@ import { Options } from '../models/options';
 import { TsFolder } from '../models/ts-folder.model';
 import { TsFile } from '../models/ts-file.model';
 
-export function getFilename(filePath = ''): string {
-    const splittedPath = filePath.split('/');
+export function getFilename(pathFile = ''): string {
+    const splittedPath = pathFile.split('/');
     return splittedPath[splittedPath.length - 1];
 }
 
@@ -21,6 +21,13 @@ export function getAllFiles(dirPath: string, arrayOfFiles?: string[]): string[] 
         }
     })
     return arrayOfFiles;
+}
+
+
+export function getPath(pathFile: string): string {
+    const splittedPath = pathFile.split('/');
+    splittedPath.pop();
+    return splittedPath.join('/');
 }
 
 
