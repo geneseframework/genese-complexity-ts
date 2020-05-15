@@ -6,6 +6,7 @@ function initProcess() {
     // const pathFolderToAnalyse = `/Users/utilisateur/Documents/projets/amadeus/amadeus-cmt/src/`;
     // const pathFolderToAnalyse = `/Users/utilisateur/Documents/projets/aura/victi-aura-affectations-frontend/src/`;
     // const pathFolderToAnalyse = `/Users/utilisateur/Documents/projets/retex/airbus-retex-front/src/`;
+    // const pathFolderToAnalyse = `/Users/utilisateur/Documents/projets/thermofisher/thermo-front/src/`;
     // const pathFolderToAnalyse = `/Users/utilisateur/Documents/projets/naval-group/code/full/20200513-1730/cyms/src/`;
     var pathFolderToAnalyse = appRoot + "/src/";
     var process = new process_1.Process();

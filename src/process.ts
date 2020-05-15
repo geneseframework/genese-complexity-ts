@@ -41,10 +41,10 @@ export class Process {
 
     getDebugReport() {
         const tsFile: TsFile = TsFileService.generateTree(`${appRoot}/src/mocks/ast.mock.ts`);
-        for (const method of tsFile.tsMethods) {
-            const tree = method.tsTree;
+        // for (const method of tsFile.tsMethods) {
+        //     const tree = method.tsTree;
             // tree.printAllChildren();
-        }
+        // }
     }
 
 

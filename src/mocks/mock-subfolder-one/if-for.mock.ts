@@ -7,13 +7,57 @@ class IfForMock {
 
 
 
+    ifAlone(data): EvaluationValuesInterface {
+        if (data === 'a') {
+            data = 'b';
+        }
+        return {cyclomaticValue: 2, cognitiveValue: 1};
+    }
+
+
     ifElse(data): EvaluationValuesInterface {
         if (data === 'a') {
             data = 'b';
         } else {
             data = 'c';
         }
+        return {cyclomaticValue: 2, cognitiveValue: 2};
+    }
+
+
+    ifIf(data): EvaluationValuesInterface {
+        if (data === 'a') {
+            data = 'b';
+            if (data === 'v') {
+                data = 'c';
+            }
+        }
+        return {cyclomaticValue: 2, cognitiveValue: 3};
+    }
+
+
+    ifElseIfInside(data): EvaluationValuesInterface {
+        if (data === 'a') {
+            data = 'b';
+        } else {
+            if (data === 'v') {
+                data = 'c';
+            }
+        }
         return {cyclomaticValue: 2, cognitiveValue: 1};
+    }
+
+
+    ifIfElseInside(data): EvaluationValuesInterface {
+        if (data === 'a') {
+            data = 'b';
+            if (data === 'v') {
+                data = 'c';
+            } else {
+                data = 'f';
+            }
+        }
+        return {cyclomaticValue: 2, cognitiveValue: 4};
     }
 
 
@@ -75,7 +119,6 @@ class IfForMock {
         }
         return {cyclomaticValue: 4, cognitiveValue: 6};
     }
-
 
 
     ifIfIfElse(data: number): EvaluationValuesInterface {
