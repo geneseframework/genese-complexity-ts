@@ -135,6 +135,22 @@ class IfForMock {
     }
 
 
+    forMethod(data): EvaluationValuesInterface {
+        for (const elt of data) {
+            console.log(elt);
+        }
+        return {cyclomaticValue: 1, cognitiveValue: 1};
+    }
+
+
+    forEachMethod(data): EvaluationValuesInterface {
+        data.forEach(e => {
+            console.log(e);
+        })
+        return {cyclomaticValue: 1, cognitiveValue: 1};
+    }
+
+
     forForFor(max: number): EvaluationValuesInterface {
         let total = 0;
         for (let i = 1; i < max; ++i) {

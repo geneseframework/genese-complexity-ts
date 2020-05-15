@@ -5,7 +5,7 @@
         data: {
             labels: [
                 {{#each stats.barChartCognitive.data}}
-                    {{this.x}},
+                    '{{this.x}}',
                 {{/each}}
             ],
             datasets: [{
@@ -24,11 +24,6 @@
         options: {
             legend: {
                 display: false
-            },
-            title: {
-                display: false,
-                text: 'Cognitive complexity',
-                position: 'top'
             },
             scales: {
                 xAxes: [{
