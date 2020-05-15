@@ -43,27 +43,23 @@ export class ComplexityService {
 
     static increaseDepth(node: ts.Node, depth: number): number {
         let newDepth = depth;
-        // if (node?.parent?.kind === ts.SyntaxKind.ConditionalExpression) {
-        //     newDepth = depth + 1;
-        // } else if (node?.kind) {
-            switch (node?.parent.kind) {
-                case ts.SyntaxKind.ArrowFunction:
-                case ts.SyntaxKind.CatchClause:
-                case ts.SyntaxKind.ConditionalExpression:
-                case ts.SyntaxKind.DoStatement:
-                case ts.SyntaxKind.ForStatement:
-                case ts.SyntaxKind.ForInStatement:
-                case ts.SyntaxKind.ForOfStatement:
-                case ts.SyntaxKind.FunctionExpression:
-                case ts.SyntaxKind.IfStatement:
-                case ts.SyntaxKind.SwitchStatement:
-                case ts.SyntaxKind.WhileStatement:
-                    newDepth = depth + 1;
-                    break;
-                default:
-                    break;
-            }
-        // }
+        switch (node?.parent.kind) {
+            case ts.SyntaxKind.ArrowFunction:
+            case ts.SyntaxKind.CatchClause:
+            case ts.SyntaxKind.ConditionalExpression:
+            case ts.SyntaxKind.DoStatement:
+            case ts.SyntaxKind.ForStatement:
+            case ts.SyntaxKind.ForInStatement:
+            case ts.SyntaxKind.ForOfStatement:
+            case ts.SyntaxKind.FunctionExpression:
+            case ts.SyntaxKind.IfStatement:
+            case ts.SyntaxKind.SwitchStatement:
+            case ts.SyntaxKind.WhileStatement:
+                newDepth = depth + 1;
+                break;
+            default:
+                break;
+        }
         return newDepth;
     }
 
@@ -72,6 +68,9 @@ export class ComplexityService {
         let complexity = 0;
         if (!tsTree?.node || tsTree?.depth === undefined) {
             return 0;
+        }
+        if (tsTree?.node?.['elseStatement']) {
+            complexity ++;
         }
         switch (tsTree.node.kind) {
             case ts.SyntaxKind.ArrowFunction:
@@ -83,13 +82,12 @@ export class ComplexityService {
             case ts.SyntaxKind.FunctionExpression:
             case ts.SyntaxKind.IfStatement:
             case ts.SyntaxKind.MethodDeclaration:
-            // case ts.SyntaxKind.QuestionDotToken:
             case ts.SyntaxKind.SwitchStatement:
             case ts.SyntaxKind.WhileStatement:
-                complexity = tsTree.depth + 1;
+                complexity += tsTree.depth + 1;
                 break;
             case ts.SyntaxKind.BinaryExpression:
-                complexity = ComplexityService.addBinaryCognitiveCpx(tsTree);
+                complexity += ComplexityService.addBinaryCognitiveCpx(tsTree);
                 break;
             case ts.SyntaxKind.PropertyAccessExpression:
                 if (ComplexityService.isRecursion(tsTree, tsTree.node)) {
@@ -97,10 +95,10 @@ export class ComplexityService {
                 }
                 break;
             case ts.SyntaxKind.ConditionalExpression:
-                complexity = ComplexityService.conditionalExpressionIsTrivial(tsTree) ? 0 : 1;
+                complexity += ComplexityService.conditionalExpressionIsTrivial(tsTree) ? 0 : 1;
                 break;
             default:
-                complexity = 0;
+                complexity += 0;
         }
         return complexity;
     }
@@ -130,11 +128,7 @@ export class ComplexityService {
         }
         let complexity = 0;
         if (Ast.isBinary(tsTree.node) && Ast.isLogicDoor(tsTree.node)) {
-            if (Ast.isSameOperatorToken(tsTree.node, tsTree.parent.node) && !Ast.isOrTokenBetweenBinaries(tsTree.node)) {
-                complexity = 0;
-            } else {
-                complexity = 1;
-            }
+            complexity = (Ast.isSameOperatorToken(tsTree.node, tsTree.parent.node) && !Ast.isOrTokenBetweenBinaries(tsTree.node)) ? 0 : 1;
         }
         return complexity;
     }
@@ -170,6 +164,9 @@ export class ComplexityService {
 
     static increasesCognitiveComplexity(tsTree: TsTree): boolean {
 
+        if (tsTree?.node?.['elseStatement']) {
+            return true;
+        }
         switch (tsTree?.node?.kind) {
             case ts.SyntaxKind.ArrowFunction:
             case ts.SyntaxKind.CatchClause:
